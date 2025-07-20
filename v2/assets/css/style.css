@@ -1,0 +1,169 @@
+.paragraph {
+    padding: 10px;
+}
+
+.paragraph-title-list {
+    min-width: 300px;
+    overflow-y: auto;
+    height: calc(100vh - 110px);
+}
+
+.paragraph-title-list a {
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+.paragraph-list {
+    overflow-y: auto;
+    height: calc(100vh - 110px);
+}
+
+.book-card {
+    max-width: 150px;
+    min-width: 150px;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: #012863;
+}
+
+.book-card .card-body {
+    padding: 10px !important;
+}
+
+.book-card .card-title {
+    margin: 0;
+}
+
+.book-card .img-bg {
+    min-height: 200px;
+    max-height: 200px;
+    min-width: 148px;
+    max-width: 148px;
+}
+
+.book-card:hover .img-bg {
+    box-shadow: grey 0 0 20px;
+}
+
+.img-bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.paragraph-section {
+    box-shadow: grey 0 0 10px;
+    margin: 20px 50px;
+    padding: 50px;
+    max-width: 800px;
+}
+
+body *:not(.book *):not(.fa) {
+    font-family: 'Atlassian Sans', sans-serif;
+}
+
+.view {
+    margin-top: 100px;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.search {
+    min-width: 25vw;
+    max-width: 25vw;
+    height: 40px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.ks-border {
+    border-radius: 20px;
+    border: 2px solid #012863;
+}
+
+.search > div {
+    height: 37.6px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.search input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar {
+    height: 100px;
+}
+
+button {
+    color: white;
+    background-color: #012863;
+    overflow: hidden;
+    border-width: 0;
+    border-radius: 20px !important;
+    height: 40px;
+    width: 150px;
+}
+
+.navbar-brand {
+    left: 3rem;
+}
+
+.vaishnava-book {
+    color: #012863;
+}
+
+.vaishnava-book ::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+.vaishnava-book ::-webkit-scrollbar-thumb {
+    background: #012863;
+    border-radius: 7.5px;
+}
+
+.vaishnava-book ::-webkit-scrollbar-thumb:active {
+    background: grey;
+}
+
+.color-default {
+    color: #012863;
+}
+
+.welcome {
+    max-width: 1200px;
+}
+
+.welcome>div:last-of-type {
+    text-align: center;
+}
+
+.welcome>div>p:first-of-type {
+    font-style: italic;
+    margin-bottom: 5px;
+    margin-top: -10px;
+}
+
+.welcome>div>p:last-child {
+    font-size: 22px;
+}

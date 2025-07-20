@@ -1,0 +1,26 @@
+<div>
+<!--    <div v-if="searchResults.length" class="d-flex align-items-center m-3 position-absolute">-->
+<!--        {{ searchResults.length }} results found-->
+<!--    </div>-->
+    <div class="d-flex">
+        <div class="w-25 overflow-y-auto" style="max-height: calc(100vh - 130px);">
+            <ul class="list-group list-group-flush">
+                <div v-for="book in searchResultsObj">
+                    <h5 class="p-2">{{ book.title }}</h5>
+                    <li class="list-group-item list-group-item-action p-2"
+                        v-for="paragraph in book.paragraphs"
+                        @click="selectSearch(paragraph, book.code)"
+                        v-html="paragraph.text">
+                    </li>
+                </div>
+            </ul>
+        </div>
+        <div class="w-75 overflow-y-auto book" style="max-height: calc(100vh - 130px);">
+            <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section">
+                <div class="paragraph" v-for="(paragraph, paragraphId) in chapter.paragraphs">
+                    <div v-html="paragraph.highlightedText || paragraph.text" :class="paragraph.class" :id="chapterId + '-' + paragraphId"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-export  default {
+export default {
     template: `
         <div>
             <h2>Home Page</h2>
