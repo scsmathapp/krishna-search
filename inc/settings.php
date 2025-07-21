@@ -176,7 +176,7 @@
 	define ('JS_MIN_IN_DB_BOOK_TEXT_SUB_DIR',			(DIRECTORY_SEPARATOR.'db'.DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'js')); // for /admin/
 	define ('CONFIG_IN_DB_BOOK_TEXT_SUB_DIR',			(DIRECTORY_SEPARATOR.'db'.DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'config')); // for /admin/
 	
-	define ('WEB_INDEX_FILE',							(WEB_ROOT.'/index.php'));
+	define ('WEB_INDEX_FILE',							(WEB_ROOT.'/v1.php'));
 	
 	define ('COOKIE_DOMAIN',							($cookieDomain));
 	define ('IS__LOCALHOST',							($is_localhost));
