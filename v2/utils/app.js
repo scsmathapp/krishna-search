@@ -1,4 +1,5 @@
 import router from './router.js';
+import allBooks from './allBooks.js';
 
 // Create Vue app
 const app = Vue.createApp({
@@ -19,9 +20,9 @@ const app = Vue.createApp({
             const vm = this;
 
             e.preventDefault();
-
+            
             if (vm.searchVal) {
-                vm.$router.push('/search?q=' + vm.searchVal);
+                vm.$router.push('/search?q=' + vm.searchVal.replaceAll('+', '%2B'));
             }
         }
     }
@@ -32,3 +33,21 @@ app.use(router);
 
 // Mount the app
 app.mount('#app');
+
+setTimeout(() => {
+    // Fetch each JSON file
+    const promises = allBooks.map(file => {
+        return fetch(`../v2/assets/books/json/${file}`)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Failed to load ${file}:`, error);
+                return null;
+            });
+    });
+
+    Promise.all(promises)
+        .then(data => {
+            window.books = data;
+            window.dispatchEvent(new CustomEvent('booksDataReady', { books: data }));
+        });
+});

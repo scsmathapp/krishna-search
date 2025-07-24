@@ -6,7 +6,9 @@ export default {
             searchVal: '',
             books: {},
             searchResultsObj: {},
-            selectedBook: {}
+            selectedBook: {},
+            searchCount: 0,
+            selectedBookCode: ''
         }
     },
     created() {
@@ -17,28 +19,37 @@ export default {
             return;
         }
 
-        // Fetch each JSON file
-        const promises = allBooks.map(file => {
-            return fetch(`../../assets/books/json/${file}`)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Failed to load ${file}:`, error);
-                    return null;
-                });
+        // Usage
+        waitForData().then(data => {
+            vm.books = data;
+            vm.filterBooks();
         });
 
-        Promise.all(promises)
-            .then(data => {
-                vm.books = data; // Array of JSON objects
-                vm.filterBooks();
+        // page.js
+        function waitForData() {
+            return new Promise((resolve) => {
+                if (window.books) {
+                    // Data already exists
+                    resolve(window.books);
+                } else {
+                    // Wait for the event
+                    window.addEventListener('booksDataReady', (event) => {
+                        resolve(event.target.books);
+                    }, { once: true }); // { once: true } ensures the listener is removed after first execution
+                }
             });
+        }
+        
     },
     methods: {
         filterBooks() {
             const vm = this;
-            const searchVal = vm.$route.query ? vm.$route.query.q : '';
+            let searchVal = vm.$route.query ? vm.$route.query.q : '';
 
             vm.searchResultsObj = {};
+            vm.searchCount = 0;
+            vm.selectedBook = {};
+            vm.selectedBookCode = '';
 
             if (searchVal) {
                 const tokens = tokenize(removeDiacritics(searchVal));
@@ -56,6 +67,8 @@ export default {
                         while (paragraphIndex < chapter.paragraphs.length) {
                             const paragraph = chapter.paragraphs[paragraphIndex];
                             const matchResult = evaluate(ast, removeDiacritics(paragraph.text));
+
+                            paragraph.highlightedText = '';
 
                             if (matchResult && matchResult.matched) {
                                 paragraph.highlightedText = highlightMatches(paragraph.text, matchResult.matches);
@@ -75,6 +88,8 @@ export default {
                                     text: extractHighlightedSnippets(paragraph.highlightedText),
                                     class: paragraph.class
                                 });
+                                
+                                vm.searchCount++;
                             }
                             paragraphIndex++;
                         }
@@ -232,126 +247,148 @@ export default {
             }
 
             function extractHighlightedSnippets(htmlText) {
-                const tagRegex = /<[^>]+>/g;
-                const wordRegex = /\p{L}+/gu;
-
-                const tokens = [];
+                // Find all highlighted spans
+                const highlightRegex = /<span class="highlight">(.*?)<\/span>/gi;
                 const highlights = [];
-
-                let index = 0;
-                let buffer = '';
-                let lastIndex = 0;
                 let match;
 
-                // Tokenize with tag tracking
-                while ((match = tagRegex.exec(htmlText)) !== null) {
-                    const between = htmlText.slice(lastIndex, match.index);
-                    let wordMatch;
-                    while ((wordMatch = wordRegex.exec(between)) !== null) {
-                        tokens.push({
-                            type: 'word',
-                            text: wordMatch[0],
-                            index: lastIndex + wordMatch.index,
-                            raw: wordMatch[0]
-                        });
-                    }
-
-                    const tag = match[0];
-                    const isHighlightStart = tag.toLowerCase() === '<span class="highlight">';
-                    const isHighlightEnd = tag.toLowerCase() === '</span>';
-
-                    tokens.push({
-                        type: 'tag',
-                        text: tag,
-                        index: match.index,
-                        raw: tag,
-                        highlightStart: isHighlightStart,
-                        highlightEnd: isHighlightEnd
-                    });
-
-                    lastIndex = tagRegex.lastIndex;
-                }
-
-                // Final section after last tag
-                const remaining = htmlText.slice(lastIndex);
-                let wordMatch;
-                while ((wordMatch = wordRegex.exec(remaining)) !== null) {
-                    tokens.push({
-                        type: 'word',
-                        text: wordMatch[0],
-                        index: lastIndex + wordMatch.index,
-                        raw: wordMatch[0]
+                while ((match = highlightRegex.exec(htmlText)) !== null) {
+                    highlights.push({
+                        start: match.index,
+                        end: match.index + match[0].length,
+                        content: match[1]
                     });
                 }
 
-                // Identify highlight word indices
-                let insideHighlight = false;
-                const wordIndices = tokens.filter(t => t.type === 'word');
-                const highlightWordIndexes = [];
+                if (highlights.length === 0) return '';
 
-                for (let i = 0, wordCounter = 0; i < tokens.length; i++) {
-                    if (tokens[i].highlightStart) {
-                        insideHighlight = true;
-                    } else if (tokens[i].highlightEnd) {
-                        insideHighlight = false;
-                    } else if (tokens[i].type === 'word') {
-                        if (insideHighlight) {
-                            highlightWordIndexes.push(wordCounter);
-                        }
-                        wordCounter++;
-                    }
+                // Get plain text for word counting
+                const plainText = htmlText.replace(/<[^>]+>/g, '');
+                const words = plainText.match(/\S+/g) || [];
+
+                // Find word positions of highlights in plain text
+                const highlightWordPositions = [];
+
+                for (const highlight of highlights) {
+                    // Find the position of this highlight in the plain text
+                    const beforeHighlight = htmlText.substring(0, highlight.start).replace(/<[^>]+>/g, '');
+                    const wordsBeforeHighlight = beforeHighlight.match(/\S+/g) || [];
+
+                    const highlightPlainText = highlight.content;
+                    const wordsInHighlight = highlightPlainText.match(/\S+/g) || [];
+
+                    const startWordIndex = wordsBeforeHighlight.length;
+                    const endWordIndex = startWordIndex + wordsInHighlight.length - 1;
+
+                    highlightWordPositions.push({ start: startWordIndex, end: endWordIndex });
                 }
 
-                if (!highlightWordIndexes.length) return '';
-
-                // Create snippet ranges
-                highlightWordIndexes.sort((a, b) => a - b);
-
+                // Merge overlapping or close ranges and expand context
+                highlightWordPositions.sort((a, b) => a.start - b.start);
                 const ranges = [];
-                let start = highlightWordIndexes[0];
-                let end = highlightWordIndexes[0];
 
-                for (let i = 1; i < highlightWordIndexes.length; i++) {
-                    if (highlightWordIndexes[i] - end <= 10) {
-                        end = highlightWordIndexes[i];
+                for (const pos of highlightWordPositions) {
+                    const expandedStart = Math.max(0, pos.start - 5);
+                    const expandedEnd = Math.min(words.length - 1, pos.end + 5);
+
+                    if (ranges.length === 0 || expandedStart > ranges[ranges.length - 1].end + 10) {
+                        ranges.push({ start: expandedStart, end: expandedEnd });
                     } else {
-                        ranges.push([Math.max(0, start - 5), end + 5]);
-                        start = highlightWordIndexes[i];
-                        end = highlightWordIndexes[i];
+                        ranges[ranges.length - 1].end = Math.max(ranges[ranges.length - 1].end, expandedEnd);
                     }
                 }
-                ranges.push([Math.max(0, start - 5), end + 5]);
 
-                // Extract snippets from original tokens
-                const wordsOnly = tokens.filter(t => t.type === 'word' || t.type === 'tag');
-
+                // Extract snippets by finding the corresponding HTML for each range
                 let result = '';
-                let wordPointer = 0;
+
                 for (let i = 0; i < ranges.length; i++) {
-                    const [start, end] = ranges[i];
-                    if (start > 0) result += '... ';
+                    const range = ranges[i];
 
-                    let currentCount = 0;
-                    for (let j = 0; j < tokens.length; j++) {
-                        const t = tokens[j];
+                    if (i > 0) result += ' ... ';
+                    if (range.start > 0) result += '... ';
 
-                        if (t.type === 'word') {
-                            if (currentCount >= start && currentCount <= end) {
-                                result += t.raw + ' ';
-                            }
-                            currentCount++;
-                        } else if (t.type === 'tag') {
-                            // Always keep tags intact
-                            result += t.raw;
-                        }
+                    // Find the HTML that corresponds to this word range
+                    const snippet = extractHtmlForWordRange(htmlText, range.start, range.end, words);
+                    result += snippet;
 
-                        if (currentCount > end) break;
-                    }
-
-                    if (end < wordIndices.length - 1) result += '... ';
+                    if (range.end < words.length - 1) result += ' ...';
                 }
 
                 return result.trim();
+            }
+
+            function extractHtmlForWordRange(htmlText, startWordIndex, endWordIndex, allWords) {
+                // This is a simpler approach: reconstruct the range from the word indices
+                const targetText = allWords.slice(startWordIndex, endWordIndex + 1).join(' ');
+
+                // Find this text sequence in the HTML while preserving highlights
+                const plainText = htmlText.replace(/<[^>]+>/g, '');
+                const words = plainText.match(/\S+/g) || [];
+
+                // Get the character positions for the start and end of our word range
+                let charStart = 0;
+                let charEnd = plainText.length;
+
+                // Find character position of start word
+                if (startWordIndex > 0) {
+                    const textBeforeStart = words.slice(0, startWordIndex).join(' ');
+                    charStart = plainText.indexOf(textBeforeStart);
+                    if (charStart !== -1) {
+                        charStart += textBeforeStart.length;
+                        // Skip whitespace
+                        while (charStart < plainText.length && /\s/.test(plainText[charStart])) {
+                            charStart++;
+                        }
+                    } else {
+                        charStart = 0;
+                    }
+                }
+
+                // Find character position of end word
+                const textUpToEnd = words.slice(0, endWordIndex + 1).join(' ');
+                const endMatch = plainText.indexOf(textUpToEnd);
+                if (endMatch !== -1) {
+                    charEnd = endMatch + textUpToEnd.length;
+                }
+
+                // Now extract the HTML that corresponds to these character positions
+                // We'll do this by walking through the HTML and tracking our position in the plain text
+                let htmlResult = '';
+                let plainTextPos = 0;
+                let inRange = false;
+
+                const htmlTokens = htmlText.split(/(<[^>]*>)/);
+
+                for (const token of htmlTokens) {
+                    if (token.startsWith('<')) {
+                        // This is an HTML tag
+                        if (inRange) {
+                            htmlResult += token;
+                        }
+                    } else {
+                        // This is text content
+                        for (let i = 0; i < token.length; i++) {
+                            const char = token[i];
+
+                            if (plainTextPos === charStart) {
+                                inRange = true;
+                            }
+
+                            if (inRange) {
+                                htmlResult += char;
+                            }
+
+                            if (plainTextPos === charEnd - 1) {
+                                inRange = false;
+                                return htmlResult;
+                            }
+
+                            plainTextPos++;
+                        }
+                    }
+                }
+
+                return htmlResult;
             }
         },
         selectSearch(paragraph, bookCode) {
@@ -363,11 +400,13 @@ export default {
                 timeoutVal = 200;
             }
 
+            vm.selectedBookCode = bookCode + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex;
+
             setTimeout(() => {
                 const element = document.getElementById(paragraph.chapterIndex + '-' + paragraph.paragraphIndex);
 
                 if (element) {
-                    element.scrollIntoView({behavior: "smooth", block: "start"});
+                    element.scrollIntoView({block: "start"});
                     vm.menuDisplay = false;
                 }
             }, timeoutVal);

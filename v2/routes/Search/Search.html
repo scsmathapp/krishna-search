@@ -1,22 +1,27 @@
 <div>
-<!--    <div v-if="searchResults.length" class="d-flex align-items-center m-3 position-absolute">-->
-<!--        {{ searchResults.length }} results found-->
-<!--    </div>-->
-    <div class="d-flex">
-        <div class="w-25 overflow-y-auto" style="max-height: calc(100vh - 130px);">
+    <div class="d-flex book">
+        <div class="w-25 overflow-y-auto paragraph-title-list">
+            <b v-if="searchCount" class="d-flex justify-content-center m-2">
+                {{ searchCount }} results found
+            </b>
+            <div class="spinner" v-else></div>
             <ul class="list-group list-group-flush">
                 <div v-for="book in searchResultsObj">
-                    <h5 class="p-2">{{ book.title }}</h5>
+                    <h5 class="p-2 d-flex position-sticky top-0 z-3 mb-0">
+                        <span class="flex-fill">{{ book.title }}</span>
+                        <a :href="`/#/book/${book.code}`"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </h5>
                     <li class="list-group-item list-group-item-action p-2"
                         v-for="paragraph in book.paragraphs"
+                        :class="selectedBookCode === book.code + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex ? 'active' : ''"
                         @click="selectSearch(paragraph, book.code)"
                         v-html="paragraph.text">
                     </li>
                 </div>
             </ul>
         </div>
-        <div class="w-75 overflow-y-auto book" style="max-height: calc(100vh - 130px);">
-            <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section">
+        <div class="paragraph-list flex-fill d-flex flex-column align-items-center">
+            <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section" style="width: 85%;">
                 <div class="paragraph" v-for="(paragraph, paragraphId) in chapter.paragraphs">
                     <div v-html="paragraph.highlightedText || paragraph.text" :class="paragraph.class" :id="chapterId + '-' + paragraphId"></div>
                 </div>

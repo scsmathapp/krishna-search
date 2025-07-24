@@ -3,6 +3,7 @@ const routes = await getRoutes([
     {path: '/', url: 'Home'},
     {path: '/book/:code', url: 'Book'},
     {path: '/search', url: 'Search'},
+    {path: '/mission', url: 'Mission'},
 ]);
 
 // Create Vue Router instance
