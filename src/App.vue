@@ -52,7 +52,7 @@ export default {
 
             e.preventDefault();
 
-            if (vm.searchVal) {
+            if (vm.searchVal && vm.$route.query.q !== vm.searchVal) {
                 vm.$router.push('/search?q=' + vm.searchVal.replaceAll('+', '%2B'));
             }
         }
@@ -60,12 +60,7 @@ export default {
 }
 </script>
 <style lang="scss">
-$all: ('', 0, 4000px);
-$sm: ('-sm', 0, 767.98px);
-$md: ('-md', 768px, 991.98px);
-$lg: ('-lg', 992px, 4000px);
-
-$breakpoints: ($all, $sm, $md, $lg);
+@import '@/assets/css/style.scss';
 
 @each $breakpoint in $breakpoints {
     $point: nth($breakpoint, 1);
@@ -109,7 +104,7 @@ $breakpoints: ($all, $sm, $md, $lg);
     min-width: 150px;
     text-decoration: none !important;
     cursor: pointer;
-    color: #012863;
+    color: $theme-color-primary;
 }
 
 .book-card .card-body {
@@ -166,7 +161,7 @@ body *:not(.book *):not(.fa) {
 
 .ks-border {
     border-radius: 20px;
-    border: 2px solid #012863;
+    border: 2px solid $theme-color-primary;
 }
 
 .search > div {
@@ -186,7 +181,7 @@ body *:not(.book *):not(.fa) {
 
 button, .nav-list a {
     color: white;
-    background-color: #012863;
+    background-color: $theme-color-primary;
     overflow: hidden;
     border-width: 0;
     border-radius: 20px !important;
@@ -203,19 +198,23 @@ button, .nav-list a {
 }
 
 .vaishnava-book {
-    color: #012863;
+    color: $theme-color-primary;
 }
 
 .vaishnava-book ::-webkit-scrollbar {
     width: 15px;
     height: 15px;
-    background: rgb(233, 236, 239);
+    background: $theme-color-secondary;
     border-radius: 7.5px;
 }
 
 .vaishnava-book ::-webkit-scrollbar-thumb {
-    background: #012863;
+    background: $theme-color-primary;
     border-radius: 7.5px;
+}
+
+.list-group-item.active {
+    background-color: $theme-color-primary !important;
 }
 
 .vaishnava-book ::-webkit-scrollbar-thumb:active {
@@ -223,7 +222,7 @@ button, .nav-list a {
 }
 
 .color-default {
-    color: #012863;
+    color: $theme-color-primary;
 }
 
 .welcome {
@@ -247,8 +246,8 @@ button, .nav-list a {
 .spinner {
     width: 40px;
     height: 40px;
-    border: 5px solid rgb(233, 236, 239);
-    border-top-color: #012863; /* Blue top */
+    border: 5px solid $theme-color-secondary;
+    border-top-color: $theme-color-primary; /* Blue top */
     border-radius: 50%;
     animation: spin 0.5s linear infinite;
     margin: 50px auto; /* Center horizontally */

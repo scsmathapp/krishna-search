@@ -1,0 +1,10 @@
+$text-color: #212529;
+$theme-color-primary: #012863;
+$theme-color-secondary: rgb(233, 236, 239);
+
+$all: ('', 0, 4000px);
+$sm: ('-sm', 0, 767.98px);
+$md: ('-md', 768px, 991.98px);
+$lg: ('-lg', 992px, 4000px);
+
+$breakpoints: ($all, $sm, $md, $lg);

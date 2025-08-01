@@ -2,11 +2,11 @@
     <div>
         <div class="d-flex book">
             <div class="w-25 overflow-y-auto paragraph-title-list">
-                <b v-if="searchCount" class="d-flex justify-content-center m-2">
+                <b v-if="searchCount || searchCount === 0" class="d-flex justify-content-center m-2">
                     {{ searchCount }} results found
                 </b>
-                <div class="spinner" v-else></div>
-                <ul class="list-group list-group-flush">
+                <div class="spinner" v-if="searchProgress"></div>
+                <ul class="list-group list-group-flush" v-else>
                     <div v-for="book in searchResultsObj">
                         <h5 class="p-2 d-flex position-sticky top-0 z-3 mb-0">
                             <span class="flex-fill">{{ book.title }}</span>
@@ -46,7 +46,8 @@ export default {
             searchResultsObj: {},
             selectedBook: {},
             searchCount: 0,
-            selectedBookCode: ''
+            selectedBookCode: '',
+            searchProgress: true
         }
     },
     created() {
@@ -73,6 +74,8 @@ export default {
                 const tokens = tokenize(removeDiacritics(searchVal));
                 const ast = parse(tokens);
                 let bookIndex = 0;
+
+                vm.searchProgress = true;
 
                 while (bookIndex < vm.books.length) {
                     const book = vm.books[bookIndex];
@@ -115,7 +118,11 @@ export default {
                     }
                     bookIndex++;
                 }
+                
+                vm.searchProgress = false;
             }
+            
+            ////////////////////////
 
             function removeDiacritics(text) {
                 return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
