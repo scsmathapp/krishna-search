@@ -2,7 +2,7 @@ export default {
 	"GovindaMhj": {
 		"name": "Srila Bhakti Sundar Govinda Dev-Goswami Maharaj",
 		"dName": "Śrīla Bhakti Sundar Govinda Dev-Goswāmī Mahārāj",
-		"shortName": "Śrīla B.S. Govinda Mahārāj",
+		"shortName": "Śrīla Govinda Mahārāj",
 		"parampara": true,
 		"code": "GovindaMhj",
 		"link": "http://scsmathinternational.com/SrilaBSGovindaDevGoswamiMaharaj.php",
@@ -83,7 +83,7 @@ export default {
 	"SridharMhj": {
 		"name": "Srila Bhakti Raksak Sridhar Dev-Goswami Maharaj",
 		"dName": "Śrīla Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj",
-		"shortName": "Śrīla Bhakti R.S. Mahārāj",
+		"shortName": "Śrīla Śrīdhar Mahārāj",
 		"parampara": true,
 		"code": "SridharMhj",
 		"link": "http://scsmathinternational.com/SrilaBRSridharDevGoswamiMaharaj.php",
@@ -203,10 +203,16 @@ export default {
 	},
 	"SaraswatiThakur": {
 		"name": "Srila Bhakti Siddhanta Saraswati Thakur Prabhupada",
-		"shortName": "Srila B.S. Saraswati Thakur",
+		"shortName": "Srila Saraswati Thakur",
 		"parampara": true,
 		"code": "SaraswatiThakur",
-		"link": "http://scsmathinternational.com/SrilaBSSaraswatiThakurPrabhupad.php"
+		"link": "http://scsmathinternational.com/SrilaBSSaraswatiThakurPrabhupad.php",
+		"books": [
+			{ "name": "Prakrta-rasa-sata-dusani", "code": "en-Prakrta-rasa-sata-dusani" },
+			{ "name": "Relative Worlds", "code": "en-RelativeWorlds" },
+			{ "name": "Rāy Rāmānanda", "code": "en-RāyRāmānanda" }
+
+		]
 	},
 	"GauraKisoraMhj": {
 		"name": "Srila Gaura Kisora Das Babaji Maharaj",
@@ -220,7 +226,14 @@ export default {
 		"shortName": "Srila Bhaktivinoda Thakur",
 		"parampara": true,
 		"code": "BhaktivinodaThakur",
-		"link": "http://www.scsmath.com/docs/bhaktivinod_thakur.html"
+		"link": "http://www.scsmath.com/docs/bhaktivinod_thakur.html",
+		"books": [
+			{ "name": "The Bhāgavat", "code": "en-Bhāgavat" },
+			{ "name": "Śaraṇāgati", "code": "en-Śaraṇāgati" },
+			{ "name": "Śrī Brahma-saṁhitā", "code": "en-BrahmaSamhita" },
+			{ "name": "Śrī Chaitanya Mahāprabhu - His Life and Precepts", "code": "en-ŚrīChaitanyaMahāprabhu-HisLifeandPrecepts" },
+			{ "name": "Śrī Navadvīpa-dhāma-māhātmya and Śrī Navadvīpa-bhāva-taraṅga", "code": "en-ŚrīNavadvīpa-dhāma-māhātmyaandŚrīNavadvīpa-bhāva-taraṅga" }
+		]
 	},
 	"JagannathMhj": {
 		"name": "Srila Jagannath Das Babaji Maharaj",
@@ -228,16 +241,5 @@ export default {
 		"parampara": true,
 		"code": "JagannathMhj",
 		"link": "http://www.scsmath.com/docs/jagannath_das_babaji.html"
-	},
-	"Others": {
-		"name": "Others",
-		"shortName": "Others",
-		"code": "Others",
-		"books": [
-			{
-				"code": "en-BrahmaSamhita",
-				"name": "Brahma Samhita"
-			}
-		]
 	}
 }

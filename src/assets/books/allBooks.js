@@ -5,6 +5,7 @@ export default [
     'en-BenedictineTreeofDivineAspiration.json',
     'en-BhagavatDarshan.json',
     'en-Bhāgavat.json',
+    'en-BrahmaSamhita.json',
     'en-CentenaryAnthology.json',
     'en-DignityoftheDivineServitor.json',
     'en-DivineAspiration.json',

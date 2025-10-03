@@ -8,3 +8,133 @@ $md: ('-md', 768px, 991.98px);
 $lg: ('-lg', 992px, 4000px);
 
 $breakpoints: ($all, $sm, $md, $lg);
+
+@each $breakpoint in $breakpoints {
+  $point: nth($breakpoint, 1);
+  $min: nth($breakpoint, 2);
+  $max: nth($breakpoint, 3);
+
+  @media screen and (min-width: $min) and (max-width: $max) {
+    @for $i from 1 through 20 {
+      $width: percentage($i*5/100);
+
+      .w#{$point}-#{$i*5} {
+        width: $width !important;
+      }
+    }
+  }
+}
+
+@mixin sm {
+  @media screen and (min-width: nth($sm, 2)) and (max-width: nth($sm, 3)) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media screen and (min-width: nth($md, 2)) and (max-width: nth($md, 3)) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media screen and (min-width: nth($lg, 2)) and (max-width: nth($lg, 3)) {
+    @content;
+  }
+}
+
+@mixin md-lg {
+  @media screen and (min-width: nth($md, 2)) and (max-width: nth($lg, 3)) {
+    @content;
+  }
+}
+
+@font-face {
+  font-family: "KrishnaSearch";
+  font-weight: 400;
+  font-style: normal;
+  src: url(~@/assets/css/TiroDevanagariSanskrit-Regular.ttf);
+}
+
+@font-face {
+  font-family: "KrishnaSearch-Italic";
+  font-weight: 400;
+  font-style: italic;
+  src: url(~@/assets/css/TiroDevanagariSanskrit-Italic.ttf);
+}
+
+.ks-border {
+  border-radius: 20px;
+  border: 2px solid $theme-color-primary;
+}
+
+.ks-button {
+  color: white;
+  background-color: $theme-color-primary;
+  overflow: hidden;
+  border-width: 0;
+  border-radius: 20px !important;
+  height: 40px;
+  padding: 10px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @include sm {
+    min-width: 40px;
+  }
+  
+  @include md-lg {
+    min-width: 150px;
+  }
+}
+
+.ks-link {
+  text-decoration: none !important;
+  cursor: pointer;
+  color: $theme-color-primary;
+  font-family: 'KrishnaSearch' !important;
+  
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.ks-font {
+  color: $theme-color-primary !important;
+  font-family: 'KrishnaSearch' !important;
+}
+
+.ks-font-secondary {
+  color: $theme-color-secondary !important;
+  font-family: 'KrishnaSearch' !important;
+}
+
+.ks-font-italic {
+  color: $theme-color-primary !important;
+  font-family: 'KrishnaSearch-Italic' !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.f-18 {
+  font-size: 18px;
+}
+
+.list-group-item.active {
+  background-color: $theme-color-primary !important;
+}
+
+.img-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+}

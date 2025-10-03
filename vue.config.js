@@ -7,6 +7,6 @@ module.exports = {
 	publicPath: './',
     pwa: {
       name: 'Krishna Search',
-      themeColor: '#3899FE'
+      themeColor: '#012863'
     }
 }

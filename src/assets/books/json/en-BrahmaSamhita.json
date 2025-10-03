@@ -1,6 +1,341 @@
 {
-  "title": "Brahma Samhita",
+  "title": "Śrī Brahma-saṁhitā",
+  "code": "en-BrahmaSamhita",
   "chapters": [
+    {
+      "title": "Cover",
+      "paragraphs": [
+        {
+          "class": "b34",
+          "text": "\r"
+        },
+        {
+          "class": "b35",
+          "text": " All glory to Śrī Guru and Śrī Gaurāṅga"
+        },
+        {
+          "class": "b36",
+          "text": " Śrī Brahma-saṁhitā"
+        },
+        {
+          "class": "b37",
+          "text": " [The fifth of one hundred chapters]"
+        },
+        {
+          "class": "b35",
+          "text": " Quintessence of Reality the Beautiful"
+        },
+        {
+          "class": "b37",
+          "text": " With elaborate Bengali commentary and translation <br/>by the Great Pioneer of Pure Devotion in the present age:"
+        },
+        {
+          "class": "b38",
+          "text": " Oṁ Viṣṇupād Śrīla Sachchidānanda Bhakti Vinod Ṭhākur"
+        },
+        {
+          "class": "b37",
+          "text": " Including an Appreciation by the Illustrious Preceptor of <br/>the Śrī Brahma-Mādhva-Gauḍīya-Sampradāya:"
+        },
+        {
+          "class": "b38",
+          "text": " Prabhupād Śrīla Bhakti Siddhānta Saraswatī Goswāmī Ṭhākur"
+        },
+        {
+          "class": "b37",
+          "text": " By the grace of the Founder-President-Āchārya <br/>of Nabadwip Śrī Chaitanya Sāraswat Maṭh: <br/>Ananta-śrī-vibhūṣita Nitya-līlā-praviṣṭa <br/>Oṁ Viṣṇupād Paramahaṁsa-kula-chūḍāmaṇi-"
+        },
+        {
+          "class": "b38",
+          "text": " Śrī Śrīmad Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj"
+        },
+        {
+          "class": "b37",
+          "text": " Under the Divine Guidance and Inspiration Graciously Granted by His <br/>Most Beloved Intimate Attendant who He Personally Appointed <br/>as His Successor, Guardian Servitor and President-Āchārya, <br/>Oṁ Viṣṇupād Aṣṭottara-śata-śrī-"
+        },
+        {
+          "class": "b38",
+          "text": " Śrīmad Bhakti Sundar Govinda Dev-Goswāmī Mahārāj"
+        },
+        {
+          "class": "b39",
+          "text": " This Holy Book was published from"
+        },
+        {
+          "class": "b40",
+          "text": " Nabadwip Śrī Chaitanya Sāraswat Maṭh"
+        },
+        {
+          "class": "b39",
+          "text": " ©All rights reserved by"
+        },
+        {
+          "class": "b40",
+          "text": " the President-Acharya, <br/>Sri Chaitanya Saraswat Maṭh, <br/>Nabadwip and internationally."
+        },
+        {
+          "class": "b39",
+          "text": " First edition"
+        },
+        {
+          "class": "b40",
+          "text": " 5,000 copies, 15th May, 1992"
+        },
+        {
+          "class": "b39",
+          "text": " Printed by"
+        },
+        {
+          "class": "b40",
+          "text": " Singapore National Printers"
+        },
+        {
+          "class": "b39",
+          "text": " Translated by"
+        },
+        {
+          "class": "b40",
+          "text": " Tridandi Bhiksu Sri Bhakti Ananda Sagar"
+        },
+        {
+          "class": "b39",
+          "text": " Published by"
+        },
+        {
+          "class": "b40",
+          "text": " Édesvíz Kiadó, Budapest, Hungary, for"
+        },
+        {
+          "class": "b66",
+          "text": " SRI CHAITANYA SARASWAT MATH"
+        },
+        {
+          "class": "b37",
+          "text": " Kolerganj, P.O. Nabadwip, Dist. Nadia, <br/>West Bengal, Pin 741302, India."
+        }
+      ]
+    },
+    {
+      "paragraphs": [
+        {
+          "text": "All Glory to Śrī Kṛṣṇa Chaitanya<br />the Golden Moon of Śrī Mayapur",
+          "class": "b60"
+        },
+        {
+          "text": "For the Reader's Appreciation",
+          "class": "b47"
+        },
+        {
+          "text": "In the <span class=\"e3\">Madhya-līlā</span>, ninth chapter of <span class=\"e3\">Śrī Chaitanya-charitāmṛta</span>, we find:",
+          "class": "b50"
+        },
+        {
+          "text": "\"That day, the Lord went to the bank of the Payasvinī River. After bathing He went to the Ādi-Keśava Temple where He met with the great devotees there, and it was there that He obtained the ancient manuscript of the fifth chapter of <span class=\"e3\">Śrī Brahma-saṁhitā</span>. This gave the Lord unlimited joy, and divine ecstatic symptoms appeared in His Body—trembling, weeping, perspiring; He was stunned, thrilled with ecstasy.",
+          "class": "b50"
+        },
+        {
+          "text": "\"As a scripture embodying perfect truths (siddhānta), <span class=\"e3\">Śrī Brahma-saṁhitā</span> has no equal; it is the best of all holy books proclaiming the glories of the Supreme Lord Govinda. Endless perfect truths are expressed in few words. It is the essence of all Vaiṣṇava scriptures.",
+          "class": "b50"
+        },
+        {
+          "text": "\"The Lord had that manuscript copied very carefully. Then He joyfully went to visit the temple of Ananta-Padmanābha.\"",
+          "class": "b50"
+        },
+        {
+          "text": "What more can I say than this? At least I may say that if this scripture is reckoned as one of the most ancient scriptures, then it is an unprecedented and truly authoritative source of the teachings of Kṛṣṇa-bhakti, devotion for the Supreme Lord, Kṛṣṇa. Again, if it is suggested that this scripture was not originally found in this province (Bengal), so it was actually authored by Śrī Śrī Mahāprabhu, what could be more happy for us? By obtaining any work of siddhānta written by Śrī Mahāprabhu, no trace of doubt can ever remain in the world of Vaiṣṇava thought. However one may consider it, this holy book, <span class=\"e3\">Śrī Brahma-saṁhitā</span>, is worshippable to every devotee.",
+          "class": "b50"
+        },
+        {
+          "text": "<span class=\"e3\"></span>—Śrī Bhakti Vinod<span class=\"e3\"></span>",
+          "class": "b50"
+        }
+      ],
+      "title": "For the Reader's Appreciation"
+    },
+    {
+      "paragraphs": [
+        {
+          "text": "All Glory to the Divine Master<br />and the Supreme Lord Śrī Kṛṣṇa Chaitanya",
+          "class": "b60"
+        },
+        {
+          "text": "Feelings of Appreciation",
+          "class": "b47"
+        },
+        {
+          "text": "It is no secret that prior to its discovery by Śrī Gaurasundar, <span class=\"e3\">Śrī Brahma-saṁhitā</span> was not propagated in India as was the great literature previously expounded in the forest of Naimiṣa—the transcendental treatise <span class=\"e3\">Śrīmad Bhāgavatam</span>. The word Brahma (or Brahman) means the Vedas and the substantial reality established by the Vedas; and the substantial reality established by the Vedas is Puruṣottam, the ultimate predominant or male personality. Any philosophy that ignores the ultimate personality while adopting the term apauruṣeya, meaning 'divine', 'supramundane' or 'superhuman' in order to disprove mundane conceptualization, must need fall within the category of peripheral doctrines or religions.",
+          "class": "b50"
+        },
+        {
+          "text": "Beyond even any consideration of mundanity, the teachings of devotion for the Supreme Reality—the Supreme Personality of Godhead—that were revealed within the heart of four-headed Brahmā from the supramental anthologies (Vedas), have been described in the one hundred chapters that form the treatise <span class=\"e3\">Brahma-saṁhitā</span>. As this fifth chapter is supremely beneficial for the soul it has come to hold the most worshippable position for the Gauḍīya Vaiṣṇavas or faithful devotees in the line of Śrī Chaitanyadev. In this respect it is noteworthy that in the philosophy of the divine succession stemming from Lord Brahmā, by the grace of the Supreme Lord, the substantial or axiomatic truth has been revealed within the fundamental four ślokas (chatuḥ-ślokī) of <span class=\"e3\">Śrīmad Bhāgavatam</span>.",
+          "class": "b50"
+        },
+        {
+          "text": "There is no question of the Supreme Personality or predominator, Puruṣottam, being of the same category of any other persons or predominators (males or puruṣas) of this mundane world. They are clearly distinct from one another in that the Supreme Personality of Godhead Śrī Kṛṣṇa is in all respects the Absolute Lord or predominator of the female or predominated factor (prakrti), while the living being or jīva is tightly shackled by the predominated factor in the shape of material nature, and only through his identification with the mundane plane must he refer to the revelation of the Supreme Lord as 'supramundane'. Śrī Dhām, mentioned in the first <span class=\"e3\">śloka</span>[^1] of the <span class=\"e3\">Śrīmad Bhāgavatam</span>, has no association with the affairs of the mundane world. The meaning of the word dhām is 'refuge' and 'light'. Nothing is visible without the help of light. The basis of the light which is to be worshipped and seen within revelation has been established to be of the nature of a person. Beyond the mutable, conditional relativity found within the mundane conception of 'personality', the eternality of the personal mainstay of light itself is situated in the divine realm.",
+          "class": "b50"
+        },
+        {
+          "text": "The viewpoint of nondifferentiation, where the seer and seen are ultimately considered to be one, is ruled by the incomplete, unwholesome measure of the mundane kingdom. Māyā-śakti, or the mundane charming-cum-deluding potency, has not the power to restrict the infinity of her Lord of immeasurable potency, Maheśvar (Viṣṇu). In describing the worshippable object of the fifth chapter of this book, the fallacious and mundanely fabricated philosophy of non-differentiation has been disproved.",
+          "class": "b50"
+        },
+        {
+          "text": "The purport traced in <span class=\"e3\">Brahma-saṁhitā</span> is most favourable in saving us from the mundane view's ascription of vulgarity to the creative conception when elucidated in terms of efficient or material and instrumental causes. This book is utterly devoid of the lowly connotations that would titillate the poor minds of those obsessed with vulgarity. Rather, we must know that the aim of this holy text is to provide new strength and relief to those sapped of their vital energy through their perverse tendencies.",
+          "class": "b50"
+        },
+        {
+          "text": "By the mercy of perfect philosophy (sudarśana), a study of the five concluding ślokas of the book will afford us our eternal wisdom, being intended to meticulously teach us the genuine revelation of the supreme element of Godhead while elucidating how that element is observed distortedly through emphasis on the alternative fourfold doctrines (of dharma, artha, kāma and mokṣa—religiosity, material gain, material desire and liberation), bringing about the doctrine of fivefold worship (pañchopāsanā). With the advent of such eternal wisdom in the heart, one may no longer harbour animosity toward the holy abode, <span class=\"e3\">Śrī Dhām</span>, and the need for asserting oneself by preaching the doctrine of non-differentiation will no longer be felt.",
+          "class": "b50"
+        },
+        {
+          "text": "It is through good fortune that one may experience, beyond the planes of Devī Dhām and Maheś Dhām, the transcendental variegatedness of the divine realm that is the Lord's personal abode—the plane where deception cannot stand. Without depending on the deceit inherent to the conditional plane, in the consideration of eternal joy in God's transcendence we shall find His realm to be the affairs of the transcendental. So the treatise that describes all these transcendental subject matters is known as <span class=\"e3\">Apauruṣeya-saṁhitā</span>. It is possible for persons of impure heart to be relieved of mundane enjoyment by the power of practising devotional life (sādhana-bhakti). Persons absorbed in mundane enjoyment or exploitation are unable to take refuge in devotion or bhakti. They are ever afflicted, being tied to the stake of their mundane deeds (karma). They cannot be relieved of the obsession for mundane lust by any other method than singing the glories of Kāmadeva, the transcendental Lord of all desires. But an adverse fruit will come to those who consider Kāmadeva in the same category as their illicit lust. When we attain the mercy of the Supreme Lord by faithfully following the four-headed Lord Brahmā, and when we become fit recipients of the Supreme Lord's grace as a result of singing with a pure heart the divine songs of His unending glories, at that moment we shall know the genuine fruition of our reading, recitation or singing of <span class=\"e3\">Brahma-saṁhitā</span>.",
+          "class": "b50"
+        },
+        {
+          "text": "Then we shall be able to know that in the highest plane of divine service (sevā) to the factual supreme Godhead is found Reality the Beautiful Śrī Rādhā-Govinda in the selfsame form of Śrī Gaura. The lower hemisphere of the divine abode Goloka is the plane of two and a half of the total five divine serving dispositions (rasas). Situated below that is the abode called Maheś Dhām and below Maheś Dhām is the material world of fourteen planes called Devī Dhām. The worldly desires of the residents of Devī Dhām who wander throughout the universe are withdrawn in Maheś Dhām. But Maheś Dhām's conception of desirelessness is illuminated by the purifying agent of service. That purifying agent in the form of this <span class=\"e3\">Brahma-saṁhitā</span> has revealed the acme of nectarine love for Śrī Rādhā-Govinda by elucidating the fifth aim of human life; and the gatherer of that nectar, Śrī Gaurasundar, the beautiful golden Lord, has distributed it to the souls in this world, showing us His nature of supreme magnanimity and His Pastimes of bestowing the most precious gift of divine love for Kṛṣṇa.",
+          "class": "b50"
+        },
+        {
+          "text": "<span class=\"e3\"></span>—Śrī Siddhānta Saraswatī<span class=\"e3\"></span>",
+          "class": "b50"
+        },
+        {
+          "text": "[^1]:<br />    \"This world's creation, sustenance and annihilation is effected by the positive and negative assertion of the Supreme Lord; in His Supremacy He is the omniscient, perfect perception is axiomatic in Him, and He incites the inspiration in the intellect of the primeval poet Lord Brahmā in order to reveal the substantial reality within his heart; all the godsheaded by Indra are bewildered in trying to comprehend Him; as in a mirage, by interaction the mutual exchange of the qualities of fire, water and earth create the appearance of another truth, similarly, the existence of the mundane qualities of sattva, rajaḥ and tamaḥ or illumination, flux and inertia, appears as factual truth in Him although in actuality He is the One within whom mundanity is impossible; deception can never exist within Him. We meditate upon that Supreme Lord, whose very Nature is the Embodiment of Truth. [We worship that Supreme Truth's Own Self, the Lord of Gokula-Vraja Dhām, Śrī Kṛṣṇa, by practising our heart's remembrance of His Divine Name, chanting His Glories and always absorbing our thoughts in His Form, Qualities and Pastimes.]\"",
+          "class": "b50"
+        }
+      ],
+      "title": "Feelings of Appreciation"
+    },
+    {
+      "paragraphs": [
+        {
+          "text": "All Glory to the Divine Master<br />and the Supreme Lord Śrī Kṛṣṇa Chaitanya",
+          "class": "b60"
+        },
+        {
+          "text": "Prologue",
+          "class": "b47"
+        },
+        {
+          "text": "Ever since the day that I, by the causeless grace of the all-auspicious descent of the Supreme Lord in the forms of Śrī Śrī Nitāi-Chaitanyadev, attained the shelter of the lotus feet of my most worshippable Śrīla Guru Mahārāj Oṁ Viṣṇupād Paramahaṁsa Śrī Śrīmad Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj, by his boundless mercy the inspiration for the genuine search for the ultimate truth was awakened in my heart; and further, that causelessly gracious Śrīla Guru Mahārāj gave me that initial connection, the vital link that enables us to attain the qualification to enter into the basic land of faith (ādau śraddhā) in accordance with Śrī Śrīmat Rūpa Goswāmī's guiding verse for the progressive life of divine service (bhajan): <span class=\"e3\">ādau śraddhā tataḥ sādhu-saṅgaḥ</span>. From that very time, I, by his grace, got the fortune of having this message of <span class=\"e3\">Gītopaniṣad</span> take its tangible shape in my heart: <span class=\"e3\">tad viddhi praṇipātena paripraśnena sevayā, upadekṣyanti te jñānaṁ jñāninas tattva-darśinaḥ</span>—\"Satisfy the enlightened Guru with your prostrate obeisances, reasonable enquiries and sincere service, and you will be able to realize the knowledge I have spoken of. The great souls who are adept in the scriptures and endowed with direct experience concerning the supreme spirit, <span class=\"e3\">Param Brahman</span>, will teach you.\" Similarly, it is also mentioned in the Upaniṣads: <span class=\"e3\">tad vijñānārthaṁ sa gurum evābhigachchhet samit pāṇiḥ śrotriyaṁ Brahma-niṣṭham</span>—\"To attain specific (devotional) knowledge of the Supreme Lord, one aspiring for auspiciousness must bring offerings, and approach, by his thought, word and deed, a genuine guru who is versed in the purport of the Vedas and who knows the reality of Kṛṣṇa.\"",
+          "class": "b50"
+        },
+        {
+          "text": "Whether in the divine world or in the ordinary world, in order to properly learn whatever subject we wish, we must take the shelter of a specialist—a genuine teacher. Actually, there is no way to achieve divine knowledge without the grace of the genuine Divine Master, and that knowledge will manifest according to the degree of one's surrender.",
+          "class": "b50"
+        },
+        {
+          "text": "The primeval poet, four-headed Lord Brahmā who was born from the universal lotus flower, is the original Guru of our divine succession. So this divine succession stemming from Lord Brahmā is naturally illuminated by the divine light of his perception, his worship and his revelation. In the beginning, by the grace of the Supreme Lord, through the agency of His divine sound vibration (Divyā Saraswatī), Lord Brahmā was taught the eighteen-syllabled Śrī Kṛṣṇa-mantra and he practised penances in pursuance of cultivating that mantra. He propitiated his Worshippable Object by his perfect meditation, and he was raised to the twice-born status by being initiated and purified by the Lord's divine flute song emanating (<span class=\"e3\">muralīṣṭa-kīrtana-dhanaṁ</span>) as the Kāma-gāyatrī mantra. He was thus initiated by the original Guru of gurus who is like a vast rolling ocean of the waves of divine Pastimes—the matchless reality in Person—the Supreme Lord Śrī Kṛṣṇa. In other words, by the potency of that function he attained to his second birth—the divine realm was completely unveiled before him.",
+          "class": "b50"
+        },
+        {
+          "text": "Śrīla Bhakti Vinod Ṭhākur has written, \"Kāma-gāyatrī ... is the gāyatrī taken after the eighteen-syllabled mantra ... In this gāyatrī is indicated the realization of the līlā or divine Pastimes of Śrī Gopījana-vallabha, the beloved of the gopīs, after complete meditation upon Him; and the prayer to attain to (the service of) that transcendental Cupid. In the entire transcendental world there is no higher pursuit for divine love in the shelter of an ecstatic relationship with Him.\"",
+          "class": "b50"
+        },
+        {
+          "text": "Empowered by faithfully meditating upon and singing that gāyatrī, Lord Brahmā freely wandered throughout the length and breadth of the ocean of truth; and his prayers in glorification of Śrī Govinda, which are the quintessence of all the Vedas, are the basis of the fifth of the hundred chapters of <span class=\"e3\">Śrī Brahma-saṁhitā</span>. Moreover, the fortunate, faithful virtuous souls can enter into a crystal-clear conception of the entire mundane world's and transcendental world's manifestation, existence and flow, by reading or singing this hymn with due regard and devotion.",
+          "class": "b50"
+        },
+        {
+          "text": "The supremely magnanimous source of all Avatārs, the bestower of shelter in the shade of the umbrella of His Own perfect philosophy (siddhānta) of inconceivable oneness and distinction (achintya-bhedābheda)—the Supreme Lord Śrī Chaitanyadev—was filled with divine ecstasy upon observing the perfect reflection of the light of the perfect philosophy revealed by the fifth chapter of <span class=\"e3\">Śrī Brahma-saṁhitā</span> rich with the songs of the glories of Śrī Śrīla Govindadev, the tips of the toes of whose Lotus Feet are eternally illuminated by the ārati or worship offered by the radiance of the crown-jewels of all the Vedas. With great love, He brought in His Own hand the manuscript of the book from South India and joyfully offered it to the hands of the devotees. In the words of Śrīla Kṛṣṇadās Kavirāj we find:",
+          "class": "b50"
+        },
+        {
+          "text": "siddhānta-śāstra nāhi 'brahma-saṁhitā'-samāna,<br />    govinda-mahimā-jñānera parama kāraṇa,<br />    alpa akṣare kahe siddhānta apāra,<br />    sakala-vaiṣṇava-śāstra-madhye ati sāra.",
+          "class": "b60"
+        },
+        {
+          "text": "\"As a scripture embodying perfect truths, <span class=\"e3\">Śrī Brahma-saṁhitā</span> has no equal; it is the supreme wisdom of the glories of the Supreme Lord Govinda. Endless perfect truths are expressed in few words. It is the quintessence of all Vaiṣṇava scriptures.\"",
+          "class": "b50"
+        },
+        {
+          "text": "I feel the need to mention just one more important point, regarding our reading <span class=\"e3\">Śrīmad Bhāgavatam</span> as Śrīman Mahāprabhu has had it made known to us: <span class=\"e3\">yāha Bhāgavata paḍa Vaiṣṇavera sthāne</span>—\"Go and learn the <span class=\"e3\">Bhāgavat</span> from a Vaiṣṇava.\" Taking the gist of this instruction to heart, it is definitely everyone's duty to give careful attention to their supreme benefit by singing and preaching this king of holy books, faithfully following the path chalked out by Śrīla Sachchid-ānanda Bhakti Vinod Ṭhākur; because faithfully following the commentary of that great King of Āchāryas, the guardian of the Śrī Brahma-Mādhva-Gauḍīya sampradāya, Śrīla Śrī Jīva Goswāmī—Śrīla Bhakti Vinod Ṭhākur has brought ever-increasing joy to the hearts of the true devotees by illuminating the Lotus Feet of sach-chid-ānanda-vigraha Śrī Govinda, the embodiment of truth, consciousness and joy, in the tender lotus flower of perfect truths that has been brought to bloom in his personal divine revelations. This is the unique, safe refuge for the sincere seekers and also the exclusive Sāraswata-Gauḍīya-Vaiṣṇavas who are already conversant with the art of divine service.",
+          "class": "b50"
+        },
+        {
+          "text": "By the grace of our Grand Guru, the embodiment of Śrī Gaura's grace—Oṁ Viṣṇupād Śrīmad Bhakti Siddhānta Saraswatī Goswāmī Prabhupād—and his personal associates, we now find that fortunate souls the world over have become intoxicated with Śrī Gaura-saṅkīrtan. In this way singing and singing the glories of Śrī Gaurahari, floating and floating down the ocean of joy of the Hare Kṛṣṇa mahāmantra taught by Him, they are progressing towards the divine abode of transcendental touchstone in their divine aspirations for loving service unto the Divine Couple Śrī Śrī Rādhā-Govinda, who are ever attended by the loving service of hundreds of thousands of Lakṣmīs. This jewel of holy books, as the elixir of life of all such blessed souls, will fortify them more and more. With this faith we are attempting to bring this book to light in the international English language. If I may quote Śrīla Prabhupāda's words, <span class=\"e3\">abhakta prayāsa, dekhiyā nā hāsa, ihā guru-gaura-dāsya</span>—\"Don't laugh to see this nondevotee's attempt, for he's trying to serve Guru and Mahāprabhu.\" With the aim of fulfilling the heart's desires of our supremely worshippable Śrīla Guru Mahārāj, today we are overjoyed because this greatly aspired-for service attempt has borne fruits by the mercy of the Vaiṣṇavas who are transcendental wish- fulfilling trees incarnate.",
+          "class": "b50"
+        },
+        {
+          "text": "Needless to say, the painstaking work of translation, etc., of this great treatise can be appreciated by the learned. Still, our dear and close friend, to whom Śrīla Guru Mahārāj was so affectionate, and who has been given the responsibility of continuing and expanding our Śrī Maṭh's work in the Western countries, the well-known and qualified preacher Tridaṇḍi Swāmī Śrīpād Bhakti Ānanda Sāgar Mahārāj has, by his sincere serving efforts, day and night, fulfilled the task. For the basis of the translation he has felt himself fortunate to have been able to consult our Grand Gurudev Jagad-Guru Prabhupād Śrīla Bhakti Siddhānta Saraswatī Goswāmī Ṭhākur's Madras Gauḍīya Maṭh and Mayapur Śrī Chaitanya Maṭh's English and Bengali editions respectively. He not only rendered the translation, but he accepted the entire responsibility of bringing the publication to light, and he has spared no pains in bringing it out in a beautiful and faultless form. Still, our unsuspecting errors, omissions, etc., may occur, as the essence-drinking, liberal Vaiṣṇavas and the devoted readers are not unaware of, yet we have full confidence that they never suffer any dearth of benevolence in their natural forbearance. In conclusion, in the words of Śrīla Guru Mahārāj I would beg to offer my obeisances unto the lotus feet of them all.",
+          "class": "b50"
+        },
+        {
+          "text": "granthārthaṁ jaḍa-dhī-hṛdi tv iha mahotsāhādi-sañchāraṇair<br />    yeṣāñ chātra satāṁ satīrtha-suhṛdām saṁśodhanādyaiś vā<br />    yeṣāñ chāpy adhame kṛpā mayi śubhā pāṭhādibhir vānyathā<br />    sarveṣām aham atra pāda-kamalaṁ vande punar vai punaḥ",
+          "class": "b60"
+        },
+        {
+          "text": "\"Those dear godbrothers and true devotees who by bringing out this book have given much life to my poor heart, or who have assisted in its refinement, or who may read it, or who have in any other way bestowed or may in the future bestow their auspicious goodwill upon this humble soul—I now offer my humble obeisances unto the lotus feet of them all.\"",
+          "class": "b50"
+        },
+        {
+          "text": "Sri Chaitanya Saraswat Maṭh,<br />Svargadvar, Puri, India.<br />Ratha-yātrā Day, 13th July, 1991",
+          "class": "b50"
+        },
+        {
+          "text": "A humble servant<br />of the Lord's devotees,<br /><span class=\"e3\"></span>Śrī Bhakti Sundar Govinda<span class=\"e3\"></span>",
+          "class": "b50"
+        }
+      ],
+      "title": "Prologue"
+    },
+    {
+      "paragraphs": [
+        {
+          "text": "All Glory to the Divine Master<br />and the Supreme Lord Śrī Kṛṣṇa Chaitanya",
+          "class": "b60"
+        },
+        {
+          "text": "Translator's Note",
+          "class": "b47"
+        },
+        {
+          "text": "I offer my humble obeisances unto the lotus feet of my Dīkṣā-guru Oṁ Viṣṇupād Śrī Śrīla Bhaktivedānta Swāmī Mahārāj, unto the lotus feet of my Param Śikṣā-guru Oṁ Viṣṇupād Śrī Śrīla Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj, and unto the lotus feet of my Śikṣā-guru Oṁ Viṣṇupād Śrī Śrīla Bhakti Sundar Govinda Mahārāj, Śrīla Śrīdhar Mahārāj's most beloved intimate servitor and disciple, and his personally appointed guardian-servitor and President-Āchārya for Śrī Chaitanya Sāraswat Maṭh, Nabadwip, India, with its centres internationally.",
+          "class": "b50"
+        },
+        {
+          "text": "By their grace, and by the grace of the unalloyed devotees in their line, I was given the service of rendering into English this holy book <span class=\"e3\">Śrī Brahma-saṁhitā</span> from the Bengali translation and elaborate commentary of the most venerable Oṁ Viṣṇupāda Śrī Śrīla Sachchid-ānanda Bhakti Vinod Ṭhākur [1838-1914], the great preacher of unalloyed devotion in this most exalted divine succession of Śrī Chaitanya Mahāprabhu. The work was first published in 1897, and also edited by our Param Gurudev Prabhupād Śrīla Bhakti Siddhānta Saraswatī Goswāmī Ṭhākur. We are eternally indebted to those great guides and reformers who made spiritual history by illuminating the world by restating Śrīman Mahāprabhu's teachings in their pure form in their vast literary contributions, their words and their deeds. When will that day be mine when this lowly soul can render some service to the dust of their holy lotus feet?",
+          "class": "b50"
+        },
+        {
+          "text": "The divine teachings of <span class=\"e3\">Śrī Brahma-saṁhitā</span> can be at times intricate in their English rendering, especially for those who have had little or no previous acquaintance with the subject, so I have tried my utmost to portray the original concepts as simply and concisely as possible, inserting footnotes, etc., at relevant points to assist the readers.",
+          "class": "b50"
+        },
+        {
+          "text": "I am ever indebted to all the kind devotees around the world for their valuable assistance and encouragement in consultation, editing and proofing. And I am bound by unceasing gratitude to my dear Godbrother Śrī Ananta Kṛṣṇa Prabhu, director of Édesvíz Kiadó, Budapest, Hungary, who bore the entire cost of bringing out this most important publication.",
+          "class": "b50"
+        },
+        {
+          "text": "Above all, Śrīla Govinda Mahārāj, by his divine affection and brilliant example of divine service to Śrīla Guru Mahārāj, is our eternal source of strength and inspiration. In offering this effort to the lotus hand of Oṁ Viṣṇupād Śrīla Govinda Mahārāj, I pray that His Divine Grace and the great souls of the Guru-varga and the pure devotees of the Lord may be satisfied, thus drawing the grace of the Supreme Lord Śrī Kṛṣṇa Chaitanya.",
+          "class": "b50"
+        },
+        {
+          "text": "Śrī Chaitanya Saraswat Maṭh,<br />Nabadwip, India.<br />Appearance of Śrī Śrī Baladev,<br />25th August, 1991",
+          "class": "b50"
+        },
+        {
+          "text": "A humble aspiring servant,<br />Swami B. A. Sagar",
+          "class": "b50"
+        }
+      ],
+      "title": "Translator's Note"
+    },
+    {
+      "paragraphs": [
+        {
+          "class": "b40",
+          "text": "Offered to the Lotus Hand of <br />Sri Acharyadev His Divine Grace <br />Srila Bhakti Sundar Govinda <br />Dev-Goswami Maharaj"
+        },
+        {
+          "class":  "b40",
+          "text": "15th May, 1992 <br />the Holy Appearance Day of <br />the Supreme Lord Sri Sri Nrsimhadev"
+        },
+        {
+          "class":  "b40",
+          "text": "On the year-long Golden Jubilee Festival of <br />Nabadwip Sri Chaitanya Saraswat Math <br />1991-1992"
+        }
+      ],
+      "title": "Offering"
+    },
     {
       "paragraphs": [
         {

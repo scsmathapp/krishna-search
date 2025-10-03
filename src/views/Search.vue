@@ -9,12 +9,12 @@
                 <ul class="list-group list-group-flush" v-else>
                     <div v-for="book in searchResultsObj">
                         <h5 class="p-2 d-flex position-sticky top-0 z-3 mb-0">
-                            <span class="flex-fill">{{ book.title }}</span>
+                            <span class="flex-fill ks-font">{{ book.title }}</span>
                             <a :href="`/#/book/${book.code}`"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </h5>
-                        <li class="list-group-item list-group-item-action p-2"
+                        <li class="list-group-item list-group-item-action p-2 cursor-pointer"
                             v-for="paragraph in book.paragraphs"
-                            :class="selectedBookCode === book.code + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex ? 'active' : ''"
+                            :class="selectedBookCode === book.code + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex ? 'active ks-font-secondary' : 'ks-font'"
                             @click="selectSearch(paragraph, book.code)"
                             v-html="paragraph.text">
                         </li>
@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
 export default {
     computed: {
@@ -118,22 +118,66 @@ export default {
                     }
                     bookIndex++;
                 }
-                
+
                 vm.searchProgress = false;
             }
-            
+
             ////////////////////////
 
+            // Updated removeDiacritics function to preserve symbols
             function removeDiacritics(text) {
+                // Only normalize and remove diacritics, but preserve all other characters including symbols
                 return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            }
+
+            function tokenize(query) {
+                const tokens = [];
+                // CHANGE: This regex captures any non-whitespace sequence except operators
+                // It will match symbols at the beginning, middle, or end of terms
+                const regex = /("[^"]+"|\+|\||\(|\)|[^\s+|()"]+)/g;
+                let match;
+
+                while ((match = regex.exec(query)) !== null) {
+                    let token = match[0];
+
+                    // Remove quotes from quoted phrases
+                    if (token.startsWith('"') && token.endsWith('"')) {
+                        token = token.slice(1, -1);
+                    }
+
+                    tokens.push(token);
+                }
+
+                // Combine consecutive non-operator tokens into phrases
+                const combinedTokens = [];
+                let phraseBuffer = [];
+
+                for (const token of tokens) {
+                    if (['+', '|', '(', ')'].includes(token)) {
+                        if (phraseBuffer.length > 0) {
+                            combinedTokens.push(phraseBuffer.join(' '));
+                            phraseBuffer = [];
+                        }
+                        combinedTokens.push(token);
+                    } else {
+                        phraseBuffer.push(token);
+                    }
+                }
+
+                if (phraseBuffer.length > 0) {
+                    combinedTokens.push(phraseBuffer.join(' '));
+                }
+
+                return combinedTokens;
             }
 
             function evaluate(ast, paragraph) {
                 const stack = [];
-                const lowerParagraph = paragraph.toLowerCase();
+                // IMPORTANT: Use the same removeDiacritics function on the paragraph
+                const processedParagraph = removeDiacritics(paragraph);
 
                 for (const token of ast) {
-                    if (['+', '-', '|'].includes(token)) {
+                    if (['+', '|'].includes(token)) {
                         const right = stack.pop();
                         const left = stack.pop();
 
@@ -142,14 +186,6 @@ export default {
                                 // For AND operation, combine matches from both sides
                                 if (left && right) {
                                     stack.push({matched: true, matches: [...left.matches, ...right.matches]});
-                                } else {
-                                    stack.push(false);
-                                }
-                                break;
-                            case '-':
-                                // For NOT operation, return left matches if right is not present
-                                if (left && !right) {
-                                    stack.push(left);
                                 } else {
                                     stack.push(false);
                                 }
@@ -167,14 +203,15 @@ export default {
                                 break;
                         }
                     } else {
-                        // Find all occurrences of the term in the paragraph
-                        const term = token.toLowerCase();
+                        // IMPORTANT: Process the search term the same way as the paragraph
+                        const processedTerm = removeDiacritics(token);
                         const matches = [];
-                        let index = lowerParagraph.indexOf(term);
+                        let index = processedParagraph.indexOf(processedTerm);
 
                         while (index !== -1) {
+                            // Store the original token for highlighting, but use processed for matching
                             matches.push({term: token, index});
-                            index = lowerParagraph.indexOf(term, index + term.length);
+                            index = processedParagraph.indexOf(processedTerm, index + processedTerm.length);
                         }
 
                         stack.push(matches.length > 0 ? {matched: true, matches} : false);
@@ -184,10 +221,11 @@ export default {
                 return stack.pop();
             }
 
+            // Updated parse function (no changes needed, but included for completeness)
             function parse(tokens) {
                 const output = [];
                 const operators = [];
-                const precedence = {'+': 2, '-': 2, '|': 1};
+                const precedence = {'+': 2, '|': 1};
 
                 for (const token of tokens) {
                     if (token === '(') {
@@ -197,7 +235,7 @@ export default {
                             output.push(operators.pop());
                         }
                         operators.pop(); // Remove '('
-                    } else if (['+', '-', '|'].includes(token)) {
+                    } else if (['+', '|'].includes(token)) {
                         while (
                             operators.length > 0 &&
                             operators[operators.length - 1] !== '(' &&
@@ -216,39 +254,6 @@ export default {
                 }
 
                 return output;
-            }
-
-            function tokenize(query) {
-                const tokens = [];
-                const regex = /("[^"]+"|\+|\-|\||\(|\)|\b\w+\b)/g;
-                let match;
-
-                while ((match = regex.exec(query)) !== null) {
-                    const token = match[0].replace(/"/g, ''); // Remove quotes from phrases
-                    tokens.push(token);
-                }
-
-                // Combine consecutive non-operator tokens into phrases
-                const combinedTokens = [];
-                let phraseBuffer = [];
-
-                for (const token of tokens) {
-                    if (['+', '-', '|', '(', ')'].includes(token)) {
-                        if (phraseBuffer.length > 0) {
-                            combinedTokens.push(phraseBuffer.join(' '));
-                            phraseBuffer = [];
-                        }
-                        combinedTokens.push(token);
-                    } else {
-                        phraseBuffer.push(token);
-                    }
-                }
-
-                if (phraseBuffer.length > 0) {
-                    combinedTokens.push(phraseBuffer.join(' '));
-                }
-
-                return combinedTokens;
             }
 
             function highlightMatches(paragraph, matches) {
@@ -449,3 +454,6 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+@import '@/assets/css/book.scss';
+</style>
