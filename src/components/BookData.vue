@@ -1,14 +1,16 @@
 <template>
     <div class="d-flex flex-column">
-        <div class="book d-flex">
+        <div class="book d-flex" v-for="selectedBook in data">
             <div class="paragraph-title-list flex-column"
-                 :class="menuDisplay ? 'mob-show' : 'mob-hide'">
+                 :class="menuDisplay ? 'd-flex position-fixed top-0 start-0 w-70 z-3 shadow' :
+                         'd-none d-md-flex d-lg-flex d-xl-flex'">
                 <h4 class="p-2 position-sticky top-0 z-3 mb-0 ks-font">{{ selectedBook.title }}</h4>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action cursor-pointer"
                         v-for="(chapter, chapterId) in selectedBook.chapters"
                         :class="('' + selectedChapterId) === ('' + chapterId) ? 'active ks-font-secondary' : 'ks-font'"
-                        @click="scrollToSection(chapterId)">
+                        @click="vm.routeName.includes('book') ?
+                            scrollToSection(chapterId) : selectSearch(chapter, selectedBook.code)">
                         {{ chapter.title || (chapterId === 0 ? 'Cover' : '-- No title --') }}
                     </li>
                 </ul>
@@ -25,47 +27,45 @@
                 </div>
             </div>
         </div>
-        <button class="list-button position-fixed start-0
-                d-md-none d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
+        <button class="list-button ks-button position-fixed start-0 m-4 shadow
+                d-md-none d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center active"
                 @click="menuDisplay = true">
-            <i class="fa fa-caret-right"></i>
+            <i class="fa fa-list"></i>
         </button>
     </div>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters} from "vuex";
 
 export default {
-    data() {
-        return {
-            book: {},
-            selectedChapterId: null,
-            menuDisplay: false
+    name: 'BookData',
+    props: {
+        data: {
+            type: Array,
+            required: true
         }
     },
     computed: {
-        ...mapGetters(['selectedBook']),
-        code() {
-            return this.$route.params.code;
+        routeName() {
+            return this.$route.name;
+        }
+    },
+    data() {
+        return {
+            selectedChapterId: null,
+            menuDisplay: false
         }
     },
     created() {
         const vm = this;
 
-        vm.loadBook();
+        if (window.innerWidth > 767 && vm.routeName.includes('book')) {
+            vm.$nextTick(() => {
+                vm.setupIntersectionObserver();
+            });
+        }
     },
     methods: {
-        async loadBook() {
-            const vm = this;
-
-            await vm.$store.dispatch('setSelectedBook', vm.code);
-
-            if (window.innerWidth > 767) {
-                vm.$nextTick(() => {
-                    vm.setupIntersectionObserver();
-                });
-            }
-        },
         scrollToSection(chapterId) {
             const vm = this;
             const element = document.getElementById(chapterId);
@@ -74,6 +74,26 @@ export default {
                 element.scrollIntoView({behavior: "smooth", block: "start"});
                 vm.menuDisplay = false;
             }
+        },
+        selectSearch(paragraph, bookCode) {
+            const vm = this;
+            let timeoutVal = 0;
+
+            if (vm.selectedBook.code !== bookCode) {
+                vm.selectedBook = vm.data.find(book => book.code === bookCode);
+                timeoutVal = 200;
+            }
+
+            vm.selectedBookCode = bookCode + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex;
+
+            setTimeout(() => {
+                const element = document.getElementById(paragraph.chapterIndex + '-' + paragraph.paragraphIndex);
+
+                if (element) {
+                    element.scrollIntoView({block: "start"});
+                    vm.menuDisplay = false;
+                }
+            }, timeoutVal);
         },
         setupIntersectionObserver() {
             const vm = this;
@@ -100,7 +120,7 @@ export default {
             });
         }
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import '@/assets/css/book.scss';

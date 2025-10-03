@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="d-flex book">
-            <div class="w-25 overflow-y-auto paragraph-title-list">
+            <div class="paragraph-title-list flex-column"
+                 :class="menuDisplay ? 'mob-show' : 'mob-hide'">
                 <b v-if="searchCount || searchCount === 0" class="d-flex justify-content-center m-2">
                     {{ searchCount }} results found
                 </b>
@@ -21,9 +22,12 @@
                     </div>
                 </ul>
             </div>
+            <div :class="menuDisplay ?
+                        'paragraph-title-list d-flex position-fixed top-0 end-0 w-30 z-3' : 'd-none'"
+                 @click="menuDisplay = false"
+            ></div>
             <div class="paragraph-list flex-fill d-flex flex-column align-items-center">
-                <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section"
-                         style="width: 85%;">
+                <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section">
                     <div class="paragraph" v-for="(paragraph, paragraphId) in chapter.paragraphs">
                         <div v-html="paragraph.highlightedText || paragraph.text" :class="paragraph.class"
                              :id="chapterId + '-' + paragraphId"></div>
@@ -31,6 +35,11 @@
                 </section>
             </div>
         </div>
+        <button class="list-button position-fixed start-0
+                d-md-none d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
+                @click="menuDisplay = true">
+            <i class="fa fa-caret-right"></i>
+        </button>
     </div>
 </template>
 <script>
@@ -47,7 +56,8 @@ export default {
             selectedBook: {},
             searchCount: 0,
             selectedBookCode: '',
-            searchProgress: true
+            searchProgress: true,
+            menuDisplay: false
         }
     },
     created() {
@@ -117,6 +127,10 @@ export default {
                         chapterIndex++;
                     }
                     bookIndex++;
+                }
+
+                if (window.innerWidth < 768) {
+                    vm.menuDisplay = true;
                 }
 
                 vm.searchProgress = false;
@@ -436,7 +450,7 @@ export default {
                 const element = document.getElementById(paragraph.chapterIndex + '-' + paragraph.paragraphIndex);
 
                 if (element) {
-                    element.scrollIntoView({block: "start"});
+                    element.scrollIntoView({block: "start", behavior: "instant"});
                     vm.menuDisplay = false;
                 }
             }, timeoutVal);

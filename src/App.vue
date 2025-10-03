@@ -144,6 +144,7 @@ nav {
         .ks-button {
             margin: 0 25px;
             max-width: 40px;
+            box-shadow: black 0 0 10px;
         }
     }
 }
@@ -219,6 +220,7 @@ nav {
             transform: translateX(-50%);
             min-width: 60vw;
             max-width: 60vw;
+            box-shadow: black 0 0 10px;
         }
 
         @include md-lg {
