@@ -95,19 +95,19 @@ p {
         .book-card {
             margin: 10px 10px 0 10px;
 
-            @include md-lg {
+            @include lg {
                 margin: 10px 10px 0 10px;
             }
 
             .img-bg {
                 border-radius: 20px;
 
-                @include md-lg {
+                @include lg {
                     width: 150px;
                     height: 200px;
                 }
 
-                @include sm {
+                @include sm-md {
                     width: 100px;
                     height: 125px;
                 }
@@ -118,7 +118,7 @@ p {
             }
             
             .ks-font {
-                @include sm {
+                @include sm-md {
                     font-size: 16px;
                 }
             }

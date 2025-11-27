@@ -43,6 +43,12 @@ $breakpoints: ($all, $sm, $md, $lg);
   }
 }
 
+@mixin sm-md {
+  @media screen and (min-width: nth($sm, 2)) and (max-width: nth($md, 3)) {
+    @content;
+  }
+}
+
 @mixin md-lg {
   @media screen and (min-width: nth($md, 2)) and (max-width: nth($lg, 3)) {
     @content;
@@ -64,8 +70,15 @@ $breakpoints: ($all, $sm, $md, $lg);
 }
 
 .ks-border {
-  border-radius: 20px;
   border: 2px solid $theme-color-primary;
+
+  @include lg {
+    border-radius: 20px;
+  }
+
+  @include sm-md {
+    border-radius: 25px;
+  }
 }
 
 .ks-button {
@@ -73,19 +86,21 @@ $breakpoints: ($all, $sm, $md, $lg);
   background-color: $theme-color-primary;
   overflow: hidden;
   border-width: 0;
-  border-radius: 20px !important;
-  height: 40px;
   padding: 10px;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
   
-  @include sm {
-    min-width: 40px;
+  @include sm-md {
+    border-radius: 25px !important;
+    min-width: 50px;
+    height: 50px;
   }
   
-  @include md-lg {
+  @include lg {
+    height: 40px;
+    border-radius: 20px !important;
     min-width: 150px;
   }
 }

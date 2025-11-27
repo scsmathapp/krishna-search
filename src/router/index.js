@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Book from '../views/Book.vue'
 import Search from '../views/Search.vue'
 import Mission from '../views/Mission.vue'
+import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,10 @@ const routes = [{
     path: '/mission',
     name: 'Mission',
     component: Mission
+}, {
+    path: '/test',
+    name: 'Test',
+    component: Test
 }];
 
 const router = new VueRouter({

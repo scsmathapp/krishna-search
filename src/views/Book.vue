@@ -25,8 +25,9 @@
                 </div>
             </div>
         </div>
+        <!-- Show chapter button for mobile -->
         <button class="list-button position-fixed start-0
-                d-md-none d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
+                d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
                 @click="menuDisplay = true">
             <i class="fa fa-caret-right"></i>
         </button>
@@ -60,7 +61,7 @@ export default {
 
             await vm.$store.dispatch('setSelectedBook', vm.code);
 
-            if (window.innerWidth > 767) {
+            if (window.innerWidth > 992) {
                 vm.$nextTick(() => {
                     vm.setupIntersectionObserver();
                 });

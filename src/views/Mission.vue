@@ -66,12 +66,12 @@ export default {
 p {
     max-width: 900px;
     
-    @include md-lg {
+    @include lg {
         margin: 20px 30px;
         font-size: 18px;
     }
     
-    @include sm {
+    @include sm-md {
         margin: 10px 20px;
         padding: 0;
         font-size: 16px;
@@ -79,7 +79,7 @@ p {
 }
 
 .guardians {
-    @include sm {
+    @include sm-md {
         padding-bottom: 100px;
     }
 }
