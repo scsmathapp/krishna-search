@@ -123,5 +123,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/book.scss';
+@import '@/assets/style/book.scss';
 </style>

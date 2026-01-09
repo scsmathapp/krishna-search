@@ -1,7 +1,7 @@
 <template>
     <div class="pt-3 home">
         <!-- Welcome text + bg -->
-        <div :style="'background-image: url(' + require('@/assets/KSWelcome.jpg') + ');'"
+        <div :style="'background-image: url(' + require('@/assets/img/KSWelcome.jpg') + ');'"
              class="welcome position-absolute top-0 left-0 d-flex flex-column justify-content-center align-items-center img-bg">
             <h1 class="mb-5 mt-4 ks-font-italic">Welcome to Krishna Search</h1>
             <p class="mt-5 ks-font-italic">Digital Library of Śrī Chaitanya Sāraswat Maṭh</p>
@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-import vaishnavas from "@/assets/vaishnavas.js";
+import vaishnavas from "@/assets/js/vaishnavas.js";
 import ImageScroller from '@/components/ImageScroller.vue';
 import Pic from '@/components/Pic.vue';
 
@@ -63,7 +63,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/style.scss';
+@import '@/assets/style/style.scss';
 
 .welcome {
     height: 650px;
@@ -149,7 +149,7 @@ h2 {
 footer {
     margin-top: 20px;
     height: 80px;
-    background-color: $theme-color-secondary;
+    background-color: $secondary;
     
     @include sm-md {
         height: 180px;

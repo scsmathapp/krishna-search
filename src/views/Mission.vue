@@ -2,8 +2,8 @@
     <div>
         <div class="d-flex flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center my-md-5 my-lg-5 my-xl-5">
             <div class="d-flex justify-content-center align-items-center p-3">
-                <Pic :source="require('@/assets/KrishnaSearchMission.png')" w="35vw" h="25vw" class="d-none d-md-flex d-lg-flex d-xl-flex"></Pic>
-                <Pic :source="require('@/assets/KrishnaSearchMission.png')" w="75vw" h="55vw" class="d-flex d-md-none d-lg-none d-xl-none"></Pic>
+                <Pic :source="require('@/assets/img/KrishnaSearchMission.png')" w="35vw" h="25vw" class="d-none d-md-flex d-lg-flex d-xl-flex"></Pic>
+                <Pic :source="require('@/assets/img/KrishnaSearchMission.png')" w="75vw" h="55vw" class="d-flex d-md-none d-lg-none d-xl-none"></Pic>
             </div>
             <div class="w-sm-100 w-md-45 w-lg-45 d-flex flex-column align-items-center">
                 <h1 class="ks-font">Our mission</h1>
@@ -38,15 +38,15 @@
             <h1 class="ks-font">Our Guardians</h1>
             <div class="d-flex justify-content-center">
                 <div class="d-flex flex-column align-items-center w-25 m-2 m-md-3 m-lg-5 m-xl-5">
-                    <Pic :source="require('@/assets/KrishnaSearchGuardian1.png')" w="25vw" h="35vw"></Pic>
+                    <Pic :source="require('@/assets/img/KrishnaSearchGuardian1.png')" w="25vw" h="35vw"></Pic>
                     <p class="fw-bold ks-font pt-2 text-center">Śrīla Govinda Mahārāj</p>
                 </div>
                 <div class="d-flex flex-column align-items-center w-25 m-2 m-md-3 m-lg-5 m-xl-5">
-                    <Pic :source="require('@/assets/KrishnaSearchGuardian2.png')" w="25vw" h="35vw"></Pic>
+                    <Pic :source="require('@/assets/img/KrishnaSearchGuardian2.png')" w="25vw" h="35vw"></Pic>
                     <p class="fw-bold ks-font pt-2 text-center">Śrīla Śrīdhar Mahārāj</p>
                 </div>
                 <div class="d-flex flex-column align-items-center w-25 m-2 m-md-3 m-lg-5 m-xl-5">
-                    <Pic :source="require('@/assets/KrishnaSearchGuardian3.png')" w="25vw" h="35vw"></Pic>
+                    <Pic :source="require('@/assets/img/KrishnaSearchGuardian3.png')" w="25vw" h="35vw"></Pic>
                     <p class="fw-bold ks-font pt-2 text-center">Śrīla Saraswatī Ṭhākur</p>
                 </div>
             </div>
@@ -61,7 +61,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/style.scss';
+@import '@/assets/style/style.scss';
 
 p {
     max-width: 900px;

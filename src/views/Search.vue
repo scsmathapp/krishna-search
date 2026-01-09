@@ -44,6 +44,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
+import allBooks from '@/assets/books/allBooks.js';
 
 export default {
     computed: {
@@ -51,7 +52,6 @@ export default {
     },
     data() {
         return {
-            searchVal: '',
             searchResultsObj: {},
             selectedBook: {},
             searchCount: 0,
@@ -72,25 +72,42 @@ export default {
     },
     methods: {
         filterBooks() {
-            const vm = this;
-            let searchVal = vm.$route.query ? vm.$route.query.q : '';
+            const vm = this,
+                searchVal = vm.$route.query ? vm.$route.query.q : '',
+                tokens = tokenize(removeDiacritics(searchVal)),
+                ast = parse(tokens),
+                filteredBooks = vm.$route.query && vm.$route.query.b ? vm.$route.query.b.split('_') : [],
+                filterMap = {};
+
+            let bookIndex = 0;
 
             vm.searchResultsObj = {};
             vm.searchCount = 0;
             vm.selectedBook = {};
             vm.selectedBookCode = '';
 
-            if (searchVal && vm.books.length) {
-                const tokens = tokenize(removeDiacritics(searchVal));
-                const ast = parse(tokens);
-                let bookIndex = 0;
+            if (!searchVal || !vm.books.length) {
+                return;
+            }
 
-                vm.searchProgress = true;
+            vm.searchProgress = true;
 
-                while (bookIndex < vm.books.length) {
-                    const book = vm.books[bookIndex];
-                    let chapterIndex = 0;
+            if (filteredBooks.length) {
+                filteredBooks.forEach(bIndex => {
+                    if (allBooks[bIndex]) {
+                        filterMap[allBooks[bIndex]] = true;
+                    }
+                });
 
+                vm.$store.commit('SET_FILTERED_BOOKS', filteredBooks);
+                vm.$store.dispatch('resetAuthorsFilterList');
+            }
+
+            while (bookIndex < vm.books.length) {
+                const book = vm.books[bookIndex];
+                let chapterIndex = 0;
+
+                if (!filteredBooks.length || filterMap[book.code]) {
                     while (chapterIndex < book.chapters.length) {
                         const chapter = book.chapters[chapterIndex];
                         let paragraphIndex = 0;
@@ -126,15 +143,16 @@ export default {
                         }
                         chapterIndex++;
                     }
-                    bookIndex++;
                 }
 
-                if (window.innerWidth < 768) {
-                    vm.menuDisplay = true;
-                }
-
-                vm.searchProgress = false;
+                bookIndex++;
             }
+
+            if (window.innerWidth < 768) {
+                vm.menuDisplay = true;
+            }
+
+            vm.searchProgress = false;
 
             ////////////////////////
 
@@ -469,5 +487,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/book.scss';
+@import '@/assets/style/book.scss';
 </style>

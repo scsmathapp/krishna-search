@@ -17,7 +17,7 @@
                         'paragraph-title-list d-flex position-fixed top-0 end-0 w-30 z-3' : 'd-none'"
                  @click="menuDisplay = false"
             ></div>
-            <div class="paragraph-list flex-fill d-flex flex-column align-items-center">
+            <div class="paragraph-list flex-fill d-flex flex-column align-items-center" ref="paragraphList">
                 <div v-for="(chapter, chapterId) in selectedBook.chapters" :id="chapterId" class="paragraph-section">
                     <div class="paragraph" v-for="paragraph in chapter.paragraphs">
                         <div v-html="paragraph.text" :class="paragraph.class"></div>
@@ -50,6 +50,13 @@ export default {
             return this.$route.params.code;
         }
     },
+    mounted() {
+        this.restoreScrollPosition();
+        this.addScrollListener();
+    },
+    beforeDestroy() {
+        this.removeScrollListener();
+    },
     created() {
         const vm = this;
 
@@ -68,8 +75,8 @@ export default {
             }
         },
         scrollToSection(chapterId) {
-            const vm = this;
-            const element = document.getElementById(chapterId);
+            const vm = this,
+                element = document.getElementById(chapterId);
 
             if (element) {
                 element.scrollIntoView({behavior: "smooth", block: "start"});
@@ -77,32 +84,88 @@ export default {
             }
         },
         setupIntersectionObserver() {
-            const vm = this;
-            const sections = document.querySelectorAll('.paragraph-section');
-            const container = document.querySelector('.paragraph-list');
-            const options = {
-                root: container, // Use the viewport as the root
-                rootMargin: '0px',
-                threshold: 0.01, // Trigger when 1% of the section is visible
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        // Update currentSection with the visible section's ID
-                        vm.selectedChapterId = entry.target.id;
-                    }
-                });
-            }, options);
+            const vm = this,
+                sections = document.querySelectorAll('.paragraph-section'),
+                container = document.querySelector('.paragraph-list'),
+                options = {
+                    root: container, // Use the viewport as the root
+                    rootMargin: '0px',
+                    threshold: 0.01, // Trigger when 1% of the section is visible
+                },
+                observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            // Update currentSection with the visible section's ID
+                            vm.selectedChapterId = entry.target.id;
+                        }
+                    });
+                }, options);
 
             // Observe each section
             sections.forEach((section) => {
                 observer.observe(section);
             });
+        },
+        saveScrollPosition() {
+            const vm = this,
+                el = vm.$refs.paragraphList;
+
+            if (el) {
+                // Save the vertical scroll position (scrollTop)
+                localStorage.setItem(vm.code, el.scrollTop);
+                // console.log(`Saved scroll for ${vm.articleId}: ${el.scrollTop}`);
+            }
+        },
+        // Throttle the save function to prevent performance issues
+        throttledSaveScroll() {
+            const vm = this;
+
+            if (vm.scrollTimer) {
+                clearTimeout(vm.scrollTimer);
+            }
+
+            vm.scrollTimer = setTimeout(() => {
+                vm.saveScrollPosition();
+            }, vm.scrollThrottle);
+        },
+        // Attempt to restore scroll position from localStorage
+        restoreScrollPosition() {
+            const vm = this,
+                savedPosition = localStorage.getItem(vm.code);
+
+            if (savedPosition) {
+                // Use nextTick to ensure the DOM has rendered before scrolling
+                vm.$nextTick(() => {
+                    const el = vm.$refs.paragraphList;
+
+                    if (el) {
+                        el.scrollTop = parseInt(savedPosition, 10);
+                        // console.log(`Restored scroll for ${vm.articleId}: ${savedPosition}`);
+                    }
+                });
+            }
+        },
+        addScrollListener() {
+            const vm = this,
+                el = vm.$refs.paragraphList;
+
+            if (el) {
+                el.addEventListener('scroll', vm.throttledSaveScroll);
+            }
+        },
+        removeScrollListener() {
+            const vm = this,
+                el = vm.$refs.paragraphList;
+
+            if (el) {
+                el.removeEventListener('scroll', vm.throttledSaveScroll);
+                // Save the final position before component destruction
+                vm.saveScrollPosition();
+            }
         }
     }
 };
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/book.scss';
+@import '@/assets/style/book.scss';
 </style>

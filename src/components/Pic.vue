@@ -35,7 +35,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/style.scss';
+@import '@/assets/style/style.scss';
 
 .img-bg {
     border-radius: 20px;

@@ -1,12 +1,16 @@
 <template>
     <div class="slide d-flex justify-content-center align-items-center">
         <!-- App logo -->
-        <img src="@/assets/KrishnaSearchLogo.png" height="150" class="d-none d-lg-block d-xl-block">
+        <img src="@/assets/img/KrishnaSearchLogo.png" height="150" class="d-none d-lg-block d-xl-block">
         <!-- Navigation buttons -->
         <div class="bar d-flex align-items-center">
             <div class="bg" :style="'transform: translateX(' + translatedX + 'px);'"></div>
             <div class="slide-button" v-for="(btn, btnIndex) in btns" :key="btnIndex" :href="btn.href" @click="btnClick(btn)">
-                <i :class="btn.iClass"></i>
+                <div v-if="btn.img">
+                    <img :src="require('@/assets/icon/' + btn.img + '-s.png')" alt="Home" v-if="btn.selected">
+                    <img :src="require('@/assets/icon/' + btn.img + '.png')" alt="Home" v-else>
+                </div>
+                <i :class="btn.iClass" v-else></i>
                 <span :class="btn.spanClass" v-if="!isMobile">{{ btn.text }}</span>
             </div>
         </div>
@@ -14,8 +18,14 @@
         <div class="position-absolute nav-menu d-flex align-items-center"
              :class="showNavMenu ? 'show-nav-menu' : ''">
             <ul class="list-group list-group-flush flex-fill">
-                <a href="/v1.php" class="list-group-item list-group-item-action cursor-pointer">
-                    Old version
+                <a href="/#/mission" class="list-group-item list-group-item-action">
+                    <i class="fa fa-flag me-2"></i>Mission
+                </a>
+                <a href="/#/versions" class="list-group-item list-group-item-action">
+                    <i class="fa fa-bell me-2"></i>What's new?
+                </a>
+                <a href="/v1.php" class="list-group-item list-group-item-action">
+                    <i class="fa fa-history me-2"></i>Old version
                 </a>
             </ul>
         </div>
@@ -23,10 +33,18 @@
         <form @submit="doSearch" class="search-container d-flex justify-content-center align-items-center"
               :class="isHome && isScrollTop ? 'search-center' : isShrunk ? 'shrink' : ''">
             <div class="input-group search ks-border d-flex align-items-center">
+                <div class="d-flex align-items-center border-0 p-2"
+                     @click="showSearchFilterClick()" v-if="isInputShown">
+                    <i class="fa fa-list"></i>
+                    <span style="background-color: #0d6efd; border-radius: 7.5px; width: 15px; height: 15px; font-size: 10px; color: white; position: absolute; margin-top: -10px; margin-left: 10px; z-index: 7;"
+                        class="d-flex justify-content-center align-items-center" v-if="filteredBooks.length">
+                        {{ filteredBooks.length }}
+                    </span>
+                </div>
                 <input type="text" class="form-control border-0" v-model="searchVal" v-if="isInputShown">
                 <div class="d-flex align-items-center border-0 p-2"
                      v-if="searchVal !== '' && isInputShown"
-                     @click="searchVal = ''">
+                     @click.stop="searchVal = ''">
                     <i class="fa fa-close"></i>
                 </div>
                 <div class="d-flex align-items-center border-0 p-2"
@@ -35,12 +53,21 @@
                 </div>
             </div>
         </form>
+        <!-- Search filter -->
+        <div class="search-filter" :class="showSearchFilter ? 'show-search-filter' : ''">
+            <BookFilter></BookFilter>
+        </div>
     </div>
 </template>
 <script>
+import BookFilter from "./BookFilter.vue";
+import {mapGetters} from "vuex";
+
 export default {
     name: "Navbar",
+    components: {BookFilter},
     computed: {
+        ...mapGetters(['filteredBooks']),
         isMobile() {
             return this.windowWidth < 991.98;
         },
@@ -59,15 +86,17 @@ export default {
             isShrunk: true,
             searchVal: '',
             showNavMenu: false,
+            showSearchFilter: false,
             btns: [
-                { icon: 'home', text: 'Home', href: '/' },
-                { icon: 'flag', text: 'Mission', href: '/mission' },
-                { icon: 'calendar', text: 'Calendar', href: '/calendar' },
-                { icon: 'ellipsis-h', text: 'More', href: '#', clickAction: this.showNavMenuClick }
+                { text: 'Home', href: '/', img: 'home' },
+                // { text: 'Mission', href: '/mission', icon: 'flag' },
+                { text: 'Kirtan', href: '/kirtan', img: 'kirtan' },
+                { text: 'Calendar', href: '/calendar', icon: 'calendar' },
+                { text: 'More', href: '#', icon: 'ellipsis-h', clickAction: this.showNavMenuClick }
             ],
             bgPositions: {
                 '/': 0,
-                '/mission': 1,
+                '/kirtan': 1,
                 '/calendar': 2
             }
         }
@@ -94,12 +123,14 @@ export default {
     },
     methods: {
         doSearch(e) {
-            const vm = this;
+            const vm = this,
+                bookFilterQuery = vm.filteredBooks.length ? vm.filteredBooks.join('_') : '';
 
+            let url = '/search?q=';
 
             e.preventDefault();
 
-            if (vm.isShrunk && (!vm.isHome || !vm.isScrollTop)) {
+            if (!vm.isInputShown) {
                 vm.$set(vm, 'isShrunk', false);
 
                 setTimeout(() => {
@@ -110,8 +141,14 @@ export default {
                 return;
             }
 
-            if (vm.searchVal && vm.$route.query.q !== vm.searchVal) {
-                vm.$router.push('/search?q=' + vm.searchVal.replaceAll('+', '%2B'));
+            if (vm.searchVal && (vm.$route.query.q !== vm.searchVal || (vm.$route.query.b || '') !== bookFilterQuery)) {
+                url += vm.searchVal.replaceAll('+', '%2B');
+
+                if (bookFilterQuery) {
+                    url += `&b=${bookFilterQuery}`;
+                }
+
+                vm.$router.push(url);
             }
         },
         shrink(e) {
@@ -146,6 +183,7 @@ export default {
 
                 btn.spanClass = active;
                 btn.iClass = `${active} fa fa-${btn.icon}`;
+                btn.selected = btnIndex === i;
             });
         },
         updateWidth() {
@@ -177,6 +215,24 @@ export default {
                 vm.showNavMenu = false;
                 document.body.removeEventListener("click", vm.hideNavMenu);
             }
+        },
+        showSearchFilterClick() {
+            const vm = this;
+
+            // Delay attaching the listener so the current click doesn’t trigger it
+            setTimeout(() => {
+                vm.showSearchFilter = true;
+                document.body.addEventListener("click", vm.hideSearchFilter);
+            }, 0);
+        },
+        hideSearchFilter(e) {
+            const vm = this,
+                isSearchFilter = e.target.closest('.search-filter');
+
+            if (!isSearchFilter) {
+                vm.showSearchFilter = false;
+                document.body.removeEventListener("click", vm.hideSearchFilter);
+            }
         }
     },
     watch: {
@@ -197,7 +253,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/style.scss';
+@import '@/assets/style/style.scss';
 
 * {
     box-sizing: border-box;
@@ -238,7 +294,7 @@ export default {
         }
 
         .bg {
-            background-color: black;
+            background-color: $primary;
             position: absolute;
             z-index: 0;
             transition: transform 0.3s ease;
@@ -276,7 +332,7 @@ export default {
 
             i,
             span {
-                color: $theme-color-primary;
+                color: $primary;
 
                 &.active {
                     color: white;
@@ -324,20 +380,65 @@ export default {
                 margin-top: 185px;
             }
         }
+        
+        .list-group-item {
+            color: $primary;
+        }
+    }
+
+    .search-filter {
+        min-width: 0;
+        max-width: 0;
+        transition: all 0.2s ease;
+        right: 0;
+        top: 0;
+        overflow: hidden;
+        position: fixed;
+
+        @include lg {
+            margin-top: 100px;
+        }
+
+        &.show-search-filter {
+            margin-left: 0px;
+            background-color: white;
+
+            @include lg {
+                min-height: calc(100vh - 100px);
+                max-height: calc(100vh - 100px);
+                min-width: 340px;
+                max-width: 340px;
+                box-shadow: black 0 14px 10px;
+            }
+
+            @include sm-md {
+                min-height: 100vh;
+                max-height: 100vh;
+                min-width: 70%;
+                max-width: 70%;
+                box-shadow: black 0 0 10px;
+                z-index: 6;
+            }
+        }
     }
 
     .search-container {
         transition: all 0.5s ease;
 
+        @include lg {
+            height: 100px;
+            margin-right: 20px;
+            top: 0;
+            z-index: 6;
+            position: absolute;
+            transform: translate(calc(50vw - 160px), 0);
+        }
+        
         @include sm-md {
             height: 100px;
             position: absolute;
             z-index: 6;
             bottom: 0;
-
-            &.search-center {
-                transform: translate(0, calc(-100dvh + 350px));
-            }
 
             &.shrink {
                 max-width: 50px !important;
@@ -345,7 +446,7 @@ export default {
                 margin-left: 200px;
 
                 .search {
-                    background-color: $theme-color-primary;
+                    background-color: $primary;
                     max-width: 50px !important;
                     min-width: 50px !important;
                     display: flex;
@@ -363,16 +464,17 @@ export default {
             }
         }
 
-        @include lg {
-            height: 100px;
-            margin-right: 20px;
-            top: 0;
-            z-index: 6;
-            position: absolute;
-            transform: translate(calc(50vw - 160px), 0);
-            
-            &.search-center {
+        &.search-center {
+            @include lg {
                 transform: translate(0, 225px);
+            }
+
+            @include md {
+                transform: translate(0, calc(-100dvh + 330px));
+            }
+
+            @include sm {
+                transform: translate(0, calc(-100dvh + 310px));
             }
         }
 
@@ -399,6 +501,7 @@ export default {
                 height: 37.6px;
                 cursor: pointer;
                 background-color: white;
+                color: $primary;
             }
 
             input:focus {

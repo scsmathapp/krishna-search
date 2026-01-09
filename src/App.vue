@@ -5,15 +5,12 @@
     </div>
 </template>
 <script>
-import allBooks from '@/assets/books/allBooks.js';
 import Navbar from "./components/Navbar.vue";
 
 export default {
     components: { Navbar },
-    created() {
-        const vm = this;
-
-        vm.$store.dispatch('loadBooks', allBooks);
+    mounted() {
+        this.$store.dispatch('loadBooks');
     }
 }
 </script>

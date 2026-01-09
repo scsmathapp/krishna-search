@@ -69,7 +69,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/style.scss';
+@import '@/assets/style/style.scss';
 
 p {
     margin-bottom: 0;
