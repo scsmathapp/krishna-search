@@ -77,6 +77,12 @@ input, select {
   }
 }
 
+.active {
+  background-color: $primary !important;
+  color: $secondary !important;
+  border: none;
+}
+
 .ks-border {
   border: 2px solid $primary;
   overflow: hidden;

@@ -6,6 +6,8 @@ import Search from '../views/Search.vue'
 import Mission from '../views/Mission.vue'
 import Versions from '../views/Versions.vue'
 import Calendar from '../views/Calendar.vue'
+import KirtanList from '../views/KirtanList.vue'
+import Kirtan from '../views/Kirtan.vue'
 import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
@@ -34,6 +36,15 @@ const routes = [{
     path: '/calendar',
     name: 'Calendar',
     component: Calendar
+}, {
+    path: '/kirtan',
+    name: 'KirtanList',
+    component: KirtanList,
+    children: [{
+        path: ':kirtanCode',
+        name: 'Kirtan',
+        component: Kirtan
+    }]
 }, {
     path: '/test',
     name: 'Test',

@@ -1,7 +1,9 @@
 <template>
     <div class="slide d-flex justify-content-center align-items-center">
         <!-- App logo -->
-        <img src="@/assets/img/KrishnaSearchLogo.png" height="150" class="d-none d-lg-block d-xl-block">
+        <div style="height:100px; width:150px;"
+             :style="'background-image: url(' + require('@/assets/img/KrishnaSearchLogo.png') + ');'"
+             class="d-none d-lg-block d-xl-block img-bg"></div>
         <!-- Navigation buttons -->
         <div class="bar d-flex align-items-center">
             <div class="bg" :style="'transform: translateX(' + translatedX + 'px);'"></div>
@@ -95,16 +97,16 @@ export default {
                 { text: 'More', href: '#', icon: 'ellipsis-h', clickAction: this.showNavMenuClick }
             ],
             bgPositions: {
-                '/': 0,
-                '/kirtan': 1,
-                '/calendar': 2
+                'Home': 0,
+                'Kirtan': 1,
+                'Calendar': 2
             }
         }
     },
     created() {
         const vm = this;
 
-        vm.setBg(vm.$route.path);
+        vm.setBg(vm.$route.name);
 
         if (localStorage.getItem('calendar') && vm.$route.path === '/') {
             vm.$router.push('/calendar');
@@ -173,8 +175,11 @@ export default {
             }
         },
         setBg(path) {
-            const vm = this,
-                btnIndex = vm.bgPositions.hasOwnProperty(path) ? vm.bgPositions[path] : 3;
+            const vm = this;
+            
+            path = path === 'KirtanList' ? 'Kirtan' : path;
+
+            const btnIndex = vm.bgPositions.hasOwnProperty(path) ? vm.bgPositions[path] : 3;
 
             vm.translatedX = btnIndex * (vm.isMobile ? 50 : 120);
 
@@ -247,7 +252,7 @@ export default {
                 localStorage.removeItem('calendar');
             }
 
-            vm.setBg(to.path);
+            vm.setBg(to.name);
         }
     }
 }

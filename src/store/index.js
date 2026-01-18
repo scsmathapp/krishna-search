@@ -10,7 +10,8 @@ export default new Vuex.Store({
         books: [],
         selectedBook: {},
         authorsFilterList: [],
-        filteredBooks: []
+        filteredBooks: [],
+        kirtanGuide: {}
     },
 
     mutations: {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         SET_FILTERED_BOOKS(state, filteredBooks) {
             state.filteredBooks = filteredBooks;
+        },
+        SET_KIRTAN_GUIDE(state, kirtanGuide) {
+            state.kirtanGuide = kirtanGuide;
         }
     },
 
@@ -44,9 +48,17 @@ export default new Vuex.Store({
 
                 books.push(module.default || module);
             }
+            
+            const kirtanGuide = books.find(book => book.code === 'en-KirtanGuide'),
+                newKirtanGuide = {};
+            
+            for (const kirtan of kirtanGuide.chapters) {
+                newKirtanGuide[kirtan.code] = kirtan;
+            }
 
             commit('SET_BOOKS', books);
             commit('SET_AUTHORS_FILTER_LIST', authorsFilterList);
+            commit('SET_KIRTAN_GUIDE', newKirtanGuide);
         },
 
         async setSelectedBook({ state, commit, dispatch }, code) {
@@ -134,6 +146,7 @@ export default new Vuex.Store({
         books: (state) => state.books,
         selectedBook: (state) => state.selectedBook,
         authorsFilterList: (state) => state.authorsFilterList,
-        filteredBooks: (state) => state.filteredBooks
+        filteredBooks: (state) => state.filteredBooks,
+        kirtan: (state) => (kirtanCode) => state.kirtanGuide[kirtanCode]
     }
 });

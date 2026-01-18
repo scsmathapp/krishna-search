@@ -22,7 +22,7 @@ export default [
     'en-HomeComfort',
     'en-InnerFulfilment',
     'en-InSearchoftheOriginalSource',
-    'en-KīrttanGuide',
+    'en-KirtanGuide',
     'en-LovingSearchForTheLostServant',
     'en-NectareanGloriesofŚrīNityānandaPrabhu',
     'en-OceanofNectar',
