@@ -369,15 +369,15 @@ export default {
         
         @include sm-md {
             margin-left: 50px;
-            margin-top: -35px;
+            margin-top: -75px;
         }
 
         &.show-nav-menu {
             margin-left: 0px;
             min-width: 270px;
             max-width: 270px;
-            min-height: 85px;
-            max-height: 85px;
+            min-height: 125px;
+            max-height: 125px;
             background-color: white;
             box-shadow: black 0 0 10px;
 

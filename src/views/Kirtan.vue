@@ -21,4 +21,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '@/assets/style/book.scss';
+
+@include sm-md {
+    .book .paragraph-list .paragraph-section {
+        padding-bottom: 50px;
+    }
+}
 </style>

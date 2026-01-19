@@ -40,6 +40,7 @@ const routes = [{
     path: '/kirtan',
     name: 'KirtanList',
     component: KirtanList,
+    redirect: '/kirtan/vande-ham-shri-guroh-shri-yuta-pada-kamalam',
     children: [{
         path: ':kirtanCode',
         name: 'Kirtan',

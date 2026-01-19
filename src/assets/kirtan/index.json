@@ -1,10 +1,14 @@
 [
   {
-    "name": "Index",
+    "name": "A",
     "items": [
       {
         "id": "akrodha-paramananda",
         "title": "akrodha paramānanda"
+      },
+      {
+        "id": "amara-jivana-sada-pape-rata",
+        "title": "āmāra jīvana, sadā pāpe rata"
       },
       {
         "id": "anya-abhilasha-chadi-jniana-karma-parihari",
@@ -23,8 +27,25 @@
         "title": "aruṇa basane sonara sūraja"
       },
       {
+        "id": "atma-nivedana-tuya-pade-kori",
+        "title": "ātma-nivedana, tuyā pade kori"
+      },
+      {
+        "id": "atma-samarpane-gela-abhimana",
+        "title": "ātma-samarpaṇe gelā abhimāna"
+      },
+      {
         "id": "avatara-sara-gora-avatara",
         "title": "avatāra sāra gorā avatāra"
+      }
+    ]
+  },
+  {
+    "name": "B",
+    "items": [
+      {
+        "id": "bhai-re-shorira-avidya-jal-jodendriya-tahe-kal",
+        "title": "bhāi-re! śorīra avidyā-jāl, joḍendriya tāhe kāl"
       },
       {
         "id": "bhaja-bhakata-vatsala-shri-gaurahari",
@@ -53,11 +74,21 @@
       {
         "id": "bondhu-gon-shiunoho-vachana-mora",
         "title": "bondhu-goṇ! śunoho vachana mora"
-      },
+      }
+    ]
+  },
+  {
+    "name": "C",
+    "items": [
       {
         "id": "chaudda-shiata-sata-shiake-masa-je-phalgun",
         "title": "chaudda-śata sāta-śake māsa je phālgun"
-      },
+      }
+    ]
+  },
+  {
+    "name": "D",
+    "items": [
       {
         "id": "dayal-nitai-chaitanya-bole-nach-re",
         "title": "‘dayāl nitāi chaitanya’ bo’le nāch re"
@@ -79,6 +110,10 @@
         "title": "dhana mora nityānanda pati mora"
       },
       {
+        "id": "dhvasta-sarvvabhauma-vada-navya-tarka-shiankaram",
+        "title": "dhvasta-sārvvabhauma-vāda-navya-tarka-śāṅkaraṁ"
+      },
+      {
         "id": "durlabha-manava-janma-labhiya-samsare",
         "title": "durlabha mānava-janma labhiyā saṁsāre"
       },
@@ -89,7 +124,12 @@
       {
         "id": "divyad-vrindaranya-kalpa-drumadhah",
         "title": "dīvyad-vṛndāraṇya-kalpa-drumādhaḥ"
-      },
+      }
+    ]
+  },
+  {
+    "name": "E",
+    "items": [
       {
         "id": "e-ghora-samsare-podiya-manava",
         "title": "e ghora saṁsāre, poḍiyā mānava"
@@ -105,7 +145,12 @@
       {
         "id": "emona-gauranga-bine-nahi-ara",
         "title": "emona gaurāṅga bine nāhi āra"
-      },
+      }
+    ]
+  },
+  {
+    "name": "G",
+    "items": [
       {
         "id": "gaura-vrajashritashieshair-vaishnavair-vandya-vigraham",
         "title": "gaura-vrajāśritāśeṣair vaiṣṇavair vandya-vigraham"
@@ -161,7 +206,12 @@
       {
         "id": "gay-gora-madhur-svare",
         "title": "gāy gorā madhur svare"
-      },
+      }
+    ]
+  },
+  {
+    "name": "H",
+    "items": [
       {
         "id": "hare-krishna-hare-krishna-krishna-krishna-hare-hare",
         "title": "hare kṛṣṇa hare kṛṣṇa kṛṣṇa kṛṣṇa hare hare"
@@ -197,7 +247,12 @@
       {
         "id": "ha-ha-bhaktivinoda-thakkura-guroh",
         "title": "hā hā bhaktivinoda-ṭhakkura! guroḥ!"
-      },
+      }
+    ]
+  },
+  {
+    "name": "J",
+    "items": [
       {
         "id": "jadi-gaura-na-hoto-tobe-ki-hoito",
         "title": "jadi gaura nā ho’to, tobe ki hoito"
@@ -277,7 +332,12 @@
       {
         "id": "jiv-jago-jiv-jago-gaurachanda-bole",
         "title": "jīv jāgo, jīv jāgo, gaurāchā̐da bole"
-      },
+      }
+    ]
+  },
+  {
+    "name": "K",
+    "items": [
       {
         "id": "kali-ghora-timire-garasala-jagajana",
         "title": "kali-ghora timire garasala jagajana"
@@ -325,7 +385,12 @@
       {
         "id": "krishnotkirtana-gana-nartana-parau",
         "title": "kṛṣṇotkīrtana-gāna-nartana-parau"
-      },
+      }
+    ]
+  },
+  {
+    "name": "M",
+    "items": [
       {
         "id": "maha-bhaya-shiankula-e-bhava-tarangini",
         "title": "mahā-bhaya śaṅkula e bhava taraṅginī"
@@ -341,7 +406,12 @@
       {
         "id": "manasa-deho-geho-jo-kichu-mora",
         "title": "mānasa, deho, geho, jo kichū mora"
-      },
+      }
+    ]
+  },
+  {
+    "name": "N",
+    "items": [
       {
         "id": "nadiya-godrume-nityananda-mahajana",
         "title": "nadīyā-godrume nityānanda mahājana"
@@ -405,7 +475,12 @@
       {
         "id": "nite-yasmin-nishiante-nayana-jala-bharaih",
         "title": "nīte yasmin niśānte nayana-jala-bharaiḥ"
-      },
+      }
+    ]
+  },
+  {
+    "name": "O",
+    "items": [
       {
         "id": "ohe-harinam-tava-mahima-apara",
         "title": "ohe harinām, tava mahimā apāra"
@@ -413,7 +488,12 @@
       {
         "id": "vaishnava-thakura-dayara-sagara",
         "title": "(ohe) vaiṣṇava ṭhākura, dayāra sāgara"
-      },
+      }
+    ]
+  },
+  {
+    "name": "P",
+    "items": [
       {
         "id": "parama-karuna-pahu-dui-jana",
         "title": "parama karuṇa, pahu̐ dūi jana"
@@ -431,9 +511,22 @@
         "title": "pralaya-payodhi-jale dhṛtavān asi vedaṁ"
       },
       {
+        "id": "prema-mugdha-rudra-raja-shiaurya-virya-vikramam",
+        "title": "prema-mugdha-rudra-rāja-śaurya-vīrya-vikramaṁ"
+      },
+      {
+        "id": "prema-mugdha-nritya-kirtanakularitantikam",
+        "title": "prema-mugdha-nṛtya-kīrtanākulāriṭāntikaṁ"
+      },
+      {
         "id": "pita-varana-kali-pavana-gora",
         "title": "pīta-varaṇa kali-pāvana gorā"
-      },
+      }
+    ]
+  },
+  {
+    "name": "R",
+    "items": [
       {
         "id": "radhe-jaya-jaya-madhava-dayite",
         "title": "rādhe jaya jaya mādhava-dayite"
@@ -457,7 +550,12 @@
       {
         "id": "radhakundatata-kunjakutira",
         "title": "rādhākuṇḍataṭa-kuñjakuṭīra"
-      },
+      }
+    ]
+  },
+  {
+    "name": "S",
+    "items": [
       {
         "id": "sakala-vaishnava-pade-mora-namaskara",
         "title": "sakala vaiṣṇava-pade mora namaskāra"
@@ -481,78 +579,6 @@
       {
         "id": "sujanarvuda-radhita-pada-yugam",
         "title": "sujanārvuda-rādhita-pāda-yugaṁ"
-      },
-      {
-        "id": "tuhu-daya-sagara-tarayite-prani",
-        "title": "tuhu̐ dayā-sāgara tārayite prāṇī"
-      },
-      {
-        "id": "tumi-sarveshvareshvara-vrajendra-kumara",
-        "title": "tumi sarveśvareśvara, vrajendra-kumāra!"
-      },
-      {
-        "id": "tatala-saikate-vari-bindu-sama",
-        "title": "tātala saikate vāri bindu-sama"
-      },
-      {
-        "id": "udilo-aruna-puraba-bhage",
-        "title": "udilo aruṇa pūraba-bhāge"
-      },
-      {
-        "id": "vande-bhaktivinodam-shri-gaura-shiakti-svarupakam",
-        "title": "vande bhaktivinodaṁ śrī-gaura-śakti-svarūpakam"
-      },
-      {
-        "id": "vande-ham-shri-guroh-shri-yuta-pada-kamalam",
-        "title": "vande ’haṁ śrī-guroḥ śrī-yuta-pada-kamalaṁ"
-      },
-      {
-        "id": "vibhavari-shiesha-aloka-praveshia",
-        "title": "vibhāvarī śeṣa, āloka-praveśa"
-      },
-      {
-        "id": "vimala-hemajin-tanu-anupama-re",
-        "title": "vimala hemajin tanu anupama re!"
-      },
-      {
-        "id": "virajar-pare-shiuddha-paravyoma-dham",
-        "title": "virajār pāre śuddha-paravyoma-dhām"
-      },
-      {
-        "id": "vancha-kalpatarubhyas-cha",
-        "title": "vāñchā-kalpatarubhyas’ cha"
-      },
-      {
-        "id": "vrindayai-tulasi-devyai",
-        "title": "vṛndāyai tulasī-devyai"
-      },
-      {
-        "id": "yadi-te-hari-pada-saroja-sudha",
-        "title": "yadi te hari-pāda-saroja-sudhā"
-      },
-      {
-        "id": "yo-nanto-nanta-vaktrair-niravadhi",
-        "title": "yo ’nanto ’nanta-vaktrair niravadhi"
-      },
-      {
-        "id": "yoga-pithopari-sthita-ashta-sakhi-subeshtita",
-        "title": "yoga-pīṭhopari-sthita, aṣṭa-sakhī-subeṣṭita"
-      },
-      {
-        "id": "amara-jivana-sada-pape-rata",
-        "title": "āmāra jīvana, sadā pāpe rata"
-      },
-      {
-        "id": "atma-nivedana-tuya-pade-kori",
-        "title": "ātma-nivedana, tuyā pade kori"
-      },
-      {
-        "id": "atma-samarpane-gela-abhimana",
-        "title": "ātma-samarpaṇe gelā abhimāna"
-      },
-      {
-        "id": "bhai-re-shorira-avidya-jal-jodendriya-tahe-kal",
-        "title": "bhāi-re! śorīra avidyā-jāl, joḍendriya tāhe kāl"
       },
       {
         "id": "shrita-kamala-kuchha-mandala-dhrita",
@@ -607,12 +633,29 @@
         "title": "śrīmān rāsa-rasārambhī"
       },
       {
+        "id": "shri-sanatananu-rupa-jiva-sampradayakam",
+        "title": "śrī-sanātanānu-rūpa-jīva-sampradāyakaṁ"
+      },
+      {
+        "id": "sutra-vritti-tippanishta-sukshma-vachanadbhutam",
+        "title": "sūtra-vṛtti-ṭippanīṣṭa-sūkṣma-vāchanādbhutaṁ"
+      },
+      {
         "id": "shiuddha-bhakata-charana-renu",
         "title": "śuddha-bhakata-charaṇa-reṇu"
       },
       {
         "id": "shiuno-he-rasika-jon-krishna-guna-aganon",
         "title": "śuno, he rasika jon kṛṣṇa guṇa agaṇon"
+      }
+    ]
+  },
+  {
+    "name": "T",
+    "items": [
+      {
+        "id": "tatala-saikate-vari-bindu-sama",
+        "title": "tātala saikate vāri bindu-sama"
       },
       {
         "id": "thakura-vaishnava-gana-kori-ei-nivedana",
@@ -623,28 +666,75 @@
         "title": "ṭhākura-vaiṣṇava-pada, avanīra"
       },
       {
-        "id": "sutra-vritti-tippanishta-sukshma-vachanadbhutam",
-        "title": "sūtra-vṛtti-ṭippanīṣṭa-sūkṣma-vāchanādbhutaṁ"
+        "id": "tuhu-daya-sagara-tarayite-prani",
+        "title": "tuhu̐ dayā-sāgara tārayite prāṇī"
       },
       {
-        "id": "dhvasta-sarvvabhauma-vada-navya-tarka-shiankaram",
-        "title": "dhvasta-sārvvabhauma-vāda-navya-tarka-śāṅkaraṁ"
+        "id": "tumi-sarveshvareshvara-vrajendra-kumara",
+        "title": "tumi sarveśvareśvara, vrajendra-kumāra!"
+      }
+    ]
+  },
+  {
+    "name": "U",
+    "items": [
+      {
+        "id": "udilo-aruna-puraba-bhage",
+        "title": "udilo aruṇa pūraba-bhāge"
+      }
+    ]
+  },
+  {
+    "name": "V",
+    "items": [
+      {
+        "id": "vande-bhaktivinodam-shri-gaura-shiakti-svarupakam",
+        "title": "vande bhaktivinodaṁ śrī-gaura-śakti-svarūpakam"
       },
       {
-        "id": "prema-mugdha-rudra-raja-shiaurya-virya-vikramam",
-        "title": "prema-mugdha-rudra-rāja-śaurya-vīrya-vikramaṁ"
+        "id": "vande-ham-shri-guroh-shri-yuta-pada-kamalam",
+        "title": "vande ’haṁ śrī-guroḥ śrī-yuta-pada-kamalaṁ"
       },
       {
-        "id": "prema-mugdha-nritya-kirtanakularitantikam",
-        "title": "prema-mugdha-nṛtya-kīrtanākulāriṭāntikaṁ"
+        "id": "vibhavari-shiesha-aloka-praveshia",
+        "title": "vibhāvarī śeṣa, āloka-praveśa"
       },
       {
-        "id": "shri-sanatananu-rupa-jiva-sampradayakam",
-        "title": "śrī-sanātanānu-rūpa-jīva-sampradāyakaṁ"
+        "id": "vimala-hemajin-tanu-anupama-re",
+        "title": "vimala hemajin tanu anupama re!"
+      },
+      {
+        "id": "virajar-pare-shiuddha-paravyoma-dham",
+        "title": "virajār pāre śuddha-paravyoma-dhām"
+      },
+      {
+        "id": "vancha-kalpatarubhyas-cha",
+        "title": "vāñchā-kalpatarubhyas’ cha"
+      },
+      {
+        "id": "vrindayai-tulasi-devyai",
+        "title": "vṛndāyai tulasī-devyai"
+      }
+    ]
+  },
+  {
+    "name": "Y",
+    "items": [
+      {
+        "id": "yadi-te-hari-pada-saroja-sudha",
+        "title": "yadi te hari-pāda-saroja-sudhā"
       },
       {
         "id": "yamunambu-krishna-radhikali-keli-mandalam",
         "title": "yāmunāmbu-kṛṣṇa-rādhikāli-keli-maṇḍalam"
+      },
+      {
+        "id": "yo-nanto-nanta-vaktrair-niravadhi",
+        "title": "yo ’nanto ’nanta-vaktrair niravadhi"
+      },
+      {
+        "id": "yoga-pithopari-sthita-ashta-sakhi-subeshtita",
+        "title": "yoga-pīṭhopari-sthita, aṣṭa-sakhī-subeṣṭita"
       }
     ]
   }

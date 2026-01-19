@@ -61,7 +61,7 @@ export default {
 }
 
 .special11 {
-    background-color: rgba(250, 88, 88, 0.3);
+    background-color: rgba(255, 215, 0, 0.3);
 }
 
 .event-image {

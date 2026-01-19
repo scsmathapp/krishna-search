@@ -18,6 +18,7 @@
                 <select class="form-select ks-border" v-model="newLocation"
                         @change="calendar.onLocationChanged(newLocation)">
                     <option :value="{ id: 0 }" disabled>Select Location...</option>
+                    <option :value="nabadwip">{{ nabadwip.name }}</option>
                     <option v-for="location in locationList" :key="location['city_id']" :value="location">
                         {{ location.name }}
                     </option>
@@ -47,6 +48,7 @@ export default {
         return {
             newLocation: {id: 0},
             locationList: cities,
+            nabadwip: _.find(cities, city => city['city_id'] == 43),
             calendar: getCalendar()
         }
     },
@@ -56,6 +58,9 @@ export default {
 
         if (location) {
             vm.newLocation = _.find(cities, city => city['city_id'] == location);
+            vm.calendar.onLocationChanged(vm.newLocation);
+        } else {
+            vm.newLocation = vm.nabadwip;
             vm.calendar.onLocationChanged(vm.newLocation);
         }
     }

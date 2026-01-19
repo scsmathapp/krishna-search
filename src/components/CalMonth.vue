@@ -10,10 +10,10 @@
             <div v-for="(day, dayIndex) in week" :key="dayIndex"
                  :class="{ selectedDate: day && calendar.selectedDate._dateText === day._dateText,
                         today: day && calendar.today._dateText === day._dateText, 'fc-red' : dayIndex === 0 }"
-                 class="btn d-flex justify-content-center align-items-center date clickable"
-                 :style="{ '--eventBgImg': day && day.url ? day.url : '' }"
+                 class="btn d-flex flex-column justify-content-center align-items-center date"
                  @click="() => { calendar.onDateSelected(day) }">
-                {{ day._date }}
+                <div v-if="day && day.url" :style="{'background-image': day.url}" style="min-height: 80%; min-width: 100%;" class="img-bg"></div>
+                <div>{{ day._date }}</div>
                 <div class="dot red d-flex justify-content-center align-items-center"
                      v-if="day && day.ekadashi"></div>
                 <div class="dot blue d-flex justify-content-center align-items-center"
@@ -76,7 +76,8 @@ export default {
 .date {
     border-radius: 50%;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+    padding: 0;
 
     @include lg {
         height: 75px;
@@ -85,36 +86,33 @@ export default {
     @include sm-md {
         height: 50px;
     }
-
-    &::after {
-        content: " ";
-        position: absolute;
-        z-index: -1;
-        border-radius: 50%;
-        background-image: var(--eventBgImg);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position-x: center;
-        width: 100%;
-        height: 100%;
+    
+    .img-bg {
+        background-position-y: top;
     }
 }
 
 .dot {
+    $dot-measure: 30px;
+
+    @include sm-md {
+        $dot-measure: 24px;
+    }
+
     position: absolute;
     width: 15px;
     height: 15px;
     border-radius: 7.5px;
-    margin-top: 30px;
+    margin-top: $dot-measure;
 
     &.red {
-        background-color: #FA5858;
-        margin-left: -30px;
+        background-color: rgb(255, 215, 0);
+        margin-left: -$dot-measure;
     }
 
     &.blue {
         background-color: $primary;
-        margin-left: 30px;
+        margin-left: $dot-measure;
         font-size: 12px;
         font-weight: bold;
         color: white;

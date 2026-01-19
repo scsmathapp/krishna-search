@@ -2,9 +2,11 @@
     <div class="book d-flex">
         <div class="paragraph-title-list flex-column"
              :class="menuDisplay ? 'mob-show' : 'mob-hide'">
-            <div class="btn-group ks-border kirtan-opt position-sticky z-3">
-                <button class="btn" :class="display[1] ? 'active' : ''" @click="display = contents">Categorized</button>
-                <button class="btn" :class="!display[1] ? 'active' : ''" @click="display = index">A to Z</button>
+            <div class="position-sticky kirtan-opt z-3 d-flex">
+                <div class="btn-group ks-border flex-fill">
+                    <button class="btn" :class="displayContent ? 'active' : ''" @click="displayContent = true; display = contents;">Categorized</button>
+                    <button class="btn" :class="!displayContent ? 'active' : ''" @click="displayContent = false; display = index;">A to Z</button>
+                </div>
             </div>
             <div v-for="(content, contentIndex) in display" :key="contentIndex">
                 <h4 class="kirtan-title p-2 position-sticky z-3 mb-0 ks-font">{{ content.name }}</h4>
@@ -24,6 +26,12 @@
              @click="menuDisplay = false"
         ></div>
         <router-view></router-view>
+        <!-- Show chapter button for mobile -->
+        <button class="list-button position-fixed start-0
+                d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
+                @click="menuDisplay = true">
+            <i class="fa fa-caret-right"></i>
+        </button>
     </div>
 </template>
 <script>
@@ -37,6 +45,7 @@ export default {
             contents,
             index,
             display: contents,
+            displayContent: true,
             menuDisplay: false
         }
     }
@@ -46,10 +55,10 @@ export default {
 @import '@/assets/style/book.scss';
 
 .kirtan-opt {
-    top: 10px;
-    min-height: 40px;
+    top: 0;
+    min-height: 60px;
     background-color: #fff !important;
-    margin: 10px;
+    padding: 10px;
 }
 
 .kirtan-title {
