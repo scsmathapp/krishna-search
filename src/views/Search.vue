@@ -17,12 +17,17 @@
                             <span class="flex-fill ks-font">{{ book.title }}</span>
                             <a :href="`/#/book/${book.code}`"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </h5>
-                        <li class="list-group-item list-group-item-action p-2 cursor-pointer"
-                            v-for="paragraph in book.paragraphs"
-                            :class="selectedBookCode === book.code + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex ? 'active ks-font-secondary' : 'ks-font'"
-                            @click="selectSearch(paragraph, book.code)"
-                            v-html="paragraph.text">
-                        </li>
+                        <div v-for="(chapter, chapterIndex) in book.chaptersObj">
+                            <h6 class="p-2 d-flex position-sticky z-2 mb-0" style="top: 40px;">
+                                <span class="flex-fill ks-font">{{ chapter.title || '-- No chapter title --' }}</span>
+                            </h6>
+                            <li class="list-group-item list-group-item-action p-2 cursor-pointer"
+                                v-for="paragraph in chapter.paragraphs"
+                                :class="selectedBookCode === book.code + '-' + chapterIndex + '-' + paragraph.paragraphIndex ? 'active ks-font-secondary' : 'ks-font'"
+                                @click="selectSearch(paragraph, book.code)"
+                                v-html="paragraph.text">
+                            </li>
+                        </div>
                     </div>
                 </ul>
             </div>
@@ -125,14 +130,19 @@ export default {
                                     vm.searchResultsObj[book.code] = {
                                         title: book.title,
                                         code: book.code,
+                                        chaptersObj: {}
+                                    }
+                                }
+
+                                if (!vm.searchResultsObj[book.code].chaptersObj[chapterIndex]) {
+                                    vm.searchResultsObj[book.code].chaptersObj[chapterIndex] = {
+                                        title: chapter.title,
                                         paragraphs: []
                                     }
                                 }
 
-                                vm.searchResultsObj[book.code].paragraphs.push({
-                                    chapter: chapter.title,
+                                vm.searchResultsObj[book.code].chaptersObj[chapterIndex].paragraphs.push({
                                     paragraphIndex: paragraphIndex,
-                                    chapterIndex: chapterIndex,
                                     text: extractHighlightedSnippets(paragraph.highlightedText),
                                     class: paragraph.class
                                 });
@@ -488,4 +498,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '@/assets/style/book.scss';
+
+.paragraph-title-list h6 {
+    background-color: $secondary !important;
+}
 </style>
