@@ -7,13 +7,6 @@ module.exports = {
     publicPath: './',
     pwa: {
         name: 'Krishna Search',
-        themeColor: '#012863',
-        workboxPluginMode: 'GenerateSW',
-        workboxOptions: {
-            // 1. Force the new worker to immediately skip the waiting phase
-            skipWaiting: true,
-            // 2. Ensure the worker takes control of existing clients (tabs)
-            clientsClaim: true
-        }
+        themeColor: '#012863'
     }
 }

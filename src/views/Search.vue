@@ -1,6 +1,10 @@
 <template>
     <div>
         <div class="d-flex book">
+            <div :class="menuDisplay ?
+                        'paragraph-title-list d-flex position-fixed top-0 start-0 w-30 z-3' : 'd-none'"
+                 @click="menuDisplay = false"
+            ></div>
             <div class="paragraph-title-list flex-column"
                  :class="menuDisplay ? 'mob-show' : 'mob-hide'">
                 <b v-if="searchCount || searchCount === 0" class="d-flex justify-content-center m-2">
@@ -22,10 +26,6 @@
                     </div>
                 </ul>
             </div>
-            <div :class="menuDisplay ?
-                        'paragraph-title-list d-flex position-fixed top-0 end-0 w-30 z-3' : 'd-none'"
-                 @click="menuDisplay = false"
-            ></div>
             <div class="paragraph-list flex-fill d-flex flex-column align-items-center">
                 <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section">
                     <div class="paragraph" v-for="(paragraph, paragraphId) in chapter.paragraphs">
@@ -35,10 +35,10 @@
                 </section>
             </div>
         </div>
-        <button class="list-button position-fixed start-0
+        <button class="book-controls position-fixed
                 d-md-none d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
                 @click="menuDisplay = true">
-            <i class="fa fa-caret-right"></i>
+            <i class="fa fa-caret-left"></i>
         </button>
     </div>
 </template>

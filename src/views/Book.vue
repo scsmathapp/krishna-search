@@ -1,6 +1,10 @@
 <template>
     <div class="d-flex flex-column">
         <div class="book d-flex">
+            <div :class="menuDisplay ?
+                        'paragraph-title-list d-flex position-fixed top-0 start-0 w-30 z-3' : 'd-none'"
+                 @click="setMenuDisplay(false)"
+            ></div>
             <div class="paragraph-title-list flex-column"
                  :class="menuDisplay ? 'mob-show' : 'mob-hide'">
                 <h4 class="p-2 position-sticky top-0 z-3 mb-0 ks-font">{{ selectedBook.title }}</h4>
@@ -13,11 +17,9 @@
                     </li>
                 </ul>
             </div>
-            <div :class="menuDisplay ?
-                        'paragraph-title-list d-flex position-fixed top-0 end-0 w-30 z-3' : 'd-none'"
-                 @click="menuDisplay = false"
-            ></div>
-            <div class="paragraph-list flex-fill d-flex flex-column align-items-center" ref="paragraphList">
+            <div class="paragraph-list flex-fill d-flex flex-column align-items-center"
+                 :style="`font-size: ${fontSize}%`"
+                 ref="paragraphList">
                 <div v-for="(chapter, chapterId) in selectedBook.chapters" :id="chapterId" class="paragraph-section">
                     <div class="paragraph" v-for="paragraph in chapter.paragraphs">
                         <div v-html="paragraph.text" :class="paragraph.class"></div>
@@ -25,18 +27,16 @@
                 </div>
             </div>
         </div>
-        <!-- Show chapter button for mobile -->
-        <button class="list-button position-fixed start-0
-                d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
-                @click="menuDisplay = true">
-            <i class="fa fa-caret-right"></i>
-        </button>
+        <!-- Control functions for mobile -->
+        <BookControls @setMenuDisplay="setMenuDisplay"></BookControls>
     </div>
 </template>
 <script>
 import {mapGetters} from 'vuex';
+import BookControls from "../components/BookControls.vue";
 
 export default {
+    components: {BookControls},
     data() {
         return {
             book: {},
@@ -45,19 +45,15 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['selectedBook']),
+        ...mapGetters(['selectedBook', 'fontSize']),
         code() {
             return this.$route.params.code;
         }
     },
-    mounted() {
-        this.restoreScrollPosition();
-        this.addScrollListener();
-    },
     beforeDestroy() {
         this.removeScrollListener();
     },
-    created() {
+    mounted() {
         const vm = this;
 
         vm.loadBook();
@@ -73,6 +69,11 @@ export default {
                     vm.setupIntersectionObserver();
                 });
             }
+
+            setTimeout(() => {
+                this.restoreScrollPosition();
+                this.addScrollListener();
+            }, 1000);
         },
         scrollToSection(chapterId) {
             const vm = this,
@@ -118,6 +119,7 @@ export default {
         },
         // Throttle the save function to prevent performance issues
         throttledSaveScroll() {
+            console.log('vm.scrollTimer', this);
             const vm = this;
 
             if (vm.scrollTimer) {
@@ -140,7 +142,6 @@ export default {
 
                     if (el) {
                         el.scrollTop = parseInt(savedPosition, 10);
-                        // console.log(`Restored scroll for ${vm.articleId}: ${savedPosition}`);
                     }
                 });
             }
@@ -159,9 +160,11 @@ export default {
 
             if (el) {
                 el.removeEventListener('scroll', vm.throttledSaveScroll);
-                // Save the final position before component destruction
                 vm.saveScrollPosition();
             }
+        },
+        setMenuDisplay(value) {
+            this.menuDisplay = value;
         }
     }
 };

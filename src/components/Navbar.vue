@@ -104,12 +104,13 @@ export default {
         }
     },
     created() {
-        const vm = this;
+        const vm = this,
+            storedRoute = localStorage.getItem('route');
 
         vm.setBg(vm.$route.name);
 
-        if (localStorage.getItem('calendar') && vm.$route.path === '/') {
-            vm.$router.push('/calendar');
+        if (vm.$route.path === '/' && storedRoute) {
+            vm.$router.push(storedRoute);
         }
 
         setTimeout(() => {
@@ -244,13 +245,7 @@ export default {
         '$route'(to, from) {
             const vm = this;
 
-            if (to.path === '/calendar') {
-                localStorage.setItem('calendar', 1);
-            }
-
-            if (from.path === '/calendar') {
-                localStorage.removeItem('calendar');
-            }
+            localStorage.setItem('route', to.path);
 
             vm.setBg(to.name);
         }

@@ -19,11 +19,12 @@ export default {
                 {
                     name: '26.01',
                     details: [
-                        'Ability to filter by author or book title',
+                        'Vaishnava calendar has been added',
+                        'Kirtan Guide has been added',
+                        'Ability to filter by author or book title by tapping on the menu on the search bar',
                         'Tips on how to search by using \'+\' and \'|\' operators',
                         'Filter is automatically set to the current book being read',
                         'Resume your reading from where you left off',
-                        'Vaishnava calendar has been added',
                         'Enhanced navigation bar',
                     ]
                 },
