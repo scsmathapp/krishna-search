@@ -17,6 +17,18 @@ export default {
         return {
             versions: [
                 {
+                    name: '26.03',
+                    details: [
+                        'Share paragraphs to others',
+                        'Increase/decrease font size',
+                        '2026/2027 Vaishnava calendar added',
+                        'Reset search filter on leaving book page',
+                        'Resume your reading from where you left off (on Mobile)',
+                        'Chapters in search results',
+                        'Bug fixes'
+                    ]
+                },
+                {
                     name: '26.01',
                     details: [
                         'Vaishnava calendar has been added',

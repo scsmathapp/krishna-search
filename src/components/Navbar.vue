@@ -20,13 +20,13 @@
         <div class="position-absolute nav-menu d-flex align-items-center"
              :class="showNavMenu ? 'show-nav-menu' : ''">
             <ul class="list-group list-group-flush flex-fill">
-                <a href="/#/mission" class="list-group-item list-group-item-action">
+                <a href="/#/mission" class="list-group-item list-group-item-action"  @click="showNavMenu = false;">
                     <i class="fa fa-flag me-2"></i>Mission
                 </a>
-                <a href="/#/versions" class="list-group-item list-group-item-action">
+                <a href="/#/versions" class="list-group-item list-group-item-action"  @click="showNavMenu = false;">
                     <i class="fa fa-bell me-2"></i>What's new?
                 </a>
-                <a href="/v1.php" class="list-group-item list-group-item-action">
+                <a href="/v1.php" class="list-group-item list-group-item-action"  @click="showNavMenu = false;">
                     <i class="fa fa-history me-2"></i>Old version
                 </a>
             </ul>

@@ -15,7 +15,9 @@
                     <div v-for="book in searchResultsObj">
                         <h5 class="p-2 d-flex position-sticky top-0 z-3 mb-0">
                             <span class="flex-fill ks-font">{{ book.title }}</span>
-                            <a :href="`/#/book/${book.code}`"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            <a :href="`/#/book/${book.code}`" v-if="book.code !== 'en-KirtanGuide'">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
                         </h5>
                         <div v-for="(chapter, chapterIndex) in book.chaptersObj">
                             <h6 class="p-2 d-flex position-sticky z-2 mb-0" style="top: 40px;">
@@ -31,29 +33,22 @@
                     </div>
                 </ul>
             </div>
-            <div class="paragraph-list flex-fill d-flex flex-column align-items-center">
-                <section v-for="(chapter, chapterId) in selectedBook.chapters" class="paragraph-section">
-                    <div class="paragraph" v-for="(paragraph, paragraphId) in chapter.paragraphs">
-                        <div v-html="paragraph.highlightedText || paragraph.text" :class="paragraph.class"
-                             :id="chapterId + '-' + paragraphId"></div>
-                    </div>
-                </section>
-            </div>
+            <BookChapters :chapters="selectedBook.chapters" :bookCode="selectedBook.code"></BookChapters>
         </div>
-        <button class="book-controls position-fixed
-                d-md-none d-lg-none d-xl-none p-0 d-flex justify-content-center align-items-center"
-                @click="menuDisplay = true">
-            <i class="fa fa-caret-left"></i>
-        </button>
+        <!-- Control functions for mobile -->
+        <BookControls @setMenuDisplay="setMenuDisplay"></BookControls>
     </div>
 </template>
 <script>
 import {mapGetters} from 'vuex';
 import allBooks from '@/assets/books/allBooks.js';
+import BookControls from "../components/BookControls.vue";
+import BookChapters from "../components/BookChapters.vue";
 
 export default {
+    components: {BookChapters, BookControls},
     computed: {
-        ...mapGetters(['books'])
+        ...mapGetters(['books', 'fontSize'])
     },
     data() {
         return {
@@ -143,6 +138,7 @@ export default {
 
                                 vm.searchResultsObj[book.code].chaptersObj[chapterIndex].paragraphs.push({
                                     paragraphIndex: paragraphIndex,
+                                    chapterIndex: chapterIndex,
                                     text: extractHighlightedSnippets(paragraph.highlightedText),
                                     class: paragraph.class
                                 });
@@ -482,6 +478,9 @@ export default {
                     vm.menuDisplay = false;
                 }
             }, timeoutVal);
+        },
+        setMenuDisplay(value) {
+            this.menuDisplay = value;
         }
     },
     watch: {

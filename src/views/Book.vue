@@ -17,15 +17,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="paragraph-list flex-fill d-flex flex-column align-items-center"
-                 :style="`font-size: ${fontSize}%`"
-                 ref="paragraphList">
-                <div v-for="(chapter, chapterId) in selectedBook.chapters" :id="chapterId" class="paragraph-section">
-                    <div class="paragraph" v-for="paragraph in chapter.paragraphs">
-                        <div v-html="paragraph.text" :class="paragraph.class"></div>
-                    </div>
-                </div>
-            </div>
+            <BookChapters :chapters="selectedBook.chapters" :bookCode="code"></BookChapters>
         </div>
         <!-- Control functions for mobile -->
         <BookControls @setMenuDisplay="setMenuDisplay"></BookControls>
@@ -34,14 +26,17 @@
 <script>
 import {mapGetters} from 'vuex';
 import BookControls from "../components/BookControls.vue";
+import BookChapters from "../components/BookChapters.vue";
 
 export default {
-    components: {BookControls},
+    components: {BookControls, BookChapters},
     data() {
         return {
             book: {},
             selectedChapterId: null,
-            menuDisplay: false
+            menuDisplay: false,
+            sharedFlag: false,
+            paragraphListElement: null,
         }
     },
     computed: {
@@ -52,6 +47,7 @@ export default {
     },
     beforeDestroy() {
         this.removeScrollListener();
+        this.$store.commit('SET_FILTERED_BOOKS', []);
     },
     mounted() {
         const vm = this;
@@ -71,15 +67,26 @@ export default {
             }
 
             setTimeout(() => {
-                this.restoreScrollPosition();
+                vm.paragraphListElement = document.getElementById('paragraph-list');
+                if (vm.$route.query.c && vm.$route.query.p) {
+                    vm.sharedFlag = true;
+                    vm.scrollToSection(vm.$route.query.c, vm.$route.query.p);
+                } else {
+                    this.restoreScrollPosition();
+                }
+
                 this.addScrollListener();
             }, 1000);
         },
-        scrollToSection(chapterId) {
+        scrollToSection(chapterId, paragraphId = null) {
             const vm = this,
-                element = document.getElementById(chapterId);
+                element = document.getElementById(paragraphId ? (chapterId + '-' + paragraphId) : chapterId);
 
             if (element) {
+                if (vm.sharedFlag) {
+                    element.innerHTML = '<span class="highlight">' + element.innerHTML + '</span>';
+                }
+
                 element.scrollIntoView({behavior: "smooth", block: "start"});
                 vm.menuDisplay = false;
             }
@@ -109,7 +116,7 @@ export default {
         },
         saveScrollPosition() {
             const vm = this,
-                el = vm.$refs.paragraphList;
+                el = vm.paragraphListElement;
 
             if (el) {
                 // Save the vertical scroll position (scrollTop)
@@ -119,7 +126,6 @@ export default {
         },
         // Throttle the save function to prevent performance issues
         throttledSaveScroll() {
-            console.log('vm.scrollTimer', this);
             const vm = this;
 
             if (vm.scrollTimer) {
@@ -138,7 +144,7 @@ export default {
             if (savedPosition) {
                 // Use nextTick to ensure the DOM has rendered before scrolling
                 vm.$nextTick(() => {
-                    const el = vm.$refs.paragraphList;
+                    const el = vm.paragraphListElement;
 
                     if (el) {
                         el.scrollTop = parseInt(savedPosition, 10);
@@ -148,7 +154,7 @@ export default {
         },
         addScrollListener() {
             const vm = this,
-                el = vm.$refs.paragraphList;
+                el = vm.paragraphListElement;
 
             if (el) {
                 el.addEventListener('scroll', vm.throttledSaveScroll);
@@ -156,7 +162,7 @@ export default {
         },
         removeScrollListener() {
             const vm = this,
-                el = vm.$refs.paragraphList;
+                el = vm.paragraphListElement;
 
             if (el) {
                 el.removeEventListener('scroll', vm.throttledSaveScroll);

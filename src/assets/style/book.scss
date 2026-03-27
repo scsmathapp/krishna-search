@@ -3,28 +3,26 @@
 .book {
   .paragraph-list,
   .paragraph-title-list {
+    overflow-y: auto;
+
     @include lg {
       height: calc(100vh - 100px);
+    }
+
+    @include sm-md {
+      height: 100vh;
     }
   }
 
   .paragraph-list {
-    @include sm-md {
-      height: auto;
-    }
-
-    @include lg {
-      overflow-y: auto;
-    }
-
     .paragraph-section {
       box-shadow: grey 0 0 10px;
       max-width: 800px;
 
       @include sm-md {
-        padding: 10px;
-        margin: 10px auto 10px 5px;
-        width: 90vw;
+        padding: 10px 30px 10px 10px;
+        margin: 10px 0;
+        width: 95vw;
         font-size: 80%;
       }
 
@@ -37,15 +35,27 @@
       .paragraph {
         padding: 10px;
         text-align: justify;
+        position: relative;
+        
+        &:hover .fa-share-from-square {
+          display: block;
+        }
+        
+        .fa-share-from-square {
+          font-size: 20px;
+          position: absolute;
+          bottom: 0;
+          display: none;
+          left: 50%;
+          transform: translateX(-50%);
+          cursor: pointer;
+        }
       }
     }
   }
 
   .paragraph-title-list {
-    overflow-y: auto;
-
     @include sm-md {
-      height: 100vh;
       padding-bottom: 100px;
       display: flex;
       position: fixed;

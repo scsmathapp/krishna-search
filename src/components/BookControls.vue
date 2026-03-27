@@ -1,10 +1,10 @@
 <template>
-    <div class="book-controls position-fixed d-lg-none d-xl-none p-0 d-flex flex-column
+    <div class="book-controls position-fixed p-0 d-flex flex-column
             justify-content-center align-items-center" style="font-size: 17px;">
         <div class="d-flex justify-content-center align-items-center border-0 show-translation fw-bold"
              :class="showTranslation ? 'active' : ''"
              v-if="kirtanFlag"
-             @click="showTranslation = !showTranslation">
+             @click="toggleTranslation()">
             En
         </div>
         <div class="d-flex justify-content-center align-items-center border-0" v-if="kirtanFlag" @click="navigateKirtan()">
@@ -21,7 +21,7 @@
             <i class="fa-solid fa-font"></i>
             <i class="fa-solid fa-minus"></i>
         </div>
-        <div class="d-flex justify-content-center align-items-center border-0" @click="setMenuDisplay()">
+        <div class="d-flex justify-content-center align-items-center border-0" @click="setMenuDisplay()" v-if="isMobile">
             <i class="fa-solid fa-angles-left"></i>
         </div>
     </div>
@@ -31,7 +31,10 @@ import {mapGetters} from "vuex";
 
 export default {
     computed: {
-        ...mapGetters(['fontSize'])
+        ...mapGetters(['fontSize', 'showTranslation']),
+        isMobile() {
+            return this.windowWidth < 991.98;
+        }
     },
     props: {
         kirtanFlag: {
@@ -40,7 +43,7 @@ export default {
     },
     data() {
         return {
-            showTranslation: true
+            windowWidth: window.innerWidth
         }
     },
     methods: {
@@ -62,6 +65,9 @@ export default {
         },
         navigateKirtan(nextFlag) {
             this.$emit('navigateKirtan', nextFlag);
+        },
+        toggleTranslation() {
+            this.$store.commit('SET_SHOW_TRANSLATION', this.showTranslation ? false : true);
         }
     }
 }
@@ -81,6 +87,14 @@ export default {
     border-radius: 25px;
     box-shadow: black 0 0 10px;
     overflow: hidden;
+    
+    @include sm-md {
+        margin-right: 3px;
+    }
+    
+    @include lg {
+        margin-right: 20px;
+    }
     
     .show-translation,
     .fa-solid {

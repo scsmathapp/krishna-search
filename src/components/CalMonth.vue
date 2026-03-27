@@ -10,14 +10,14 @@
             <div v-for="(day, dayIndex) in week" :key="dayIndex"
                  :class="{ selectedDate: day && calendar.selectedDate._dateText === day._dateText,
                         today: day && calendar.today._dateText === day._dateText, 'fc-red' : dayIndex === 0 }"
-                 class="btn d-flex flex-column justify-content-center align-items-center date"
+                 class="d-flex flex-column justify-content-center align-items-center date"
                  @click="() => { calendar.onDateSelected(day) }">
                 <div v-if="day && day.url" :style="{'background-image': day.url}" style="min-height: 100%; min-width: 100%;" class="img-bg"></div>
                 <div v-else>{{ day._date }}</div>
                 <div class="dot red d-flex justify-content-center align-items-center"
-                     v-if="day && day.ekadashi && !day.url"></div>
+                     v-if="day && day.ekadashi"></div>
                 <div class="dot blue d-flex justify-content-center align-items-center"
-                     v-if="day && day.events && !day.url && ((day.events.length > 0) || (day.special))">
+                     v-if="day && day.events && ((day.events.length > 0) || (day.special))">
                     {{ day.special ? day.events.length + 1 : day.events.length }}
                 </div>
             </div>
@@ -89,8 +89,7 @@ export default {
     
     .img-bg {
         border-radius: 50%;
-        border: 2px solid $primary;
-        background-color: $primary;
+        background-color: rgba(1, 40, 99, 0.3);
         background-size: contain;
     }
 }

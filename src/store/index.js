@@ -12,7 +12,8 @@ export default new Vuex.Store({
         authorsFilterList: [],
         filteredBooks: [],
         kirtanGuide: {},
-        fontSize: 62.5
+        fontSize: 62.5,
+        showTranslation: true
     },
 
     mutations: {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         },
         SET_FONT_SIZE(state, fontSize) {
             state.fontSize = fontSize;
+        },
+        SET_SHOW_TRANSLATION(state, showTranslation) {
+            state.showTranslation = showTranslation;
         }
     },
 
@@ -152,6 +156,7 @@ export default new Vuex.Store({
         authorsFilterList: (state) => state.authorsFilterList,
         filteredBooks: (state) => state.filteredBooks,
         fontSize: (state) => state.fontSize,
+        showTranslation: (state) => state.showTranslation,
         kirtan: (state) => (kirtanCode) => state.kirtanGuide[kirtanCode]
     }
 });
