@@ -22,7 +22,8 @@
             <i class="fa-solid fa-minus"></i>
         </div>
         <div class="d-flex justify-content-center align-items-center border-0" @click="setMenuDisplay()" v-if="isMobile">
-            <i class="fa-solid fa-angles-left"></i>
+            <i class="fa-solid fa-angle-left me-1"></i>
+            <i class="fa-solid fa-list"></i>
         </div>
     </div>
 </template>
@@ -51,7 +52,7 @@ export default {
             const vm = this;
 
             if (add) {
-                if (vm.fontSize < 125) {
+                if (vm.fontSize < 150) {
                     vm.$store.commit('SET_FONT_SIZE', vm.fontSize + 12.5);
                 }
             } else {
@@ -83,7 +84,7 @@ export default {
     color: $primary;
     border: none;
     font-size: 24px;
-    width: 35px;
+    width: 45px;
     border-radius: 25px;
     box-shadow: black 0 0 10px;
     overflow: hidden;
@@ -96,6 +97,15 @@ export default {
         margin-right: 20px;
     }
     
+    .show-translation {
+        cursor: pointer;
+
+        &.active {
+            background-color: #315891 !important;
+            box-shadow: inset rgba(0, 0, 0, 0.7) 0 0 20px;
+        }
+    }
+    
     .show-translation,
     .fa-solid {
         font-size: 14px;
@@ -105,12 +115,16 @@ export default {
     .fa-minus {
         font-size: 8px;
     }
+    
+    .fa-angle-left {
+        font-size: 10px;
+    }
 
     & > div {
         padding: 10px 0;
         width: 100%;
-        border-radius: 17.5px;
-        height: 35px;
+        border-radius: 25px;
+        height: 45px;
 
         &:active {
             color: $secondary;

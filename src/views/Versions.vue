@@ -25,6 +25,7 @@ export default {
                         'Reset search filter on leaving book page',
                         'Resume your reading from where you left off (on Mobile)',
                         'Chapters in search results',
+                        'Show filter on clicking on search bar',
                         'Bug fixes'
                     ]
                 },

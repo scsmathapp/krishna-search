@@ -1,5 +1,5 @@
 <template>
-    <div class="book d-flex flex-fill">
+    <div class="book d-flex flex-fill kirtan">
         <BookChapters :chapters="[kirtan]" bookCode="en-KirtanGuide" v-if="kirtan"></BookChapters>
     </div>
 </template>
@@ -26,14 +26,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '@/assets/style/book.scss';
-
-.b60 {
-    padding-bottom: 0 !important;
-}
-
-.book .paragraph-list .paragraph-section {
-    @include sm-md {
-        padding-bottom: 60px;
-    }
-}
 </style>

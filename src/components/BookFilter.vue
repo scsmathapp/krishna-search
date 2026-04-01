@@ -34,7 +34,7 @@
                         <b>{{ author.name }}</b>
                     </div>
                 </div>
-                <div v-if="author.showBooks">
+                <div v-if="searchVal !== '' || author.showBooks">
                     <div v-for="(book, bookIndex) in author.books" :key="bookIndex"
                          class="list-group-item d-flex align-items-center"
                          :class="book.selected ? 'active' : ''"

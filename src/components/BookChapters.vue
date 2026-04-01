@@ -76,4 +76,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '@/assets/style/book.scss';
+
+.kirtan {
+    .b60 {
+        padding-bottom: 0 !important;
+    }
+    
+    .paragraph-list .paragraph-section {
+        @include sm-md {
+            padding-bottom: 60px;
+        }
+    }
+}
 </style>

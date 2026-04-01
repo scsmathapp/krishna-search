@@ -48,6 +48,7 @@ export default {
     beforeDestroy() {
         this.removeScrollListener();
         this.$store.commit('SET_FILTERED_BOOKS', []);
+        this.$store.dispatch('resetAuthorsFilterList');
     },
     mounted() {
         const vm = this;
@@ -87,7 +88,7 @@ export default {
                     element.innerHTML = '<span class="highlight">' + element.innerHTML + '</span>';
                 }
 
-                element.scrollIntoView({behavior: "smooth", block: "start"});
+                element.scrollIntoView({block: "start"});
                 vm.menuDisplay = false;
             }
         },

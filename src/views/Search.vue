@@ -60,6 +60,15 @@ export default {
             menuDisplay: false
         }
     },
+    beforeDestroy() {
+        this.books.forEach(book => {
+            book.chapters.forEach(chapter => {
+                chapter.paragraphs.forEach(paragraph => {
+                    paragraph.highlightedText = '';
+                });
+            });
+        });
+    },
     created() {
         const vm = this;
 

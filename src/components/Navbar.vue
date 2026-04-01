@@ -7,7 +7,8 @@
         <!-- Navigation buttons -->
         <div class="bar d-flex align-items-center">
             <div class="bg" :style="'transform: translateX(' + translatedX + 'px);'"></div>
-            <div class="slide-button" v-for="(btn, btnIndex) in btns" :key="btnIndex" :href="btn.href" @click="btnClick(btn)">
+            <div class="slide-button" v-for="(btn, btnIndex) in btns" :key="btnIndex" :href="btn.href"
+                 @click="btnClick(btn)">
                 <div v-if="btn.img">
                     <img :src="require('@/assets/icon/' + btn.img + '-s.png')" alt="Home" v-if="btn.selected">
                     <img :src="require('@/assets/icon/' + btn.img + '.png')" alt="Home" v-else>
@@ -20,30 +21,27 @@
         <div class="position-absolute nav-menu d-flex align-items-center"
              :class="showNavMenu ? 'show-nav-menu' : ''">
             <ul class="list-group list-group-flush flex-fill">
-                <a href="/#/mission" class="list-group-item list-group-item-action"  @click="showNavMenu = false;">
+                <a href="/#/mission" class="list-group-item list-group-item-action" @click="showNavMenu = false;">
                     <i class="fa fa-flag me-2"></i>Mission
                 </a>
-                <a href="/#/versions" class="list-group-item list-group-item-action"  @click="showNavMenu = false;">
+                <a href="/#/versions" class="list-group-item list-group-item-action" @click="showNavMenu = false;">
                     <i class="fa fa-bell me-2"></i>What's new?
                 </a>
-                <a href="/v1.php" class="list-group-item list-group-item-action"  @click="showNavMenu = false;">
+                <a href="/v1.php" class="list-group-item list-group-item-action" @click="showNavMenu = false;">
                     <i class="fa fa-history me-2"></i>Old version
                 </a>
             </ul>
         </div>
         <!-- Search -->
         <form @submit="doSearch" class="search-container d-flex justify-content-center align-items-center"
-              :class="isHome && isScrollTop ? 'search-center' : isShrunk ? 'shrink' : ''">
+              :class="inputClass">
             <div class="input-group search ks-border d-flex align-items-center">
-                <div class="d-flex align-items-center border-0 p-2"
-                     @click="showSearchFilterClick()" v-if="isInputShown">
-                    <i class="fa fa-list"></i>
-                    <span style="background-color: #0d6efd; border-radius: 7.5px; width: 15px; height: 15px; font-size: 10px; color: white; position: absolute; margin-top: -10px; margin-left: 10px; z-index: 7;"
-                        class="d-flex justify-content-center align-items-center" v-if="filteredBooks.length">
-                        {{ filteredBooks.length }}
-                    </span>
+                <div class="d-flex align-items-center border-0 p-2" v-if="isMobile && showSearchFilter"
+                     @click="showSearchFilter = false">
+                    <i class="fa fa-arrow-left"></i>
                 </div>
-                <input type="text" class="form-control border-0" v-model="searchVal" v-if="isInputShown">
+                <input type="text" class="form-control border-0" v-model="searchVal" v-if="isInputShown"
+                       @click="showSearchFilterClick()">
                 <div class="d-flex align-items-center border-0 p-2"
                      v-if="searchVal !== '' && isInputShown"
                      @click.stop="searchVal = ''">
@@ -52,6 +50,10 @@
                 <div class="d-flex align-items-center border-0 p-2"
                      @click="doSearch">
                     <i class="fa fa-search"></i>
+                    <span class="filter-badge d-flex justify-content-center align-items-center"
+                          v-if="filteredBooks.length">
+                        {{ filteredBooks.length }}
+                    </span>
                 </div>
             </div>
         </form>
@@ -78,6 +80,19 @@ export default {
         },
         isInputShown() {
             return !this.isMobile || (this.isHome && this.isScrollTop) || !this.isShrunk;
+        },
+        inputClass() {
+            const {isMobile, showSearchFilter, isScrollTop, isHome} = this;
+
+            if (isMobile && showSearchFilter) {
+                return 'search-top';
+            } else if (isHome && ((!isMobile && isScrollTop) || (isMobile && isScrollTop && !showSearchFilter))) {
+                return 'search-center';
+            } else if (!isHome || (isMobile && !isScrollTop && !showSearchFilter)) {
+                return 'shrink';
+            }
+
+            return '';
         }
     },
     data() {
@@ -90,11 +105,11 @@ export default {
             showNavMenu: false,
             showSearchFilter: false,
             btns: [
-                { text: 'Home', href: '/', img: 'home' },
+                {text: 'Home', href: '/', img: 'home'},
                 // { text: 'Mission', href: '/mission', icon: 'flag' },
-                { text: 'Kirtan', href: '/kirtan', img: 'kirtan' },
-                { text: 'Calendar', href: '/calendar', icon: 'calendar' },
-                { text: 'More', href: '#', icon: 'ellipsis-h', clickAction: this.showNavMenuClick }
+                {text: 'Kirtan', href: '/kirtan', img: 'kirtan'},
+                {text: 'Calendar', href: '/calendar', icon: 'calendar'},
+                {text: 'More', href: '#', icon: 'ellipsis-h', clickAction: this.showNavMenuClick}
             ],
             bgPositions: {
                 'Home': 0,
@@ -109,7 +124,7 @@ export default {
 
         vm.setBg(vm.$route.name);
 
-        if (vm.$route.path === '/' && storedRoute) {
+        if (vm.$route.path === '/' && storedRoute && vm.$route.path !== storedRoute) {
             vm.$router.push(storedRoute);
         }
 
@@ -133,8 +148,9 @@ export default {
 
             e.preventDefault();
 
-            if (!vm.isInputShown) {
+            if (vm.inputClass === 'shrink') {
                 vm.$set(vm, 'isShrunk', false);
+                vm.showSearchFilterClick();
 
                 setTimeout(() => {
                     document.querySelector('.search input').focus();
@@ -177,7 +193,7 @@ export default {
         },
         setBg(path) {
             const vm = this;
-            
+
             path = path === 'KirtanList' ? 'Kirtan' : path;
 
             const btnIndex = vm.bgPositions.hasOwnProperty(path) ? vm.bgPositions[path] : 3;
@@ -233,7 +249,7 @@ export default {
         },
         hideSearchFilter(e) {
             const vm = this,
-                isSearchFilter = e.target.closest('.search-filter');
+                isSearchFilter = e.target.closest('.search-filter') || e.target.closest('.search-container');
 
             if (!isSearchFilter) {
                 vm.showSearchFilter = false;
@@ -338,7 +354,7 @@ export default {
                     color: white;
                 }
             }
-            
+
             span {
                 margin-left: 5px;
             }
@@ -361,7 +377,7 @@ export default {
             left: 510px;
             margin-top: 0;
         }
-        
+
         @include sm-md {
             margin-left: 50px;
             margin-top: -75px;
@@ -380,20 +396,22 @@ export default {
                 margin-top: 185px;
             }
         }
-        
+
         .list-group-item {
             color: $primary;
         }
     }
 
     .search-filter {
-        min-width: 0;
-        max-width: 0;
+        min-height: 0;
+        max-height: 0;
         transition: all 0.2s ease;
         right: 0;
         top: 0;
         overflow: hidden;
         position: fixed;
+        min-width: 340px;
+        max-width: 340px;
 
         @include lg {
             margin-top: 100px;
@@ -402,6 +420,7 @@ export default {
         &.show-search-filter {
             margin-left: 0px;
             background-color: white;
+            overflow: hidden;
 
             @include lg {
                 min-height: calc(100vh - 100px);
@@ -412,18 +431,19 @@ export default {
             }
 
             @include sm-md {
-                min-height: 100vh;
-                max-height: 100vh;
-                min-width: 70%;
-                max-width: 70%;
+                min-height: calc(100vh - 50px);
+                max-height: calc(100vh - 50px);
+                min-width: 100vw;
+                max-width: 100vw;
+                top: 50px;
                 box-shadow: black 0 0 10px;
-                z-index: 6;
+                z-index: 5;
             }
         }
     }
 
     .search-container {
-        transition: all 0.5s ease;
+        transition: all 0.2s ease;
 
         @include lg {
             height: 100px;
@@ -433,7 +453,7 @@ export default {
             position: absolute;
             transform: translate(calc(50vw - 160px), 0);
         }
-        
+
         @include sm-md {
             height: 100px;
             position: absolute;
@@ -478,6 +498,19 @@ export default {
             }
         }
 
+        &.search-top {
+            @include sm-md {
+                transform: translateY(calc(-100vh + 75px));
+
+                .input-group {
+                    border-radius: 0;
+                    border: none;
+                    min-width: 100vw;
+                    max-width: 100vw;
+                }
+            }
+        }
+
         .search {
             background-color: white;
             overflow: hidden;
@@ -507,6 +540,27 @@ export default {
             input:focus {
                 outline: none;
                 box-shadow: none;
+            }
+
+            .filter-badge {
+                background-color: #0d6efd;
+                border-radius: 7.5px;
+                width: 15px;
+                height: 15px;
+                font-size: 10px;
+                color: white;
+                position: absolute;
+                z-index: 7;
+                
+                @include sm-md {
+                    margin-left: 10px;
+                    margin-top: -20px;
+                }
+                
+                @include lg {
+                    margin-left: 5px;
+                    margin-top: -17px;
+                }
             }
         }
     }
