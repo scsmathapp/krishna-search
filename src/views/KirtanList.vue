@@ -6,7 +6,7 @@
         ></div>
         <div class="paragraph-title-list flex-column"
              :class="menuDisplay ? 'mob-show' : 'mob-hide'">
-            <div class="position-sticky kirtan-opt z-3 d-flex">
+            <div class="position-sticky kirtan-opt z-4 d-flex">
                 <div class="btn-group ks-border flex-fill">
                     <button class="btn" :class="displayContent ? 'active' : ''" @click="displayContent = true; display = contents;">Categorized</button>
                     <button class="btn" :class="!displayContent ? 'active' : ''" @click="displayContent = false; display = index;">A to Z</button>

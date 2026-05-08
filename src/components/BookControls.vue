@@ -1,6 +1,6 @@
 <template>
     <div class="book-controls position-fixed p-0 d-flex flex-column
-            justify-content-center align-items-center" style="font-size: 17px;">
+            justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center border-0 show-translation fw-bold"
              :class="showTranslation ? 'active' : ''"
              v-if="kirtanFlag"
@@ -88,7 +88,8 @@ export default {
     border-radius: 25px;
     box-shadow: black 0 0 10px;
     overflow: hidden;
-    
+    cursor: pointer;
+
     @include sm-md {
         margin-right: 3px;
     }
@@ -98,8 +99,6 @@ export default {
     }
     
     .show-translation {
-        cursor: pointer;
-
         &.active {
             background-color: #315891 !important;
             box-shadow: inset rgba(0, 0, 0, 0.7) 0 0 20px;

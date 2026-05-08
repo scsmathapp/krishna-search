@@ -56,6 +56,50 @@ $breakpoints: ($all, $sm, $md, $lg);
   }
 }
 
+// Mobile + Tablet
+@mixin nav-sm-md-3 {
+  @media screen and (max-width: 369.9px) {
+    @content;
+  }
+}
+
+@mixin nav-sm-md-4 {
+  @media screen and (min-width: 370px) and (max-width: 419.9px) {
+    @content;
+  }
+}
+
+@mixin nav-sm-md-5 {
+  @media screen and (min-width: 420px) and (max-width: 991.9px) {
+    @content;
+  }
+}
+
+// Desktop
+@mixin nav-lg-2 {
+  @media screen and (min-width: 992px) and (max-width: 1019.9px) {
+    @content;
+  }
+}
+
+@mixin nav-lg-3 {
+  @media screen and (min-width: 1020px) and (max-width: 1149.9px) {
+    @content;
+  }
+}
+
+@mixin nav-lg-4 {
+  @media screen and (min-width: 1150px) and (max-width: 1279.9px) {
+    @content;
+  }
+}
+
+@mixin nav-lg-5 {
+  @media screen and (min-width: 1280px) {
+    @content;
+  }
+}
+
 @font-face {
   font-family: "KrishnaSearch";
   font-weight: 400;
@@ -167,4 +211,8 @@ a {
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
+}
+
+.z-4 {
+  z-index: 4 !important;
 }

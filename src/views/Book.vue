@@ -53,13 +53,13 @@ export default {
     mounted() {
         const vm = this;
 
-        vm.loadBook();
+        vm.loadBook(vm.code);
     },
     methods: {
-        async loadBook() {
+        async loadBook(code) {
             const vm = this;
 
-            await vm.$store.dispatch('setSelectedBook', vm.code);
+            await vm.$store.dispatch('setSelectedBook', code);
 
             if (window.innerWidth > 992) {
                 vm.$nextTick(() => {
@@ -172,6 +172,11 @@ export default {
         },
         setMenuDisplay(value) {
             this.menuDisplay = value;
+        }
+    },
+    watch: {
+        $route(to) {
+            this.loadBook(to.params.code);
         }
     }
 };

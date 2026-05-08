@@ -36,12 +36,17 @@
                 </div>
                 <div v-if="searchVal !== '' || author.showBooks">
                     <div v-for="(book, bookIndex) in author.books" :key="bookIndex"
-                         class="list-group-item d-flex align-items-center"
+                         class="list-group-item d-flex align-items-center p-0"
                          :class="book.selected ? 'active' : ''"
-                         @click.stop="$store.dispatch('selectBook', { bookIndex, authorIndex })"
                          v-if="book.name.toLowerCase().includes(searchVal.toLowerCase())">
-                        <i :class="book.selected ? 'fas fa-check-circle' : 'far fa-circle'" class="me-2"></i>
-                        <span>{{ book.name }}</span>
+                        <div class="flex-fill p-3" @click.stop="$store.dispatch('selectBook', { bookIndex, authorIndex })">
+                            <i :class="book.selected ? 'fas fa-check-circle' : 'far fa-circle'" class="me-2"></i>
+                            <span>{{ book.name }}</span>
+                        </div>
+                        <a :href="`/#/book/${book.code}`" @click.stop="$emit('hideSearchFilter')"
+                           class="open-book p-3">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -117,6 +122,11 @@ export default {
                 height: 20px;
                 font-size: 13px;
             }
+        }
+
+        .open-book {
+            width: 50px;
+            border-left: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
         }
 
         .list-group-item {

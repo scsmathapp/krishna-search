@@ -1,8 +1,8 @@
 <template>
-    <div class="pt-3 home">
+    <div class="home">
         <!-- Welcome text + bg -->
         <div :style="'background-image: url(' + require('@/assets/img/KSWelcome.jpg') + ');'"
-             class="welcome position-absolute top-0 left-0 d-flex flex-column justify-content-center align-items-center img-bg">
+             class="welcome d-flex flex-column justify-content-center align-items-center img-bg">
             <h1 class="mb-5 mt-4 ks-font-italic">Welcome to Krishna Search</h1>
             <p class="mt-5 ks-font-italic">Digital Library of Śrī Chaitanya Sāraswat Maṭh</p>
             <p class="ks-font">A dedicated tool for reading and exploring the teachings of devotion<br class="d-none d-md-flex d-lg-flex d-xl-flex" />
@@ -10,7 +10,7 @@
                 and Śrīla Bhakti Sundar Govinda Dev-Goswāmī Mahārāj.</p>
         </div>
         <!-- Books -->
-        <h1 class="color-default text-center ks-font">Our Library</h1>
+        <h1 class="color-default text-center ks-font mt-4">Our Library</h1>
         <div class="d-flex flex-wrap mx-1 mx-md-3 mx-lg-5 mx-xl-5">
             <div v-for="vaishnava in vaishnavas" v-if="vaishnava.books && vaishnava.books.length" :class="vaishnava.hasBookCover ? 'w-100' : 'w-sm-100 w-md-50 w-lg-50'">
                 <div class="vaishnava-book my-3" v-if="vaishnava.hasBookCover">
@@ -46,10 +46,9 @@
 <script>
 import vaishnavas from "@/assets/js/vaishnavas.js";
 import ImageScroller from '@/components/ImageScroller.vue';
-import Pic from '@/components/Pic.vue';
 
 export default {
-    components: { ImageScroller, Pic },
+    components: { ImageScroller },
     data() {
         return {
             vaishnavas
@@ -66,7 +65,7 @@ export default {
 @import '@/assets/style/style.scss';
 
 .welcome {
-    height: 650px;
+    height: 570px;
     background-position-y: top !important;
     text-align: center;
 
@@ -133,16 +132,6 @@ h2 {
     @include sm-md {
         font-size: 16px;
         padding: 5px;
-    }
-}
-
-.home {
-    @include sm-md {
-        margin-top: 650px;
-    }
-
-    @include lg {
-        margin-top: 570px;
     }
 }
 

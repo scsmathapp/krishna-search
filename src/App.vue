@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <Navbar class="d-flex"></Navbar>
-        <router-view class="view"></router-view>
+        <Navbar></Navbar>
+        <div class="view">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 <script>
@@ -14,3 +16,18 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+@import '@/assets/style/style.scss';
+
+.view {
+    overflow-y: auto;
+    
+    @include lg {
+        height: calc(100vh - 100px);
+    }
+    
+    @include sm-md {
+        height: 100dvh;
+    }
+}
+</style>

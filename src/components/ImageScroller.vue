@@ -28,11 +28,8 @@
     </div>
 </template>
 <script>
-import Pic from "./Pic.vue";
-
 export default {
     name: "ImageScroller",
-    components: {Pic},
     props: {
         vaishnava: {
             type: Object,

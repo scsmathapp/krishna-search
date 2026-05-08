@@ -7,20 +7,21 @@
             ></div>
             <div class="paragraph-title-list flex-column"
                  :class="menuDisplay ? 'mob-show' : 'mob-hide'">
-                <b v-if="searchCount || searchCount === 0" class="d-flex justify-content-center m-2">
-                    {{ searchCount }} results found
+                <b v-if="searchCount || searchCount === 0"
+                   class="d-flex justify-content-center p-2 position-sticky top-0 z-4">
+                    {{ searchCount }} results from {{ bookCount }} books
                 </b>
                 <div class="spinner" v-if="searchProgress"></div>
                 <ul class="list-group list-group-flush" v-else>
                     <div v-for="book in searchResultsObj">
-                        <h5 class="p-2 d-flex position-sticky top-0 z-3 mb-0">
+                        <h5 class="p-2 d-flex position-sticky z-3 mb-0" style="top: 40px;">
                             <span class="flex-fill ks-font">{{ book.title }}</span>
                             <a :href="`/#/book/${book.code}`" v-if="book.code !== 'en-KirtanGuide'">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
                         </h5>
                         <div v-for="(chapter, chapterIndex) in book.chaptersObj">
-                            <h6 class="p-2 d-flex position-sticky z-2 mb-0" style="top: 40px;">
+                            <h6 class="p-2 d-flex position-sticky z-2 mb-0" style="top: 80px;">
                                 <span class="flex-fill ks-font">{{ chapter.title || '-- No chapter title --' }}</span>
                             </h6>
                             <li class="list-group-item list-group-item-action p-2 cursor-pointer"
@@ -55,6 +56,7 @@ export default {
             searchResultsObj: {},
             selectedBook: {},
             searchCount: 0,
+            bookCount: 0,
             selectedBookCode: '',
             searchProgress: true,
             menuDisplay: false
@@ -92,6 +94,7 @@ export default {
 
             vm.searchResultsObj = {};
             vm.searchCount = 0;
+            vm.bookCount = 0;
             vm.selectedBook = {};
             vm.selectedBookCode = '';
 
@@ -131,6 +134,8 @@ export default {
                                 paragraph.highlightedText = highlightMatches(paragraph.text, matchResult.matches);
 
                                 if (!vm.searchResultsObj[book.code]) {
+                                    vm.bookCount++;
+
                                     vm.searchResultsObj[book.code] = {
                                         title: book.title,
                                         code: book.code,

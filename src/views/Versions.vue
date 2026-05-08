@@ -17,6 +17,16 @@ export default {
         return {
             versions: [
                 {
+                    name: '26.04',
+                    details: [
+                        'Book count in search results',
+                        'Show filter on clicking on search bar',
+                        'Open book from filter',
+                        'Larger book controls',
+                        'Bug fixes'
+                    ]
+                },
+                {
                     name: '26.03',
                     details: [
                         'Share paragraphs to others',
@@ -24,9 +34,7 @@ export default {
                         '2026/2027 Vaishnava calendar added',
                         'Reset search filter on leaving book page',
                         'Resume your reading from where you left off (on Mobile)',
-                        'Chapters in search results',
-                        'Show filter on clicking on search bar',
-                        'Bug fixes'
+                        'Chapters in search results'
                     ]
                 },
                 {
