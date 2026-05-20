@@ -244,6 +244,7 @@ export default {
                 max-height: calc(100dvh - 50px);
                 min-width: 100vw;
                 max-width: 100vw;
+                box-shadow: black 0 0 10px;
             }
 
             // X: (Screen width - width of (3 navs + more)) divide by 2 to center

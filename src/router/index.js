@@ -8,6 +8,7 @@ import Versions from '../views/Versions.vue'
 import Calendar from '../views/Calendar.vue'
 import KirtanList from '../views/KirtanList.vue'
 import Kirtan from '../views/Kirtan.vue'
+import Chat from '../views/Chat.vue'
 import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
@@ -46,6 +47,10 @@ const routes = [{
         name: 'Kirtan',
         component: Kirtan
     }]
+}, {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat
 }, {
     path: '/test',
     name: 'Test',
