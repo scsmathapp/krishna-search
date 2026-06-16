@@ -1,7 +1,7 @@
 [
   {
-    "name": "Intro",
-    "items": [
+    "title": "Intro",
+    "chapters": [
       {
         "id": "vande-ham-shri-guroh-shri-yuta-pada-kamalam",
         "title": "Vandanā"
@@ -85,8 +85,8 @@
     ]
   },
   {
-    "name": "Morning Songs",
-    "items": [
+    "title": "Morning Songs",
+    "chapters": [
       {
         "id": "jaya-jaya-girirajer-arati-vishiala",
         "title": "Śrī Govinda Kuṇḍa Gupta-Govardhan Ārati"
@@ -158,8 +158,8 @@
     ]
   },
   {
-    "name": "Midday Songs",
-    "items": [
+    "title": "Midday Songs",
+    "chapters": [
       {
         "id": "bhaja-bhakata-vatsala-shri-gaurahari",
         "title": "Śrī Bhog Ārati Gīti"
@@ -175,8 +175,8 @@
     ]
   },
   {
-    "name": "Evening Songs",
-    "items": [
+    "title": "Evening Songs",
+    "chapters": [
       {
         "id": "jaya-jaya-gaurachander-arotiko-shobha",
         "title": "Śrī Gaura-ārati"
@@ -212,8 +212,8 @@
     ]
   },
   {
-    "name": "Śrī Śrī Premadhāma-deva-stotram",
-    "items": [
+    "title": "Śrī Śrī Premadhāma-deva-stotram",
+    "chapters": [
       {
         "id": "deva-siddha-mukta-yukta-bhakta-vrinda",
         "title": "1-10. Saturday"
@@ -245,8 +245,8 @@
     ]
   },
   {
-    "name": "Songs to Śrī Nityānanda Prabhu",
-    "items": [
+    "title": "Songs to Śrī Nityānanda Prabhu",
+    "chapters": [
       {
         "id": "nadiya-godrume-nityananda-mahajana",
         "title": "Ājñā-Ṭahal"
@@ -278,8 +278,8 @@
     ]
   },
   {
-    "name": "Songs to Śrī Chaitanya Mahāprabhu",
-    "items": [
+    "title": "Songs to Śrī Chaitanya Mahāprabhu",
+    "chapters": [
       {
         "id": "gaurangera-duti-pada-jar-dhana-sampada",
         "title": "Sāvaraṇa-Śrī-Gaura-mahimā"
@@ -335,8 +335,8 @@
     ]
   },
   {
-    "name": "Other Songs",
-    "items": [
+    "title": "Other Songs",
+    "chapters": [
       {
         "id": "thakura-vaishnava-pada-avanira",
         "title": "Ṭhākura-vaiṣṇava-pada"
@@ -464,8 +464,8 @@
     ]
   },
   {
-    "name": "Śrī Śikṣāṣṭakam",
-    "items": [
+    "title": "Śrī Śikṣāṣṭakam",
+    "chapters": [
       {
         "id": "pita-varana-kali-pavana-gora",
         "title": "1. Pita-varaṇa kali"
@@ -513,8 +513,8 @@
     ]
   },
   {
-    "name": "Songs to Śrīmatī Rādhārāṇī",
-    "items": [
+    "title": "Songs to Śrīmatī Rādhārāṇī",
+    "chapters": [
       {
         "id": "radhika-charana-padma-sakala-shreyera",
         "title": "Śrī Rādhāṣṭaka 1"
@@ -538,8 +538,8 @@
     ]
   },
   {
-    "name": "Songs to Śrī Krishna",
-    "items": [
+    "title": "Songs to Śrī Krishna",
+    "chapters": [
       {
         "id": "he-deva-bhavantam-vande",
         "title": "He deva bhavantaṁ vande"
@@ -583,8 +583,8 @@
     ]
   },
   {
-    "name": "Songs on Special Days",
-    "items": [
+    "title": "Songs on Special Days",
+    "chapters": [
       {
         "id": "jaya-shrila-maharaja-charanaravinda",
         "title": "Āchārya-charaṇa-vandana"
@@ -652,8 +652,8 @@
     ]
   },
   {
-    "name": "Compositions of Śrīla Śrīdhar Mahārāj",
-    "items": [
+    "title": "Compositions of Śrīla Śrīdhar Mahārāj",
+    "chapters": [
       {
         "id": "ha-ha-bhaktivinoda-thakkura-guroh",
         "title": "Śrīmad Bhakti Vinod-viraha Daśakam"
@@ -681,8 +681,8 @@
     ]
   },
   {
-    "name": "Compositions of Śrīla Govinda Mahārāj",
-    "items": [
+    "title": "Compositions of Śrīla Govinda Mahārāj",
+    "chapters": [
       {
         "id": "shri-svarupa-raya-rupa-jiva-bhava",
         "title": "Praṇām Mantra to Śrīla Guru Mahārāj"

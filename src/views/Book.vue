@@ -1,38 +1,32 @@
 <template>
     <div class="d-flex flex-column">
         <div class="book d-flex">
-            <div :class="menuDisplay ?
-                        'paragraph-title-list d-flex position-fixed top-0 start-0 w-30 z-3' : 'd-none'"
+            <div class="paragraph-title-list position-fixed top-0 start-0 w-100"
+                 :class="menuDisplay ? 'd-flex' : 'd-none'"
                  @click="setMenuDisplay(false)"
             ></div>
-            <div class="paragraph-title-list flex-column"
-                 :class="menuDisplay ? 'mob-show' : 'mob-hide'">
-                <h4 class="p-2 position-sticky top-0 z-3 mb-0 ks-font">{{ selectedBook.title }}</h4>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action cursor-pointer"
-                        v-for="(chapter, chapterId) in selectedBook.chapters"
-                        :class="('' + selectedChapterId) === ('' + chapterId) ? 'active ks-font-secondary' : 'ks-font'"
-                        @click="scrollToSection(chapterId)">
-                        {{ chapter.title || (chapterId === 0 ? 'Cover' : '-- No title --') }}
-                    </li>
-                </ul>
-            </div>
+            <BookSidebar :books="books"
+                         :selectedParagraphCode="selectedChapterId"
+                         :hasParagraph="false"
+                         :class="menuDisplay ? 'mob-show' : 'mob-hide'"
+                         @selectBookContent="scrollToSection"></BookSidebar>
             <BookChapters :chapters="selectedBook.chapters" :bookCode="code"></BookChapters>
         </div>
         <!-- Control functions for mobile -->
-        <BookControls @setMenuDisplay="setMenuDisplay"></BookControls>
+        <BookControls @setMenuDisplay="setMenuDisplay" pageType="chapters"></BookControls>
     </div>
 </template>
 <script>
 import {mapGetters} from 'vuex';
 import BookControls from "../components/BookControls.vue";
 import BookChapters from "../components/BookChapters.vue";
+import BookSidebar from "@/components/BookSidebar.vue";
 
 export default {
-    components: {BookControls, BookChapters},
+    components: {BookSidebar, BookControls, BookChapters},
     data() {
         return {
-            book: {},
+            books: {},
             selectedChapterId: null,
             menuDisplay: false,
             sharedFlag: false,
@@ -67,19 +61,24 @@ export default {
                 });
             }
 
+            vm.books = [{
+                title: vm.selectedBook.title,
+                chapters: vm.selectedBook.chapters
+            }];
+
             setTimeout(() => {
                 vm.paragraphListElement = document.getElementById('paragraph-list');
                 if (vm.$route.query.c && vm.$route.query.p) {
                     vm.sharedFlag = true;
-                    vm.scrollToSection(vm.$route.query.c, vm.$route.query.p);
+                    vm.scrollToSection(0, vm.$route.query.c, vm.$route.query.p);
                 } else {
-                    this.restoreScrollPosition();
+                    vm.restoreScrollPosition();
                 }
 
-                this.addScrollListener();
+                vm.addScrollListener();
             }, 1000);
         },
-        scrollToSection(chapterId, paragraphId = null) {
+        scrollToSection(bookId, chapterId, paragraphId) {
             const vm = this,
                 element = document.getElementById(paragraphId ? (chapterId + '-' + paragraphId) : chapterId);
 
@@ -105,7 +104,7 @@ export default {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
                             // Update currentSection with the visible section's ID
-                            vm.selectedChapterId = entry.target.id;
+                            vm.selectedChapterId = '0-' + entry.target.id;
                         }
                     });
                 }, options);
@@ -121,7 +120,7 @@ export default {
 
             if (el) {
                 // Save the vertical scroll position (scrollTop)
-                localStorage.setItem(vm.code, el.scrollTop);
+                localStorage.setItem(vm.code, JSON.stringify([el.scrollTop, new Date()]));
                 // console.log(`Saved scroll for ${vm.articleId}: ${el.scrollTop}`);
             }
         },
@@ -140,17 +139,31 @@ export default {
         // Attempt to restore scroll position from localStorage
         restoreScrollPosition() {
             const vm = this,
-                savedPosition = localStorage.getItem(vm.code);
+                bookScrollConfig = localStorage.getItem(vm.code);
 
-            if (savedPosition) {
-                // Use nextTick to ensure the DOM has rendered before scrolling
-                vm.$nextTick(() => {
-                    const el = vm.paragraphListElement;
+            let savedPosition;
 
-                    if (el) {
-                        el.scrollTop = parseInt(savedPosition, 10);
+            if (bookScrollConfig) {
+                if (bookScrollConfig.startsWith('[')) {
+                    try {
+                        const configArr = JSON.parse(bookScrollConfig);
+                        savedPosition = configArr[0];
+                    } catch (e) {
                     }
-                });
+                } else {
+                    savedPosition = bookScrollConfig;
+                }
+
+                if (savedPosition) {
+                    // Use nextTick to ensure the DOM has rendered before scrolling
+                    vm.$nextTick(() => {
+                        const el = vm.paragraphListElement;
+
+                        if (el) {
+                            el.scrollTop = parseInt(savedPosition, 10);
+                        }
+                    });
+                }
             }
         },
         addScrollListener() {

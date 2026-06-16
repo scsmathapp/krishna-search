@@ -1,43 +1,22 @@
 <template>
     <div>
         <div class="d-flex book">
-            <div :class="menuDisplay ?
-                        'paragraph-title-list d-flex position-fixed top-0 start-0 w-30 z-3' : 'd-none'"
-                 @click="menuDisplay = false"
+            <div class="paragraph-title-list position-fixed top-0 start-0 w-100"
+                 :class="menuDisplay ? 'd-flex' : 'd-none'"
+                 @click="setMenuDisplay(false)"
             ></div>
-            <div class="paragraph-title-list flex-column"
-                 :class="menuDisplay ? 'mob-show' : 'mob-hide'">
-                <b v-if="searchCount || searchCount === 0"
-                   class="d-flex justify-content-center p-2 position-sticky top-0 z-4">
-                    {{ searchCount }} results from {{ bookCount }} books
-                </b>
-                <div class="spinner" v-if="searchProgress"></div>
-                <ul class="list-group list-group-flush" v-else>
-                    <div v-for="book in searchResultsObj">
-                        <h5 class="p-2 d-flex position-sticky z-3 mb-0" style="top: 40px;">
-                            <span class="flex-fill ks-font">{{ book.title }}</span>
-                            <a :href="`/#/book/${book.code}`" v-if="book.code !== 'en-KirtanGuide'">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </a>
-                        </h5>
-                        <div v-for="(chapter, chapterIndex) in book.chaptersObj">
-                            <h6 class="p-2 d-flex position-sticky z-2 mb-0" style="top: 80px;">
-                                <span class="flex-fill ks-font">{{ chapter.title || '-- No chapter title --' }}</span>
-                            </h6>
-                            <li class="list-group-item list-group-item-action p-2 cursor-pointer"
-                                v-for="paragraph in chapter.paragraphs"
-                                :class="selectedBookCode === book.code + '-' + chapterIndex + '-' + paragraph.paragraphIndex ? 'active ks-font-secondary' : 'ks-font'"
-                                @click="selectSearch(paragraph, book.code)"
-                                v-html="paragraph.text">
-                            </li>
-                        </div>
-                    </div>
-                </ul>
-            </div>
+            <BookSidebar :searchCount="searchCount"
+                         :bookCount="bookCount"
+                         :searchProgress="searchProgress"
+                         :books="searchResultsObj"
+                         :selectedParagraphCode="selectedParagraphCode"
+                         :class="menuDisplay ? 'mob-show' : 'mob-hide'"
+                         :hasParagraph="true"
+                         @selectBookContent="selectSearch"></BookSidebar>
             <BookChapters :chapters="selectedBook.chapters" :bookCode="selectedBook.code"></BookChapters>
         </div>
         <!-- Control functions for mobile -->
-        <BookControls @setMenuDisplay="setMenuDisplay"></BookControls>
+        <BookControls @setMenuDisplay="setMenuDisplay" pageType="results" v-if="!menuDisplay"></BookControls>
     </div>
 </template>
 <script>
@@ -45,9 +24,10 @@ import {mapGetters} from 'vuex';
 import allBooks from '@/assets/books/allBooks.js';
 import BookControls from "../components/BookControls.vue";
 import BookChapters from "../components/BookChapters.vue";
+import BookSidebar from "../components/BookSidebar.vue";
 
 export default {
-    components: {BookChapters, BookControls},
+    components: {BookChapters, BookControls, BookSidebar},
     computed: {
         ...mapGetters(['books', 'fontSize'])
     },
@@ -57,7 +37,7 @@ export default {
             selectedBook: {},
             searchCount: 0,
             bookCount: 0,
-            selectedBookCode: '',
+            selectedParagraphCode: '',
             searchProgress: true,
             menuDisplay: false
         }
@@ -96,7 +76,7 @@ export default {
             vm.searchCount = 0;
             vm.bookCount = 0;
             vm.selectedBook = {};
-            vm.selectedBookCode = '';
+            vm.selectedParagraphCode = '';
 
             if (!searchVal || !vm.books.length) {
                 return;
@@ -107,7 +87,7 @@ export default {
             if (filteredBooks.length) {
                 filteredBooks.forEach(bIndex => {
                     if (allBooks[bIndex]) {
-                        filterMap[allBooks[bIndex]] = true;
+                        filterMap[bIndex] = true;
                     }
                 });
 
@@ -119,7 +99,7 @@ export default {
                 const book = vm.books[bookIndex];
                 let chapterIndex = 0;
 
-                if (!filteredBooks.length || filterMap[book.code]) {
+                if (!filteredBooks.length || filterMap[book.bookIndex]) {
                     while (chapterIndex < book.chapters.length) {
                         const chapter = book.chapters[chapterIndex];
                         let paragraphIndex = 0;
@@ -128,34 +108,33 @@ export default {
                             const paragraph = chapter.paragraphs[paragraphIndex];
                             const matchResult = evaluate(ast, removeDiacritics(paragraph.text));
 
-                            paragraph.highlightedText = '';
+                            vm.$set(paragraph, 'highlightedText', '');
 
                             if (matchResult && matchResult.matched) {
                                 paragraph.highlightedText = highlightMatches(paragraph.text, matchResult.matches);
 
-                                if (!vm.searchResultsObj[book.code]) {
+                                if (!vm.searchResultsObj[book.bookIndex]) {
                                     vm.bookCount++;
 
-                                    vm.searchResultsObj[book.code] = {
+                                    vm.searchResultsObj[book.bookIndex] = {
                                         title: book.title,
                                         code: book.code,
-                                        chaptersObj: {}
+                                        chapters: {}
                                     }
                                 }
 
-                                if (!vm.searchResultsObj[book.code].chaptersObj[chapterIndex]) {
-                                    vm.searchResultsObj[book.code].chaptersObj[chapterIndex] = {
+                                if (!vm.searchResultsObj[book.bookIndex].chapters[chapterIndex]) {
+                                    vm.searchResultsObj[book.bookIndex].chapters[chapterIndex] = {
                                         title: chapter.title,
-                                        paragraphs: []
+                                        paragraphs: {}
                                     }
                                 }
 
-                                vm.searchResultsObj[book.code].chaptersObj[chapterIndex].paragraphs.push({
-                                    paragraphIndex: paragraphIndex,
-                                    chapterIndex: chapterIndex,
+                                vm.searchResultsObj[book.bookIndex].chapters[chapterIndex]
+                                    .paragraphs[paragraphIndex] = {
                                     text: extractHighlightedSnippets(paragraph.highlightedText),
                                     class: paragraph.class
-                                });
+                                };
 
                                 vm.searchCount++;
                             }
@@ -168,7 +147,7 @@ export default {
                 bookIndex++;
             }
 
-            if (window.innerWidth < 768) {
+            if (window.innerWidth < 991.98) {
                 vm.menuDisplay = true;
             }
 
@@ -473,19 +452,21 @@ export default {
                 return htmlResult;
             }
         },
-        selectSearch(paragraph, bookCode) {
+        selectSearch(bookIndex, chapterIndex, paragraphIndex) {
             const vm = this;
             let timeoutVal = 0;
+            
+            bookIndex = parseInt(bookIndex);
 
-            if (vm.selectedBook.code !== bookCode) {
-                vm.selectedBook = vm.books.find(book => book.code === bookCode);
+            if (vm.selectedBook.bookIndex !== bookIndex) {
+                vm.selectedBook = vm.books.find(book => book.bookIndex === bookIndex);
                 timeoutVal = 200;
             }
 
-            vm.selectedBookCode = bookCode + '-' + paragraph.chapterIndex + '-' + paragraph.paragraphIndex;
+            vm.selectedParagraphCode = bookIndex + '-' + chapterIndex + '-' + paragraphIndex;
 
             setTimeout(() => {
-                const element = document.getElementById(paragraph.chapterIndex + '-' + paragraph.paragraphIndex);
+                const element = document.getElementById(chapterIndex + '-' + paragraphIndex);
 
                 if (element) {
                     element.scrollIntoView({block: "start", behavior: "instant"});
@@ -511,8 +492,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '@/assets/style/book.scss';
-
-.paragraph-title-list h6 {
-    background-color: $secondary !important;
-}
 </style>

@@ -1,60 +1,54 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Book from '../views/Book.vue'
-import Search from '../views/Search.vue'
-import Mission from '../views/Mission.vue'
-import Versions from '../views/Versions.vue'
-import Calendar from '../views/Calendar.vue'
-import KirtanList from '../views/KirtanList.vue'
-import Kirtan from '../views/Kirtan.vue'
-import Chat from '../views/Chat.vue'
-import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import('@/views/Home.vue')
 }, {
     path: '/book/:code',
     name: 'Book',
-    component: Book
+    component: () => import('@/views/Book.vue')
 }, {
     path: '/search',
     name: 'Search',
-    component: Search
+    component: () => import('@/views/Search.vue')
 }, {
     path: '/mission',
     name: 'Mission',
-    component: Mission
+    component: () => import('@/views/Mission.vue')
 }, {
     path: '/versions',
     name: 'Versions',
-    component: Versions
+    component: () => import('@/views/Versions.vue')
 }, {
     path: '/calendar',
     name: 'Calendar',
-    component: Calendar
+    component: () => import('@/views/Calendar.vue')
 }, {
     path: '/kirtan',
     name: 'KirtanList',
-    component: KirtanList,
+    component: () => import('@/views/KirtanList.vue'),
     redirect: '/kirtan/vande-ham-shri-guroh-shri-yuta-pada-kamalam',
     children: [{
         path: ':kirtanCode',
         name: 'Kirtan',
-        component: Kirtan
+        component: () => import('@/views/Kirtan.vue')
     }]
 }, {
     path: '/chat',
     name: 'Chat',
-    component: Chat
+    component: () => import('@/views/Chat.vue')
+}, {
+    path: '/favourites',
+    name: 'Favourites',
+    component: () => import('@/views/Favourites.vue')
 }, {
     path: '/test',
     name: 'Test',
-    component: Test
+    component: () => import('@/views/Test.vue')
 }];
 
 const router = new VueRouter({

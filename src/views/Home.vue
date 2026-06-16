@@ -5,14 +5,19 @@
              class="welcome d-flex flex-column justify-content-center align-items-center img-bg">
             <h1 class="mb-5 mt-4 ks-font-italic">Welcome to Krishna Search</h1>
             <p class="mt-5 ks-font-italic">Digital Library of Śrī Chaitanya Sāraswat Maṭh</p>
-            <p class="ks-font">A dedicated tool for reading and exploring the teachings of devotion<br class="d-none d-md-flex d-lg-flex d-xl-flex" />
-                in the tradition of Śrīla Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj<br class="d-none d-md-flex d-lg-flex d-xl-flex" />
-                and Śrīla Bhakti Sundar Govinda Dev-Goswāmī Mahārāj.</p>
+            <p class="ks-font">
+                A dedicated tool for reading and exploring the teachings of devotion
+                <br class="d-none d-md-flex d-lg-flex d-xl-flex" />
+                in the tradition of Śrīla Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj
+                <br class="d-none d-md-flex d-lg-flex d-xl-flex" />
+                and Śrīla Bhakti Sundar Govinda Dev-Goswāmī Mahārāj.
+            </p>
         </div>
         <!-- Books -->
         <h1 class="color-default text-center ks-font mt-4">Our Library</h1>
         <div class="d-flex flex-wrap mx-1 mx-md-3 mx-lg-5 mx-xl-5">
-            <div v-for="vaishnava in vaishnavas" v-if="vaishnava.books && vaishnava.books.length" :class="vaishnava.hasBookCover ? 'w-100' : 'w-sm-100 w-md-50 w-lg-50'">
+            <div v-for="vaishnava in vaishnavas" v-if="vaishnava.books && vaishnava.books.length"
+                 :class="vaishnava.hasBookCover ? 'w-100' : 'w-sm-100 w-md-50 w-lg-50'">
                 <div class="vaishnava-book my-3" v-if="vaishnava.hasBookCover">
                     <h2 class="p-3 ks-font">
                         {{ vaishnava.name }}
@@ -46,6 +51,7 @@
 <script>
 import vaishnavas from "@/assets/js/vaishnavas.js";
 import ImageScroller from '@/components/ImageScroller.vue';
+import allBooks from '@/assets/books/allBooks.js';
 
 export default {
     components: { ImageScroller },
@@ -55,9 +61,50 @@ export default {
         }
     },
     created() {
-        const vm = this;
+        const vm = this,
+            books = [];
+
+        let book;
         
-        vm.imageList = vm.vaishnavas.GovindaMhj.books.map(book => require(`@/assets/books/cover/${book.bookCode}.jpg`));
+        if (vm.vaishnavas[0] && vm.vaishnavas[0].isContinue) {
+            vm.vaishnavas.shift();
+        }
+
+        Object.entries(localStorage).forEach(([key, value]) => {
+            if (allBooks.findIndex(bookCode => bookCode === key) > -1) {
+                vaishnavas.forEach((vaishnava) => {
+                    book = vaishnava.books.find(book => book.code === key);
+
+                    if (book) {
+                        if (value.startsWith('[')) {
+                            try {
+                                const configArr = JSON.parse(value);
+                                book.date = configArr[1];
+                            } catch (e) {}
+                        }
+
+                        books.push(book);
+                        return false;
+                    }
+                });
+            }
+        });
+        
+        if (books.length > 0) {
+            books.sort((a, b) => {
+                const dateA = a.date ? new Date(a.date).getTime() : 0;
+                const dateB = b.date ? new Date(b.date).getTime() : 0;
+
+                return dateB - dateA;
+            });
+
+            vm.vaishnavas.unshift({
+                name: 'Continue reading...',
+                hasBookCover: true,
+                isContinue: true,
+                books
+            });
+        }
     }
 };
 </script>
@@ -70,7 +117,7 @@ export default {
     text-align: center;
 
     @include lg {
-        width: 99vw;
+        width: 100%;
     }
 
     @include sm-md {

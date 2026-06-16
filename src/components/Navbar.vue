@@ -225,7 +225,8 @@ export default {
 
         &.show-search-filter {
             margin-left: 0;
-            background-color: white;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
             overflow: hidden;
             z-index: 5;
 

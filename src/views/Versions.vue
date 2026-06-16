@@ -17,6 +17,17 @@ export default {
         return {
             versions: [
                 {
+                    name: '26.06',
+                    details: [
+                        '\'Continue reading\' section in Homepage',
+                        'Bookmark your loved texts in the Favourites tab',
+                        'More tabs visible in the Navbar (according to your screen size)',
+                        'Now you understand better with text below icons',
+                        'Big text for a few seconds',
+                        'New App icon'
+                    ]
+                },
+                {
                     name: '26.04',
                     details: [
                         'Book count in search results',

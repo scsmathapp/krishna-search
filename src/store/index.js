@@ -50,11 +50,13 @@ export default new Vuex.Store({
                 }
             }
 
-            for (const filename of allBooks) {
+            for (const [fileIndex, fileName] of allBooks.entries()) {
                 // Adjust the path as needed to your book folder
-                const module = await import(`@/assets/books/json/${filename}.json`);
+                const module = await import(`@/assets/books/json/${fileName}.json`);
+                const book = module.default || module;
+                book.bookIndex = fileIndex;
 
-                books.push(module.default || module);
+                books.push(book);
             }
             
             const kirtanGuide = books.find(book => book.code === 'en-KirtanGuide'),

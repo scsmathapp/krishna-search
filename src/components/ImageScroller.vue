@@ -1,6 +1,6 @@
 <template>
     <div class="image-gallery">
-        <div class="scroll-btn left align-items-center justify-content-center"
+        <div class="scroll-btn left align-items-center justify-content-center start-0"
              :class="{ hidden: isAtStart }"
              @click="scroll('left')">
             <span><i class="fa fa-solid fa-chevron-left"></i></span>
@@ -11,8 +11,10 @@
              @scroll="updateButtons">
             <div v-for="book in vaishnava.books">
                 <a :href="'/#/book/' + book.code" class="book-card d-flex flex-column cursor-pointer">
-                    <div v-if="book.bookCode" class="ks-border img-bg"
-                         :style="'background-image: url(' + require(`@/assets/books/cover/${book.bookCode}.jpg`) + ');'"></div>
+                    <div class="ks-border img-bg"
+                         :style="book.bookCode ?
+                            `background-image: url(${require(`@/assets/books/cover/${book.bookCode}.jpg`)});` :
+                            ''"></div>
                     <div class="d-flex justify-content-center align-items-center text-center pt-2">
                         <p class="ks-font f-18">{{ book.name }}</p>
                     </div>
@@ -20,7 +22,7 @@
             </div>
         </div>
 
-        <div class="scroll-btn right align-items-center justify-content-center"
+        <div class="scroll-btn right align-items-center justify-content-center end-0"
              :class="{ hidden: isAtEnd }"
              @click="scroll('right')">
             <span><i class="fa fa-solid fa-chevron-right"></i></span>
@@ -87,13 +89,24 @@ p {
         padding: 10px 0;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE & Edge */
-        width: 100%; /* Adjust as needed */
+
+        @include lg {
+            width: 95vw;
+        }
+
+        @include sm-md {
+            width: 100vw;
+        }
 
         .book-card {
             margin: 10px 10px 0 10px;
 
             @include lg {
-                margin: 10px 10px 0 10px;
+                width: 150px;
+            }
+
+            @include sm-md {
+                width: 100px;
             }
 
             .img-bg {
@@ -137,31 +150,18 @@ p {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: transparent;
         border: none;
         padding: 0;
         height: 100%;
-        width: 70px; /* Width of the gradient overlay area */
+        width: 50px; /* Width of the gradient overlay area */
         cursor: pointer;
         z-index: 2;
         display: flex;
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(1.8px);
 
-        &.left, &.right {
-            &:hover {
-                background: rgba(0, 0, 0, 0.6);
-            }
-        }
-
-        /* Left gradient */
-        &.left {
-            left: 0;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.6), transparent);
-        }
-
-        /* Right gradient */
-        &.right {
-            right: 0;
-            background: linear-gradient(to left, rgba(0, 0, 0, 0.6), transparent);
+        &:hover {
+            background: rgba(0, 0, 0, 0.4);
         }
 
         /* Arrow text style */
@@ -182,6 +182,10 @@ p {
 
             &:hover {
                 background: rgba(0, 0, 0, 0.05);
+            }
+            
+            span {
+                color: rgba(255, 255, 255, 0.2);
             }
         }
     }

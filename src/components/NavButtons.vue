@@ -1,18 +1,19 @@
 <template>
-    <div class="bar d-flex align-items-center flex-fill">
+    <div class="bar d-flex align-items-center flex-fill"
+         :class="`${showNavMenu ? '' : 'blur'}`">
         <div class="bg" :class="bgPos"></div>
         <div class="d-flex align-items-center flex-fill" id="btns">
-            <a :href="btn.href" class="slide-button"
+            <a :href="btn.href" class="slide-button d-flex flex-column flex-lg-row flex-xl-row justify-content-center align-items-center"
                :class="(btn.activeFlag ? 'active-nav' : '') + (showNavMenu ? ' selected' : '')"
                v-for="(btn, btnIndex) in btns" :key="btnIndex" @click="btnClick(btn)">
-                <i :class="btn.class"></i>
-                <span class="d-none d-lg-flex d-xl-flex">{{ btn.name }}</span>
+                <i :class="btn.class" class="d-flex align-items-center"></i>
+                <span class="d-flex">{{ btn.name }}</span>
             </a>
         </div>
         <div class="position-absolute nav-menu d-flex align-items-center"
              :class="showNavMenu ? 'show-nav-menu' : ''">
             <ul class="list-group list-group-flush flex-fill">
-                <a :href="btn.href" class="list-group-item list-group-item-action"
+                <a :href="btn.href" class="nav-menu-item"
                    v-for="(btn, btnIndex) in btns" :key="btnIndex" @click="showNavMenu = false;">
                     <i :class="btn.class"></i>
                     <span>{{ btn.name }}</span>
@@ -38,7 +39,8 @@ export default {
                 {name: 'Home', href: '/#/', class: 'img-bg nav-btn-img home', activeFlag: true},
                 {name: 'Kirtan', href: '/#/kirtan', class: 'img-bg nav-btn-img kirtan'},
                 {name: 'Calendar', href: '/#/calendar', class: 'fa fa-calendar'},
-                {name: 'AI Chat', href: '/#/chat', class: 'fa fa-comment-dots'},
+                // {name: 'AI Chat', href: '/#/chat', class: 'fa fa-comment-dots'},
+                {name: 'Favourites', href: '/#/favourites', class: 'fa fa-heart'},
                 {name: 'Mission', href: '/#/mission', class: 'fa fa-flag'},
                 {name: 'What\'s new?', href: '/#/versions', class: 'fa fa-bell'},
                 {name: 'Old version', href: '/v1.php', class: 'fa fa-history'},
@@ -124,7 +126,11 @@ export default {
         border-radius: 25px;
         height: 50px;
         box-shadow: 0 0 10px black;
-        background-color: white;
+        
+        &.blur {
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
     }
 
     .bg {
@@ -210,9 +216,20 @@ export default {
                 background-image: url(~@/assets/icon/kirtan-s.png);
             }
         }
+        
+        i {
+            height: 25px;
+        }
 
         span {
-            margin-left: 5px;
+            @include lg {
+                margin-left: 5px;
+            }
+            
+            @include sm-md {
+                font-size: 9px;
+                line-height: 9px;
+            }
         }
     }
 }
@@ -243,7 +260,6 @@ export default {
 
     &.show-nav-menu {
         margin-left: 0px;
-        background-color: white;
         box-shadow: black 0 0 10px;
 
         @include lg {
@@ -251,16 +267,23 @@ export default {
             max-width: 270px;
             margin-top: 185px;
         }
-    }
 
-    .list-group-item {
-        color: $primary;
+        .nav-menu-item {
+            color: $primary;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 15px;
+
+            &:not(:last-of-type) {
+                border-bottom: 1px solid grey;
+            }
+        }
     }
 }
 
 // Mobile + Tablet
 @include nav-sm-md-3 {
-    .slide-button:has(.fa-comment-dots, .fa-flag, .fa-bell, .fa-history) {
+    .slide-button:has(.fa-heart, .fa-flag, .fa-bell, .fa-history) {
         display: none !important;
     }
 
@@ -268,7 +291,7 @@ export default {
         // -163.2px [height of nav menu] + 50px [height of navbar]
         margin-top: -113.2px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar) {
             display: none !important;
         }
     }
@@ -292,7 +315,7 @@ export default {
         // -122.4px [height of nav menu] + 50px [height of navbar]
         margin-top: -72.4px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-comment-dots) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-heart) {
             display: none !important;
         }
     }
@@ -316,7 +339,7 @@ export default {
         // -81.6px [height of nav menu] + 50px [height of navbar]
         margin-top: -31.6px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-comment-dots, .fa-flag) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-heart, .fa-flag) {
             display: none !important;
         }
     }
@@ -333,7 +356,7 @@ export default {
 
 // Desktop
 @include nav-lg-2 {
-    .slide-button:has(.fa-calendar, .fa-comment-dots, .fa-flag, .fa-bell, .fa-history) {
+    .slide-button:has(.fa-calendar, .fa-heart, .fa-flag, .fa-bell, .fa-history) {
         display: none !important;
     }
     
@@ -341,7 +364,7 @@ export default {
         // 150px [width of logo] + (2 * 130px) [width of 2 navs]
         left: 410px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan) {
             display: none !important;
         }
     }
@@ -353,7 +376,7 @@ export default {
 }
 
 @include nav-lg-3 {
-    .slide-button:has(.fa-comment-dots, .fa-flag, .fa-bell, .fa-history) {
+    .slide-button:has(.fa-heart, .fa-flag, .fa-bell, .fa-history) {
         display: none !important;
     }
 
@@ -361,7 +384,7 @@ export default {
         // 150px [width of logo] + (3 * 130px) [width of 3 navs]
         left: 540px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar) {
             display: none !important;
         }
     }
@@ -381,7 +404,7 @@ export default {
         // 150px [width of logo] + (4 * 130px) [width of 4 navs]
         left: 670px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-comment-dots) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-heart) {
             display: none !important;
         }
     }
@@ -401,7 +424,7 @@ export default {
     .nav-menu {
         left: 800px;
 
-        .list-group-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-comment-dots, .fa-flag) {
+        .nav-menu-item:has(.fa-ellipsis-h, .home, .kirtan, .fa-calendar, .fa-heart, .fa-flag) {
             display: none !important;
         }
     }

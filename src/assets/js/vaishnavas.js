@@ -1,5 +1,5 @@
-export default {
-	"GovindaMhj": {
+export default [
+	{
 		"name": "Srila Bhakti Sundar Govinda Dev-Goswami Maharaj",
 		"dName": "Śrīla Bhakti Sundar Govinda Dev-Goswāmī Mahārāj",
 		"shortName": "Śrīla Govinda Mahārāj",
@@ -80,7 +80,7 @@ export default {
 			}
 		]
 	},
-	"SridharMhj": {
+	{
 		"name": "Srila Bhakti Raksak Sridhar Dev-Goswami Maharaj",
 		"dName": "Śrīla Bhakti Rakṣak Śrīdhar Dev-Goswāmī Mahārāj",
 		"shortName": "Śrīla Śrīdhar Mahārāj",
@@ -201,7 +201,7 @@ export default {
 			}
 		]
 	},
-	"SaraswatiThakur": {
+	{
 		"name": "Srila Bhakti Siddhanta Saraswati Thakur Prabhupada",
 		"shortName": "Srila Saraswati Thakur",
 		"parampara": true,
@@ -214,14 +214,15 @@ export default {
 
 		]
 	},
-	"GauraKisoraMhj": {
+	{
 		"name": "Srila Gaura Kisora Das Babaji Maharaj",
 		"shortName": "Srila Gaura Kisora Das Babaji Maharaj",
 		"parampara": true,
 		"code": "GauraKisoraMhj",
-		"link": "http://www.scsmath.com/docs/gaurakisor_babaji.html"
+		"link": "http://www.scsmath.com/docs/gaurakisor_babaji.html",
+		"books": []
 	},
-	"BhaktivinodaThakur": {
+	{
 		"name": "Srila Bhaktivinoda Thakur",
 		"shortName": "Srila Bhaktivinoda Thakur",
 		"parampara": true,
@@ -235,11 +236,12 @@ export default {
 			{ "name": "Śrī Navadvīpa-dhāma-māhātmya and Śrī Navadvīpa-bhāva-taraṅga", "code": "en-ŚrīNavadvīpa-dhāma-māhātmyaandŚrīNavadvīpa-bhāva-taraṅga" }
 		]
 	},
-	"JagannathMhj": {
+	{
 		"name": "Srila Jagannath Das Babaji Maharaj",
 		"shortName": "Srila Jagannath Das Babaji Maharaj",
 		"parampara": true,
 		"code": "JagannathMhj",
-		"link": "http://www.scsmath.com/docs/jagannath_das_babaji.html"
+		"link": "http://www.scsmath.com/docs/jagannath_das_babaji.html",
+		"books": []
 	}
-}
+]

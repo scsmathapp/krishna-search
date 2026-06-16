@@ -14,7 +14,7 @@
         <h4 class="ms-3">Search filter</h4>
         <div class="px-2 d-flex w-100">
             <div class="input-group input-box ks-border d-flex align-items-center px-2">
-                <input type="text" class="form-control border-0" placeholder="Filter books..." v-model="searchVal">
+                <input type="text" class="form-control border-0" placeholder="Filter book name..." v-model="searchVal">
             </div>
         </div>
         <!-- Search filter -->
@@ -36,7 +36,7 @@
                 </div>
                 <div v-if="searchVal !== '' || author.showBooks">
                     <div v-for="(book, bookIndex) in author.books" :key="bookIndex"
-                         class="list-group-item d-flex align-items-center p-0"
+                         class="list-group-item book-item d-flex align-items-center p-0"
                          :class="book.selected ? 'active' : ''"
                          v-if="book.name.toLowerCase().includes(searchVal.toLowerCase())">
                         <div class="flex-fill p-3" @click.stop="$store.dispatch('selectBook', { bookIndex, authorIndex })">
@@ -109,7 +109,7 @@ export default {
         }
         
         .author {
-            background-color: rgb(240, 240, 240);
+            background-color: rgba(0, 0, 0, 0.1);
             
             .show-books-btn {
                 border-right: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
@@ -124,6 +124,10 @@ export default {
             }
         }
 
+        .book-item {
+            background-color: transparent;
+        }
+
         .open-book {
             width: 50px;
             border-left: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
@@ -133,7 +137,7 @@ export default {
             cursor: pointer;
 
             &:hover {
-                background-color: #f8f9fa;
+                background-color: rgba(255, 255, 255, 0.2);
             }
         }
     }
