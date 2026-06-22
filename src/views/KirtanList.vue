@@ -5,7 +5,7 @@
              @click="setMenuDisplay(false)"
         ></div>
         <BookSidebar :books="display"
-                     :selectedParagraphCode="selectedParagraphCode"
+                     :selectedItemCode="selectedItemCode"
                      :hasParagraph="false"
                      :class="menuDisplay ? 'mob-show' : 'mob-hide'"
                      @selectBookContent="goToKirtan"></BookSidebar>
@@ -53,7 +53,7 @@ export default {
             display: contents,
             displayContent: true,
             menuDisplay: false,
-            selectedParagraphCode: '0-0-0'
+            selectedItemCode: '0-0-0'
         }
     },
     created() {
@@ -81,7 +81,7 @@ export default {
             vm.contents.forEach((content, contentIndex) => {
                 content.chapters.forEach((item, itemIndex) => {
                     if (item.id === kirtanCode) {
-                        vm.selectedParagraphCode = `${contentIndex}-${itemIndex}`;
+                        vm.selectedItemCode = `${contentIndex}-${itemIndex}`;
                         vm.contentIndex = contentIndex;
                         vm.itemIndex = itemIndex;
                         return false;

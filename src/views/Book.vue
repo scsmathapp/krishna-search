@@ -5,8 +5,8 @@
                  :class="menuDisplay ? 'd-flex' : 'd-none'"
                  @click="setMenuDisplay(false)"
             ></div>
-            <BookSidebar :books="books"
-                         :selectedParagraphCode="selectedChapterId"
+            <BookSidebar :books="[selectedBook]"
+                         :selectedItemCode="selectedChapterId"
                          :hasParagraph="false"
                          :class="menuDisplay ? 'mob-show' : 'mob-hide'"
                          @selectBookContent="scrollToSection"></BookSidebar>
@@ -26,7 +26,6 @@ export default {
     components: {BookSidebar, BookControls, BookChapters},
     data() {
         return {
-            books: {},
             selectedChapterId: null,
             menuDisplay: false,
             sharedFlag: false,
@@ -60,11 +59,6 @@ export default {
                     vm.setupIntersectionObserver();
                 });
             }
-
-            vm.books = [{
-                title: vm.selectedBook.title,
-                chapters: vm.selectedBook.chapters
-            }];
 
             setTimeout(() => {
                 vm.paragraphListElement = document.getElementById('paragraph-list');

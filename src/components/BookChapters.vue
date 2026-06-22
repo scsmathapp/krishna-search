@@ -7,14 +7,18 @@
                 <div v-html="paragraph.highlightedText || paragraph.text" :class="paragraph.class"
                      v-if="showTranslation || !paragraph.translationFlag"
                      :id="chapterId + '-' + paragraphId"></div>
-                <i class="fa-solid fa-share-from-square" @click="copyUrl(chapterId, paragraphId)"></i>
+                <div class="paragraph-action">
+                    <i class="fa-solid fa-share-from-square" @click="copyUrl(chapterId, paragraphId)"></i>
+                    <i class="fa-solid fa-heart-circle-plus"
+                       v-if="!favBooks[`${bookIndex}-${chapterId}-${paragraphId}`]"
+                       @click="addToFav(chapterId, paragraphId)"></i>
+                    <i class="fa-solid fa-heart-circle-minus" v-else
+                       @click="removeFav(chapterId, paragraphId)"></i>
+                </div>
             </div>
         </div>
-        <div v-if="copySuccess" class="alert alert-success position-fixed bottom-0 fs-6" role="alert">
-            Sharing link copied to clipboard!
-        </div>
-        <div v-if="copyFail" class="alert alert-danger position-fixed bottom-0 fs-6" role="alert">
-            Copying link FAILED!
+        <div v-if="msg.text" class="alert position-fixed fs-6" :class="msg.class" role="alert">
+            {{ msg.text }}
         </div>
     </div>
 </template>
@@ -22,36 +26,73 @@
 import {mapGetters} from 'vuex';
 
 export default {
-    props: {
-        bookCode: {
-            type: String
-        },
-        chapters: {
-            type: Array
-        }
-    },
+    props: ['bookCode', 'chapters'],
     computed: {
-        ...mapGetters(['fontSize', 'showTranslation'])
+        ...mapGetters(['fontSize', 'showTranslation']),
+        bookIndex() {
+            return this.$store.getters.bookIndex(this.bookCode);
+        }
     },
     data() {
         return {
-            copySuccess: false,
-            copyFail: false,
-            alertTimer: null
+            alertTimer: null,
+            msg: {},
+            favBooks: {}
         }
     },
+    created() {
+        this.setFavBooks();
+    },
     methods: {
+        setFavBooks() {
+            const vm = this;
+
+            try {
+                const localFav = localStorage.fav;
+
+                if (localFav) {
+                    vm.favBooks = JSON.parse(localFav);
+                }
+            } catch (e) {}
+        },
         async copyUrl(chapterId, paragraphId) {
             const vm = this;
 
             try {
                 await navigator.clipboard.writeText(window.location.origin + `/#/book/${vm.bookCode}?c=${chapterId}&p=${paragraphId}`);
-                vm.triggerAlert(true);
+                vm.triggerAlert('goodShare');
             } catch (e) {
-                vm.triggerAlert(false);
+                vm.triggerAlert('badShare');
             }
         },
-        triggerAlert(success) {
+        addToFav(chapterId, paragraphId) {
+            const vm = this;
+
+            vm.setFavBooks();
+
+            if (vm.bookIndex < 0) {
+                vm.triggerAlert('badFav');
+                return;
+            }
+
+            vm.favBooks[`${vm.bookIndex}-${chapterId}-${paragraphId}`] = 1;
+            localStorage.fav = JSON.stringify(vm.favBooks);
+            vm.triggerAlert('goodFav');
+        },
+        removeFav(chapterId, paragraphId) {
+            const vm = this;
+
+            vm.setFavBooks();
+
+            if (vm.bookIndex < 0) {
+                vm.triggerAlert('badFav');
+                return;
+            }
+
+            delete vm.favBooks[`${vm.bookIndex}-${chapterId}-${paragraphId}`];
+            localStorage.fav = JSON.stringify(vm.favBooks);
+        },
+        triggerAlert(msgType) {
             const vm = this;
 
             // Clear any existing timer to prevent overlapping logic
@@ -59,16 +100,39 @@ export default {
                 clearTimeout(this.alertTimer);
             }
 
-            if (success) {
-                vm.copySuccess = true;
-            } else {
-                vm.copyFail = true;
+            switch (msgType) {
+                case 'goodShare':
+                    vm.msg = {
+                        text: 'Sharing link copied to clipboard!',
+                        class: 'alert-success'
+                    }
+                    break;
+
+                case 'badShare':
+                    vm.msg = {
+                        text: 'Copying link FAILED!',
+                        class: 'alert-danger'
+                    }
+                    break;
+
+                case 'goodFav':
+                    vm.msg = {
+                        text: 'Text added to favourites!',
+                        class: 'alert-success'
+                    }
+                    break;
+
+                case 'badFav':
+                    vm.msg = {
+                        text: 'Adding to favourites FAILED!',
+                        class: 'alert-danger'
+                    }
+                    break;
             }
 
             // Hide the alert after 3000ms (3 seconds)
             vm.alertTimer = setTimeout(() => {
-                vm.copySuccess = false;
-                vm.copyFail = false;
+                vm.msg = {};
             }, 3000);
         }
     }
@@ -77,11 +141,27 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/style/book.scss';
 
-.kirtan {
-    .b60 {
-        padding-bottom: 0 !important;
+.alert {
+    border-radius: 50px;
+    color: $primary;
+
+    @include lg {
+        bottom: 10px;
     }
-    
+
+    @include sm-md {
+        top: 10px;
+    }
+}
+
+.b59 {
+    & + .paragraph-action {
+        bottom: -10px !important;
+        z-index: 2;
+    }
+}
+
+.kirtan {
     .paragraph-list .paragraph-section {
         @include sm-md {
             padding-bottom: 60px;

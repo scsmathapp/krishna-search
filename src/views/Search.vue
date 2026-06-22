@@ -9,7 +9,7 @@
                          :bookCount="bookCount"
                          :searchProgress="searchProgress"
                          :books="searchResultsObj"
-                         :selectedParagraphCode="selectedParagraphCode"
+                         :selectedItemCode="selectedItemCode"
                          :class="menuDisplay ? 'mob-show' : 'mob-hide'"
                          :hasParagraph="true"
                          @selectBookContent="selectSearch"></BookSidebar>
@@ -37,7 +37,7 @@ export default {
             selectedBook: {},
             searchCount: 0,
             bookCount: 0,
-            selectedParagraphCode: '',
+            selectedItemCode: '',
             searchProgress: true,
             menuDisplay: false
         }
@@ -76,7 +76,7 @@ export default {
             vm.searchCount = 0;
             vm.bookCount = 0;
             vm.selectedBook = {};
-            vm.selectedParagraphCode = '';
+            vm.selectedItemCode = '';
 
             if (!searchVal || !vm.books.length) {
                 return;
@@ -463,7 +463,7 @@ export default {
                 timeoutVal = 200;
             }
 
-            vm.selectedParagraphCode = bookIndex + '-' + chapterIndex + '-' + paragraphIndex;
+            vm.selectedItemCode = bookIndex + '-' + chapterIndex + '-' + paragraphIndex;
 
             setTimeout(() => {
                 const element = document.getElementById(chapterIndex + '-' + paragraphIndex);

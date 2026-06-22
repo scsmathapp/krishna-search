@@ -24,13 +24,13 @@
                     <div v-if="hasParagraph">
                         <li class="list-group-item list-group-item-action p-2 cursor-pointer"
                             v-for="(paragraph, paragraphIndex) in chapter.paragraphs"
-                            :class="selectedParagraphCode === (bookIndex + '-' + chapterIndex + '-' + paragraphIndex) ? 'active ks-font-secondary' : 'ks-font'"
+                            :class="selectedItemCode === (bookIndex + '-' + chapterIndex + '-' + paragraphIndex) ? 'active ks-font-secondary' : 'ks-font'"
                             @click="$emit('selectBookContent', bookIndex, chapterIndex, paragraphIndex)"
                             v-html="paragraph.text">
                         </li>
                     </div>
                     <li class="list-group-item list-group-item-action p-2 cursor-pointer"
-                        :class="selectedParagraphCode === (bookIndex + '-' + chapterIndex) ? 'active ks-font-secondary' : 'ks-font'"
+                        :class="selectedItemCode === (bookIndex + '-' + chapterIndex) ? 'active ks-font-secondary' : 'ks-font'"
                         @click="$emit('selectBookContent', bookIndex, chapterIndex)"
                         v-else>
                         {{ chapter.title || (chapterIndex === 0 ? 'Cover' : '&#45;&#45; No title &#45;&#45;') }}
@@ -41,8 +41,6 @@
     </div>
 </template>
 <script>
-import {mapGetters} from "vuex";
-
 export default {
     name: 'BookSidebar',
     props: [
@@ -50,7 +48,7 @@ export default {
         'bookCount',
         'searchProgress',
         'books',
-        'selectedParagraphCode',
+        'selectedItemCode',
         'hasParagraph'
     ],
     computed: {

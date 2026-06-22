@@ -20,10 +20,12 @@ export default {
                     name: '26.06',
                     details: [
                         '\'Continue reading\' section in Homepage',
-                        'Bookmark your loved texts in the Favourites tab',
-                        'More tabs visible in the Navbar (according to your screen size)',
-                        'Now you understand better with text below icons',
-                        'Big text for a few seconds',
+                        'Bookmark your loved texts',
+                        'Find bookmarks in the Favourites tab',
+                        'Big text glimpse for book controls',
+                        'Glass effects adapted to modern environments',
+                        'Text below icons',
+                        'More tabs in the Navbar',
                         'New App icon'
                     ]
                 },

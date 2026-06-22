@@ -159,6 +159,7 @@ export default new Vuex.Store({
         filteredBooks: (state) => state.filteredBooks,
         fontSize: (state) => state.fontSize,
         showTranslation: (state) => state.showTranslation,
-        kirtan: (state) => (kirtanCode) => state.kirtanGuide[kirtanCode]
+        kirtan: (state) => (kirtanCode) => state.kirtanGuide[kirtanCode],
+        bookIndex: (state) => (bookCode) => state.books.findIndex((book) => book.code === bookCode)
     }
 });
