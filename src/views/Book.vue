@@ -1,29 +1,18 @@
 <template>
-    <div class="d-flex flex-column">
-        <div class="book d-flex">
-            <div class="paragraph-title-list position-fixed top-0 start-0 w-100"
-                 :class="menuDisplay ? 'd-flex' : 'd-none'"
-                 @click="setMenuDisplay(false)"
-            ></div>
-            <BookSidebar :books="[selectedBook]"
-                         :selectedItemCode="selectedChapterId"
-                         :hasParagraph="false"
-                         :class="menuDisplay ? 'mob-show' : 'mob-hide'"
-                         @selectBookContent="scrollToSection"></BookSidebar>
-            <BookChapters :chapters="selectedBook.chapters" :bookCode="code"></BookChapters>
-        </div>
-        <!-- Control functions for mobile -->
-        <BookControls @setMenuDisplay="setMenuDisplay" pageType="chapters"></BookControls>
+    <div>
+        <BookData :books="[selectedBook]"
+                  :selectedItemCode="selectedChapterId"
+                  :selectedBook="selectedBook"
+                  pageType="chapters"
+                  @selectBookContent="scrollToSection"></BookData>
     </div>
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import BookControls from "../components/BookControls.vue";
-import BookChapters from "../components/BookChapters.vue";
-import BookSidebar from "@/components/BookSidebar.vue";
+import BookData from "@/components/BookData.vue";
 
 export default {
-    components: {BookSidebar, BookControls, BookChapters},
+    components: {BookData},
     data() {
         return {
             selectedChapterId: null,

@@ -58,7 +58,7 @@ export default {
                 return 'search-top';
             } else if (isHome && ((!isMobile && isScrollTop) || (isMobile && isScrollTop && !showSearchFilter))) {
                 return 'search-center';
-            } else if (!isHome || (isMobile && !isScrollTop && !showSearchFilter)) {
+            } else if (isMobile && (!isHome || (!isScrollTop && !showSearchFilter))) {
                 return 'shrink';
             }
 
@@ -270,7 +270,7 @@ export default {
 
     // Search input + action buttons
     .search-container {
-        transition: all 0.25s ease;
+        transition: all 0.2s ease;
 
         @include lg {
             margin-right: 20px;

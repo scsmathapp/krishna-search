@@ -1,33 +1,22 @@
 <template>
     <div>
-        <div class="d-flex book">
-            <div class="paragraph-title-list position-fixed top-0 start-0 w-100"
-                 :class="menuDisplay ? 'd-flex' : 'd-none'"
-                 @click="setMenuDisplay(false)"
-            ></div>
-            <BookSidebar :searchCount="searchCount"
-                         :bookCount="bookCount"
-                         :searchProgress="searchProgress"
-                         :books="searchResultsObj"
-                         :selectedItemCode="selectedItemCode"
-                         :class="menuDisplay ? 'mob-show' : 'mob-hide'"
-                         :hasParagraph="true"
-                         @selectBookContent="selectSearch"></BookSidebar>
-            <BookChapters :chapters="selectedBook.chapters" :bookCode="selectedBook.code"></BookChapters>
-        </div>
-        <!-- Control functions for mobile -->
-        <BookControls @setMenuDisplay="setMenuDisplay" pageType="results" v-if="!menuDisplay"></BookControls>
+        <BookData :searchCount="searchCount"
+                  :bookCount="bookCount"
+                  :searchProgress="searchProgress"
+                  :books="searchResultsObj"
+                  :selectedItemCode="selectedItemCode"
+                  :selectedBook="selectedBook"
+                  pageType="results"
+                  @selectBookContent="selectSearch"></BookData>
     </div>
 </template>
 <script>
 import {mapGetters} from 'vuex';
 import allBooks from '@/assets/books/allBooks.js';
-import BookControls from "../components/BookControls.vue";
-import BookChapters from "../components/BookChapters.vue";
-import BookSidebar from "../components/BookSidebar.vue";
+import BookData from "../components/BookData.vue";
 
 export default {
-    components: {BookChapters, BookControls, BookSidebar},
+    components: {BookData},
     computed: {
         ...mapGetters(['books', 'fontSize'])
     },
@@ -65,10 +54,56 @@ export default {
         filterBooks() {
             const vm = this,
                 searchVal = vm.$route.query ? vm.$route.query.q : '',
-                tokens = tokenize(removeDiacritics(searchVal)),
+                tokens = tokenize(searchVal),
                 ast = parse(tokens),
                 filteredBooks = vm.$route.query && vm.$route.query.b ? vm.$route.query.b.split('_') : [],
                 filterMap = {};
+
+            const sanskritDiacriticMap = {
+                'ā': 'a',  'Ā': 'a',
+                'ī': 'i',  'Ī': 'i',
+                'ū': 'u',  'Ū': 'u',
+                'ṛ': 'r',  'Ṛ': 'r',
+                'ṝ': 'r',  'Ṝ': 'r',
+                'ḷ': 'l',  'Ḷ': 'l',
+                'ḹ': 'l',  'Ḹ': 'l',
+                'ṁ': 'm',  'Ṁ': 'm',
+                'ṃ': 'm',  'Ṃ': 'm',
+                'ḥ': 'h',  'Ḥ': 'h',
+                'ṅ': 'n', 'Ṅ': 'n',
+                'ṭ': 't',  'Ṭ': 't',
+                'ḍ': 'd',  'Ḍ': 'd',
+                'ṇ': 'n',  'Ṇ': 'n',
+                'ṣ': 's', 'Ṣ': 's',
+                'ś': 's', 'Ś': 's',
+                'ñ': 'n', 'Ñ': 'n',
+                'jñ':'jn',
+                'ḻ': 'l',  'Ḻ': 'l',
+                'ṯ': 't',  'Ṯ': 't',
+            };
+
+            // Only lowercase keys needed — buildSanskritPattern lowercases everything before lookup
+            const romanToSanskritMap = {
+                // Two-character (must come before single-char to be checked first)
+                'sh': ['ṣ', 'ś'],
+                'ri': ['ṛ', 'ṝ', 'rī'],
+                'gy': ['jñ'],
+                'aa': ['ā'],
+                'ee': ['ī'],
+                'oo': ['ū'],
+                // Single characters
+                's':  ['ṣ', 'ś'],   // bare s also matches diacritic forms
+                'r':  ['ṛ', 'ṝ'],   // bare r also matches diacritic forms
+                'a':  ['ā'],
+                'i':  ['ī'],
+                'u':  ['ū'],
+                'l':  ['ḷ', 'ḹ', 'ḻ'],
+                'm':  ['ṁ', 'ṃ'],
+                'h':  ['ḥ'],
+                'n':  ['ṇ', 'ñ', 'ṅ'],
+                't':  ['ṭ', 'ṯ'],
+                'd':  ['ḍ'],
+            };
 
             let bookIndex = 0;
 
@@ -81,6 +116,9 @@ export default {
             if (!searchVal || !vm.books.length) {
                 return;
             }
+
+            // Pre-build patterns for all tokens
+            const patternCache = {};
 
             vm.searchProgress = true;
 
@@ -106,7 +144,7 @@ export default {
 
                         while (paragraphIndex < chapter.paragraphs.length) {
                             const paragraph = chapter.paragraphs[paragraphIndex];
-                            const matchResult = evaluate(ast, removeDiacritics(paragraph.text));
+                            const matchResult = evaluate(ast, paragraph.text);
 
                             vm.$set(paragraph, 'highlightedText', '');
 
@@ -153,12 +191,50 @@ export default {
 
             vm.searchProgress = false;
 
-            ////////////////////////
+            function normalizeSanskrit(text) {
+                let result = text.toLowerCase();
+                // IMPORTANT: multi-character diacritics (jñ) must be replaced before single ones
+                // to avoid partial replacements
+                const entries = Object.entries(sanskritDiacriticMap)
+                    .sort((a, b) => b[0].length - a[0].length);
+                for (const [diacritic, plain] of entries) {
+                    result = result.split(diacritic.toLowerCase()).join(plain);
+                }
+                return result;
+            }
 
-            // Updated removeDiacritics function to preserve symbols
-            function removeDiacritics(text) {
-                // Only normalize and remove diacritics, but preserve all other characters including symbols
-                return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            function buildSanskritPattern(term) {
+                const normalized = normalizeSanskrit(term.toLowerCase());
+                let pattern = '';
+                let i = 0;
+
+                while (i < normalized.length) {
+                    const twoChar = normalized.slice(i, i + 2);
+                    const oneChar = normalized[i];
+
+                    if (romanToSanskritMap[twoChar]) {
+                        const alternatives = romanToSanskritMap[twoChar]
+                            .map(d => escapeRegex(d))
+                            .join('|');
+                        pattern += `(?:${escapeRegex(twoChar)}|${alternatives})`;
+                        i += 2;
+                    } else if (romanToSanskritMap[oneChar]) {
+                        const alternatives = romanToSanskritMap[oneChar]
+                            .map(d => escapeRegex(d))
+                            .join('|');
+                        pattern += `(?:${escapeRegex(oneChar)}|${alternatives})`;
+                        i += 1;
+                    } else {
+                        pattern += escapeRegex(oneChar);
+                        i += 1;
+                    }
+                }
+
+                return new RegExp(pattern, 'gi');
+            }
+
+            function escapeRegex(str) {
+                return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             }
 
             function tokenize(query) {
@@ -202,50 +278,46 @@ export default {
                 return combinedTokens;
             }
 
+            function getPattern(token) {
+                if (!patternCache[token]) {
+                    patternCache[token] = buildSanskritPattern(token);
+                }
+                return patternCache[token];
+            }
+
             function evaluate(ast, paragraph) {
                 const stack = [];
-                // IMPORTANT: Use the same removeDiacritics function on the paragraph
-                const processedParagraph = removeDiacritics(paragraph);
 
                 for (const token of ast) {
                     if (['+', '|'].includes(token)) {
                         const right = stack.pop();
                         const left = stack.pop();
-
                         switch (token) {
                             case '+':
-                                // For AND operation, combine matches from both sides
-                                if (left && right) {
-                                    stack.push({matched: true, matches: [...left.matches, ...right.matches]});
-                                } else {
-                                    stack.push(false);
-                                }
+                                stack.push(left && right
+                                    ? { matched: true, matches: [...left.matches, ...right.matches] }
+                                    : false);
                                 break;
                             case '|':
-                                // For OR operation, combine matches from both sides
                                 if (left || right) {
                                     const matches = [];
-                                    if (left) matches.push(...left.matches);
+                                    if (left)  matches.push(...left.matches);
                                     if (right) matches.push(...right.matches);
-                                    stack.push({matched: true, matches});
+                                    stack.push({ matched: true, matches });
                                 } else {
                                     stack.push(false);
                                 }
                                 break;
                         }
                     } else {
-                        // IMPORTANT: Process the search term the same way as the paragraph
-                        const processedTerm = removeDiacritics(token);
+                        const re = getPattern(token);
+                        re.lastIndex = 0; // CRITICAL — reset lastIndex before each paragraph
                         const matches = [];
-                        let index = processedParagraph.indexOf(processedTerm);
-
-                        while (index !== -1) {
-                            // Store the original token for highlighting, but use processed for matching
-                            matches.push({term: token, index});
-                            index = processedParagraph.indexOf(processedTerm, index + processedTerm.length);
+                        let m;
+                        while ((m = re.exec(paragraph)) !== null) {
+                            matches.push({ term: m[0], index: m.index });
                         }
-
-                        stack.push(matches.length > 0 ? {matched: true, matches} : false);
+                        stack.push(matches.length > 0 ? { matched: true, matches } : false);
                     }
                 }
 

@@ -1,59 +1,38 @@
 <template>
-    <div class="book d-flex">
-        <div class="paragraph-title-list position-fixed top-0 start-0 w-100"
-             :class="menuDisplay ? 'd-flex' : 'd-none'"
-             @click="setMenuDisplay(false)"
-        ></div>
-        <BookSidebar :books="display"
-                     :selectedItemCode="selectedItemCode"
-                     :hasParagraph="false"
-                     :class="menuDisplay ? 'mob-show' : 'mob-hide'"
-                     @selectBookContent="goToKirtan"></BookSidebar>
-<!--        <div class="paragraph-title-list flex-column"-->
-<!--             :class="menuDisplay ? 'mob-show' : 'mob-hide'">-->
-<!--            <div class="position-sticky kirtan-opt z-4 d-flex">-->
-<!--                <div class="btn-group ks-border flex-fill">-->
-<!--                    <button class="btn" :class="displayContent ? 'active' : ''" @click="displayContent = true; display = contents;">Categorized</button>-->
-<!--                    <button class="btn" :class="!displayContent ? 'active' : ''" @click="displayContent = false; display = index;">A to Z</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div v-for="(content, contentIndex) in display" :key="contentIndex">-->
-<!--                <h4 class="kirtan-title p-2 position-sticky z-3 mb-0 ks-font">{{ content.name }}</h4>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item list-group-item-action cursor-pointer"-->
-<!--                       v-for="(item, itemIndex) in content.chapters" :key="itemIndex"-->
-<!--                        @click="goToKirtan(item.id)"-->
-<!--                       :class="$route.params.kirtanCode === item.id ?-->
-<!--                       'active ks-font-secondary' : 'ks-font'">-->
-<!--                        {{ item.title }}-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-        <router-view></router-view>
-        <!-- Control functions for mobile -->
-        <BookControls @setMenuDisplay="setMenuDisplay" @navigateKirtan="navigateKirtan" pageType="kirtans"></BookControls>
+    <div>
+        <BookData :books="kirtanList"
+                  :selectedItemCode="selectedItemCode"
+                  :selectedBook="kirtan"
+                  :showCategorizedFlag="showCategorizedFlag"
+                  pageType="kirtans"
+                  @navigateKirtan="navigateKirtan"
+                  @showCategorized="showCategorized"
+                  @selectBookContent="goToKirtan"></BookData>
     </div>
 </template>
 <script>
-import contents from '@/assets/kirtan/contents.json';
-import index from '@/assets/kirtan/index.json';
-import BookControls from "../components/BookControls.vue";
-import BookSidebar from "@/components/BookSidebar.vue";
+import categorized from '@/assets/kirtan/categorized.json';
+import indexed from '@/assets/kirtan/indexed.json';
+import BookData from "@/components/BookData.vue";
 
 export default {
     name: "KirtanList",
-    components: {BookSidebar, BookControls},
+    components: {BookData},
+    computed: {
+        kirtan() {
+            return {chapters: [this.$store.getters.kirtan(this.$route.params.kirtanCode) || {}]};
+        }
+    },
     data() {
         return {
-            contents,
-            index,
+            categorized,
+            indexed,
             contentIndex: -1,
             itemIndex: -1,
-            display: contents,
-            displayContent: true,
+            showCategorizedFlag: true,
             menuDisplay: false,
-            selectedItemCode: '0-0-0'
+            selectedItemCode: '0-0-0',
+            kirtanList: categorized
         }
     },
     created() {
@@ -62,23 +41,26 @@ export default {
         vm.setIndexes(vm.$route.params.kirtanCode);
     },
     methods: {
-        goToKirtan(bookIndex, chapterIndex) {
+        showCategorized(showCategorizedFlag) {
             const vm = this;
 
-            const kirtan = vm.display[bookIndex].chapters[chapterIndex];
+            vm.showCategorizedFlag = showCategorizedFlag;
+            vm.kirtanList = showCategorizedFlag ? vm.categorized : vm.indexed;
+            vm.setIndexes(vm.$route.params.kirtanCode);
+        },
+        goToKirtan(bookIndex, chapterIndex) {
+            const vm = this,
+                kirtan = vm.kirtanList[bookIndex].chapters[chapterIndex];
             
             if (kirtan && vm.$route.params.kirtanCode !== kirtan.id) {
                 vm.$router.push(`/kirtan/${kirtan.id}`);
                 vm.menuDisplay = false;
             }
         },
-        setMenuDisplay(value) {
-            this.menuDisplay = value;
-        },
         setIndexes(kirtanCode) {
             const vm = this;
 
-            vm.contents.forEach((content, contentIndex) => {
+            vm.kirtanList.forEach((content, contentIndex) => {
                 content.chapters.forEach((item, itemIndex) => {
                     if (item.id === kirtanCode) {
                         vm.selectedItemCode = `${contentIndex}-${itemIndex}`;
@@ -91,30 +73,31 @@ export default {
         },
         navigateKirtan(nextFlag) {
             const vm = this;
+
             let newContentIndex = -1, newItemIndex = -1;
 
-            if (vm.contents[vm.contentIndex] && vm.contents[vm.contentIndex].chapters &&
-                vm.contents[vm.contentIndex].chapters.length && vm.contents[vm.contentIndex].chapters[vm.itemIndex]) {
+            if (vm.kirtanList[vm.contentIndex] && vm.kirtanList[vm.contentIndex].chapters &&
+                vm.kirtanList[vm.contentIndex].chapters.length && vm.kirtanList[vm.contentIndex].chapters[vm.itemIndex]) {
                 newItemIndex = nextFlag ? vm.itemIndex + 1 : vm.itemIndex - 1;
 
-                if (vm.contents[vm.contentIndex].chapters[newItemIndex]) {
+                if (vm.kirtanList[vm.contentIndex].chapters[newItemIndex]) {
                     vm.itemIndex = newItemIndex;
                 } else {
                     newContentIndex = nextFlag ? vm.contentIndex + 1 : vm.contentIndex - 1;
 
-                    if (vm.contents[newContentIndex]) {
+                    if (vm.kirtanList[newContentIndex]) {
                         vm.contentIndex = newContentIndex;
-                        newItemIndex = nextFlag ? 0 : vm.contents[newContentIndex].chapters.length - 1;
+                        newItemIndex = nextFlag ? 0 : vm.kirtanList[newContentIndex].chapters.length - 1;
 
-                        if (vm.contents[newContentIndex].chapters && vm.contents[newContentIndex].chapters[newItemIndex]) {
+                        if (vm.kirtanList[newContentIndex].chapters && vm.kirtanList[newContentIndex].chapters[newItemIndex]) {
                             vm.itemIndex = newItemIndex;
                         }
                     }
                 }
 
-                if (vm.contents[vm.contentIndex].chapters[vm.itemIndex] &&
-                    vm.contents[vm.contentIndex].chapters[vm.itemIndex].id !== vm.$route.params.kirtanCode) {
-                    vm.$router.push(`/kirtan/${vm.contents[vm.contentIndex].chapters[vm.itemIndex].id}`);
+                if (vm.kirtanList[vm.contentIndex].chapters[vm.itemIndex] &&
+                    vm.kirtanList[vm.contentIndex].chapters[vm.itemIndex].id !== vm.$route.params.kirtanCode) {
+                    vm.$router.push(`/kirtan/${vm.kirtanList[vm.contentIndex].chapters[vm.itemIndex].id}`);
                 }
             }
         }
@@ -126,17 +109,3 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
-@import '@/assets/style/book.scss';
-
-.kirtan-opt {
-    top: 0;
-    min-height: 60px;
-    background-color: #fff !important;
-    padding: 10px;
-}
-
-.kirtan-title {
-    top: 60px;
-}
-</style>

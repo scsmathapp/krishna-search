@@ -1,7 +1,7 @@
 [
   {
-    "name": "A",
-    "items": [
+    "title": "A",
+    "chapters": [
       {
         "id": "akrodha-paramananda",
         "title": "akrodha paramānanda"
@@ -41,8 +41,8 @@
     ]
   },
   {
-    "name": "B",
-    "items": [
+    "title": "B",
+    "chapters": [
       {
         "id": "bhai-re-shorira-avidya-jal-jodendriya-tahe-kal",
         "title": "bhāi-re! śorīra avidyā-jāl, joḍendriya tāhe kāl"
@@ -78,8 +78,8 @@
     ]
   },
   {
-    "name": "C",
-    "items": [
+    "title": "C",
+    "chapters": [
       {
         "id": "chaudda-shiata-sata-shiake-masa-je-phalgun",
         "title": "chaudda-śata sāta-śake māsa je phālgun"
@@ -87,8 +87,8 @@
     ]
   },
   {
-    "name": "D",
-    "items": [
+    "title": "D",
+    "chapters": [
       {
         "id": "dayal-nitai-chaitanya-bole-nach-re",
         "title": "‘dayāl nitāi chaitanya’ bo’le nāch re"
@@ -128,8 +128,8 @@
     ]
   },
   {
-    "name": "E",
-    "items": [
+    "title": "E",
+    "chapters": [
       {
         "id": "e-ghora-samsare-podiya-manava",
         "title": "e ghora saṁsāre, poḍiyā mānava"
@@ -149,8 +149,8 @@
     ]
   },
   {
-    "name": "G",
-    "items": [
+    "title": "G",
+    "chapters": [
       {
         "id": "gaura-vrajashritashieshair-vaishnavair-vandya-vigraham",
         "title": "gaura-vrajāśritāśeṣair vaiṣṇavair vandya-vigraham"
@@ -210,8 +210,8 @@
     ]
   },
   {
-    "name": "H",
-    "items": [
+    "title": "H",
+    "chapters": [
       {
         "id": "hare-krishna-hare-krishna-krishna-krishna-hare-hare",
         "title": "hare kṛṣṇa hare kṛṣṇa kṛṣṇa kṛṣṇa hare hare"
@@ -251,8 +251,8 @@
     ]
   },
   {
-    "name": "J",
-    "items": [
+    "title": "J",
+    "chapters": [
       {
         "id": "jadi-gaura-na-hoto-tobe-ki-hoito",
         "title": "jadi gaura nā ho’to, tobe ki hoito"
@@ -336,8 +336,8 @@
     ]
   },
   {
-    "name": "K",
-    "items": [
+    "title": "K",
+    "chapters": [
       {
         "id": "kali-ghora-timire-garasala-jagajana",
         "title": "kali-ghora timire garasala jagajana"
@@ -389,8 +389,8 @@
     ]
   },
   {
-    "name": "M",
-    "items": [
+    "title": "M",
+    "chapters": [
       {
         "id": "maha-bhaya-shiankula-e-bhava-tarangini",
         "title": "mahā-bhaya śaṅkula e bhava taraṅginī"
@@ -410,8 +410,8 @@
     ]
   },
   {
-    "name": "N",
-    "items": [
+    "title": "N",
+    "chapters": [
       {
         "id": "nadiya-godrume-nityananda-mahajana",
         "title": "nadīyā-godrume nityānanda mahājana"
@@ -479,8 +479,8 @@
     ]
   },
   {
-    "name": "O",
-    "items": [
+    "title": "O",
+    "chapters": [
       {
         "id": "ohe-harinam-tava-mahima-apara",
         "title": "ohe harinām, tava mahimā apāra"
@@ -492,8 +492,8 @@
     ]
   },
   {
-    "name": "P",
-    "items": [
+    "title": "P",
+    "chapters": [
       {
         "id": "parama-karuna-pahu-dui-jana",
         "title": "parama karuṇa, pahu̐ dūi jana"
@@ -525,8 +525,8 @@
     ]
   },
   {
-    "name": "R",
-    "items": [
+    "title": "R",
+    "chapters": [
       {
         "id": "radhe-jaya-jaya-madhava-dayite",
         "title": "rādhe jaya jaya mādhava-dayite"
@@ -554,8 +554,8 @@
     ]
   },
   {
-    "name": "S",
-    "items": [
+    "title": "S",
+    "chapters": [
       {
         "id": "sakala-vaishnava-pade-mora-namaskara",
         "title": "sakala vaiṣṇava-pade mora namaskāra"
@@ -651,8 +651,8 @@
     ]
   },
   {
-    "name": "T",
-    "items": [
+    "title": "T",
+    "chapters": [
       {
         "id": "tatala-saikate-vari-bindu-sama",
         "title": "tātala saikate vāri bindu-sama"
@@ -676,8 +676,8 @@
     ]
   },
   {
-    "name": "U",
-    "items": [
+    "title": "U",
+    "chapters": [
       {
         "id": "udilo-aruna-puraba-bhage",
         "title": "udilo aruṇa pūraba-bhāge"
@@ -685,8 +685,8 @@
     ]
   },
   {
-    "name": "V",
-    "items": [
+    "title": "V",
+    "chapters": [
       {
         "id": "vande-bhaktivinodam-shri-gaura-shiakti-svarupakam",
         "title": "vande bhaktivinodaṁ śrī-gaura-śakti-svarūpakam"
@@ -718,8 +718,8 @@
     ]
   },
   {
-    "name": "Y",
-    "items": [
+    "title": "Y",
+    "chapters": [
       {
         "id": "yadi-te-hari-pada-saroja-sudha",
         "title": "yadi te hari-pāda-saroja-sudhā"

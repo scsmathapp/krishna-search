@@ -1,30 +1,19 @@
 <template>
-    <div class="d-flex flex-column">
-        <div class="book d-flex">
-            <div class="paragraph-title-list position-fixed top-0 start-0 w-100"
-                 :class="menuDisplay ? 'd-flex' : 'd-none'"
-                 @click="setMenuDisplay(false)"
-            ></div>
-            <BookSidebar :books="paragraphList"
-                         :selectedItemCode="selectedItemCode"
-                         :hasParagraph="true"
-                         :class="menuDisplay ? 'mob-show' : 'mob-hide'"
-                         @selectBookContent="loadFavParagraph"></BookSidebar>
-            <BookChapters :chapters="selectedBook.chapters" :bookCode="selectedBook.code"></BookChapters>
-        </div>
-        <!-- Control functions for mobile -->
-        <BookControls @setMenuDisplay="setMenuDisplay" pageType="favs"></BookControls>
+    <div>
+        <BookData :books="paragraphList"
+                  :selectedItemCode="selectedItemCode"
+                  :selectedBook="selectedBook"
+                  pageType="favs"
+                  @selectBookContent="loadFavParagraph"></BookData>
     </div>
 </template>
 <script>
-import BookSidebar from "@/components/BookSidebar.vue";
-import BookChapters from "@/components/BookChapters.vue";
-import BookControls from "@/components/BookControls.vue";
 import {mapGetters} from "vuex";
+import BookData from "@/components/BookData.vue";
 
 export default {
     name: 'Favourites',
-    components: {BookControls, BookChapters, BookSidebar},
+    components: {BookData},
     computed: {
         ...mapGetters(['books', 'fontSize'])
     },

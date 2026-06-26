@@ -35,7 +35,9 @@ const routes = [{
     children: [{
         path: ':kirtanCode',
         name: 'Kirtan',
-        component: () => import('@/views/Kirtan.vue')
+        component: {
+            template: '<div></div>'
+        }
     }]
 }, {
     path: '/chat',
